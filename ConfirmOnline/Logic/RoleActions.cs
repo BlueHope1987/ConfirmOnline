@@ -54,7 +54,7 @@ namespace ConfirmOnline.Logic
             // add the "canEdit" user to the "canEdit" role. 
             if (!userMgr.IsInRole(userMgr.FindByEmail("Admin123@ConfirmOnline.com").Id, "canEdit"))
             {
-                IdUserResult = userMgr.AddToRole(userMgr.FindByEmail("Admin123@ConfirmOnline.com").Id, "canEdit");
+                IdUserResult = userMgr.AddToRole(userMgr.FindByEmail("Admin123@ConfirmOnline.com").Id, "Admin");
             }
         }
     }

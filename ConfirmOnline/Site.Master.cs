@@ -7,6 +7,9 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using System.Linq;
+using ConfirmOnline.Logic;
+using ConfirmOnline.Models;
 
 namespace ConfirmOnline
 {
@@ -15,6 +18,8 @@ namespace ConfirmOnline
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+
+        public SiteSetting SystemSet;
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -69,10 +74,18 @@ namespace ConfirmOnline
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (HttpContext.Current.User.IsInRole("admin"))
+            SystemSet = GetSiteSetting().First();
+            if (HttpContext.Current.User.IsInRole("Admin"))
             {
                 adminLink.Visible = true;
             }
+        }
+
+        public IQueryable<SiteSetting> GetSiteSetting()
+        {
+            var _db = new ConfirmOnline.Models.SiteContext();
+            IQueryable<SiteSetting> query = _db.SiteSetting.Where(s=>s.CfgIsEnable==true);
+            return query;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
