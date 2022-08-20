@@ -3,9 +3,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <h1>信息在线核实程序</h1>
-        <p class="lead">在此开始检查，确认，修改您的个人信息。</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">点击开始 &raquo;</a></p>
+        <h1><%: masterPage.SystemSet.SiteName %></h1>
+        <p class="lead"><%: masterPage.SystemSet.SiteWelcomeWord %></p>
+        <p><a href="Operation\RecodeLookup" class="btn btn-primary btn-lg">点击开始 &raquo;</a></p>
     </div>
 
     <%--<div class="row">

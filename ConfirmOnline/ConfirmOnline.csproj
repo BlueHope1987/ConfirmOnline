@@ -193,7 +193,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="Admin\Web.config" />
+    <Content Include="App_Data\test.xlsx" />
+    <Content Include="App_Data\test.xls" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Operation\RecodeLookup.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -376,6 +379,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\ExcelVisiter.cs" />
     <Compile Include="Logic\ExceptionUtility.cs" />
     <Compile Include="Logic\RoleActions.cs" />
     <Compile Include="Models\EditFlow.cs" />
@@ -383,6 +387,13 @@
     <Compile Include="Models\SiteContext.cs" />
     <Compile Include="Models\SiteDbInitializer.cs" />
     <Compile Include="Models\SiteSetting.cs" />
+    <Compile Include="Operation\RecodeLookup.aspx.cs">
+      <DependentUpon>RecodeLookup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Operation\RecodeLookup.aspx.designer.cs">
+      <DependentUpon>RecodeLookup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
