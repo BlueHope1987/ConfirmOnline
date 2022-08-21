@@ -34,8 +34,9 @@ namespace ConfirmOnline.Logic
                 sConnectionString = "Provider=Microsoft.Ace.OleDb.12.0;" +
                 "data source=" + filepath + ";" +
                 "Extended Properties='Excel 12.0; HDR=NO; IMEX=1'";
-                //ph=Server.MapPath("../App_Data/test.xlsx")
-            } else
+                //filepath=Server.MapPath("../App_Data/test.xlsx")
+            }
+            else
             {
                 return false;
             }
@@ -74,17 +75,18 @@ namespace ConfirmOnline.Logic
             return true;
         }
 
-        public List<string> ListSheetInExcel(string filePath)
+        //待研究返回工作表清单
+        public List<string> ListSheetInExcel()
         {
             OleDbConnectionStringBuilder sbConnection = new OleDbConnectionStringBuilder();
             String strExtendedProperties = String.Empty;
-            sbConnection.DataSource = filePath;
-            if (System.IO.Path.GetExtension(filePath).Equals(".xls"))//for 97-03 Excel file
+            sbConnection.DataSource = filepath;
+            if (System.IO.Path.GetExtension(filepath).Equals(".xls"))//for 97-03 Excel file
             {
                 sbConnection.Provider = "Microsoft.Jet.OLEDB.4.0";
                 strExtendedProperties = "Excel 8.0;HDR=Yes;IMEX=1";//HDR=ColumnHeader,IMEX=InterMixed
             }
-            else if (System.IO.Path.GetExtension(filePath).Equals(".xlsx"))  //for 2007 Excel file
+            else if (System.IO.Path.GetExtension(filepath).Equals(".xlsx"))  //for 2007 Excel file
             {
                 sbConnection.Provider = "Microsoft.ACE.OLEDB.12.0";
                 strExtendedProperties = "Excel 12.0;HDR=Yes;IMEX=1";
@@ -106,13 +108,14 @@ namespace ConfirmOnline.Logic
             return listSheet;
         }
 
-        public static List<string> ToExcelsSheetList(string excelFilePath)
+        //待研究返回工作表清单
+        public static List<string> ToExcelsSheetList(string filepath)
         {
             List<string> sheets = new List<string>();
             using (OleDbConnection connection =
-                    new OleDbConnection((excelFilePath.TrimEnd().ToLower().EndsWith("x"))
-                    ? "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='" + excelFilePath + "';" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
-                    : "provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + excelFilePath + "';Extended Properties=Excel 8.0;"))
+                    new OleDbConnection((filepath.TrimEnd().ToLower().EndsWith("x"))
+                    ? "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='" + filepath + "';" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
+                    : "provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + filepath + "';Extended Properties=Excel 8.0;"))
             {
                 connection.Open();
                 DataTable dt = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
@@ -125,6 +128,58 @@ namespace ConfirmOnline.Logic
                 connection.Close();
             }
             return sheets;
+        }
+
+        //待研究连接方法
+        protected void testcon1()
+        {
+            //HttpPostedFile jvFile = FileUpload1.PostedFile;
+            string jvPath = filepath;
+            //jvFile.SaveAs(jvPath);
+
+            string[] begins = {
+                 "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=",
+                 "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=",
+                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=",
+                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=",
+                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=",
+                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=",
+                "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=",
+                "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
+        };
+            string[] ends = {
+                ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1;\"",
+                ";Extended Properties=\"Excel 8.0;HDR=Yes;\"",
+               ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"",
+               ";Extended Properties=\"Excel 12.0 Xml;HDR=YES\"",
+               ";Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\"",
+               ";Extended Properties=\"Excel 12.0;HDR=YES\"",
+               ";Extended Properties=\"Excel 12.0 Macro;HDR=YES\"",
+               ";Extended Properties=\"text;HDR=Yes;FMT=Delimited\"",
+               ";Extended Properties=\"text;HDR=Yes;FMT=Fixed\";"
+       };
+
+            for (int i = 0; i < begins.Length; i++)
+            {
+                System.Text.StringBuilder sbExcelFileConnStr = new System.Text.StringBuilder();
+                sbExcelFileConnStr.Append(begins[i]);
+                sbExcelFileConnStr.Append(jvPath);
+                sbExcelFileConnStr.Append(ends[i]);
+
+                OleDbConnection dbConn = new OleDbConnection(sbExcelFileConnStr.ToString());
+                string[] excelSheets = { };
+                try
+                {
+                    dbConn.Open();
+                }
+                catch (Exception ex)
+                {
+                    // fails here with "System.Data.OleDb.OleDbException: 
+                    // External table is not in the expected format." 
+                    // 
+                    // 
+                }
+            }
         }
     }
 }

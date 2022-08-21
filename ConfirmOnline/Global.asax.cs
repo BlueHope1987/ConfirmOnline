@@ -13,8 +13,10 @@ using ConfirmOnline.Models;
 
 namespace ConfirmOnline
 {
+
     public class Global : HttpApplication
     {
+    public SiteSetting SystemSet;
         void Application_Start(object sender, EventArgs e)
         {
             // 在应用程序启动时运行的代码
@@ -31,7 +33,9 @@ namespace ConfirmOnline
             //添加路由
             RegisterCustomRoutes(RouteTable.Routes);
 
+
         }
+
 
         void RegisterCustomRoutes(RouteCollection routes)
         {
