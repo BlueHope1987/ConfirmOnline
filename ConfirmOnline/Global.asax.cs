@@ -16,7 +16,8 @@ namespace ConfirmOnline
 
     public class Global : HttpApplication
     {
-    public SiteSetting SystemSet;
+        public SiteSetting SystemSet;
+
         void Application_Start(object sender, EventArgs e)
         {
             // 在应用程序启动时运行的代码
@@ -33,9 +34,17 @@ namespace ConfirmOnline
             //添加路由
             RegisterCustomRoutes(RouteTable.Routes);
 
+            //读取配置 不管用
+            //SystemSet = GetSiteSetting().First();
 
         }
 
+        //public IQueryable<SiteSetting> GetSiteSetting()
+        //{
+        //    var _db = new ConfirmOnline.Models.SiteContext();
+        //    IQueryable<SiteSetting> query = _db.SiteSetting.Where(s => s.CfgIsEnable == true);
+        //    return query;
+        //}
 
         void RegisterCustomRoutes(RouteCollection routes)
         {

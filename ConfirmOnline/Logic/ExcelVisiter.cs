@@ -30,7 +30,7 @@ namespace ConfirmOnline.Logic
             }
             else if (System.IO.Path.GetExtension(filepath).Equals(".xlsx"))
             {
-                //xlsx Microsoft.Ace.OleDb.12.0 缺组件
+                //xlsx Microsoft.Ace.OleDb.12.0 缺组件安装AccessDatabaseEngine2010x86
                 sConnectionString = "Provider=Microsoft.Ace.OleDb.12.0;" +
                 "data source=" + filepath + ";" +
                 "Extended Properties='Excel 12.0; HDR=NO; IMEX=1'";
@@ -180,6 +180,26 @@ namespace ConfirmOnline.Logic
                     // 
                 }
             }
+        }
+
+        //枚举OLEDB驱动
+        public List<string> listOLEDBDrv()
+        {
+            var reader = OleDbEnumerator.GetRootEnumerator();
+
+            var list = new List<String>();
+            while (reader.Read())
+            {
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    if (reader.GetName(i) == "SOURCES_NAME")
+                    {
+                        list.Add(reader.GetValue(i).ToString());
+                    }
+                }
+            }
+            reader.Close();
+            return list;
         }
     }
 }
