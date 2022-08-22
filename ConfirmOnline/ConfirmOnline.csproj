@@ -172,10 +172,6 @@
     <Content Include="App_Data\aspnet-ConfirmOnline-20220818112138_log.ldf">
       <DependentUpon>aspnet-ConfirmOnline-20220818112138.mdf</DependentUpon>
     </Content>
-    <Content Include="App_Data\SiteContext.mdf" />
-    <Content Include="App_Data\SiteContext_log.ldf">
-      <DependentUpon>SiteContext.mdf</DependentUpon>
-    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

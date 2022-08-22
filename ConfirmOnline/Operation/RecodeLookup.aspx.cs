@@ -11,12 +11,21 @@ namespace ConfirmOnline.Operation
 {
     public partial class RecodeLookup : System.Web.UI.Page
     {
-        public SiteMaster masterPage;
+        public SiteMaster mstPg;
         protected void Page_Load(object sender, EventArgs e)
         {
-            masterPage = (SiteMaster)this.Master;
+            mstPg = (SiteMaster)this.Master;
+            /*
+            List<string> qurMth = new List<string>(mstPg.SystemSet.QueryMeth.Split(','));
+            foreach (string q in qurMth)
+            {
+
+            }
+            */
+            
             ExcelVisiter visiter=new ExcelVisiter(Server.MapPath("../App_Data/test.xlsx"));
             visiter.Test(DataGrid1);
+            
             //Page.Application
         }
     }

@@ -21,7 +21,7 @@ namespace ConfirmOnline.Models
 
         public decimal FixRow { get; set; } //修订行，0表示不需修订的确认标识
 
-        public decimal FixCol { get; set; } //修订列，重路由后
+        public decimal FixCol { get; set; } //修订列，原始表格列号
 
         public string FixNew { get; set; } //修订后内容
 
