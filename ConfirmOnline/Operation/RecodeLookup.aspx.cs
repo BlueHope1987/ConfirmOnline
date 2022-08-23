@@ -52,7 +52,7 @@ namespace ConfirmOnline.Operation
                 div = new HtmlGenericControl();
                 div.TagName = "div";
                 div.ID = "divTextBox" + id;
-                div.Attributes["class"] = "input-group input-group-md";
+                div.Attributes["class"] = "input-group input-group-md col-md-offset-2";
 
                 //创建span   
                 span = new HtmlGenericControl();
