@@ -43,8 +43,8 @@ namespace ConfirmOnline.Operation
 
         private void CreateTextBoxList(string id,string describe)
         {
-            HtmlGenericControl div;
-            HtmlGenericControl span;
+            HtmlGenericControl div=new HtmlGenericControl("div");
+            HtmlGenericControl span=new HtmlGenericControl("span");
             TextBox txt;
             RegularExpressionValidator rev;
 
@@ -52,12 +52,14 @@ namespace ConfirmOnline.Operation
                 div = new HtmlGenericControl();
                 div.TagName = "div";
                 div.ID = "divTextBox" + id;
-                div.Attributes["class"] = "item2";
+                div.Attributes["class"] = "input-group input-group-md";
 
                 //创建span   
                 span = new HtmlGenericControl();
                 span.ID = "spanTextBox" + id;
                 span.InnerHtml = describe + ":";
+                span.Attributes["class"] = "input-group-addon control-label";
+            
 
                 //创建TextBox   
                 txt = new TextBox();
@@ -65,18 +67,18 @@ namespace ConfirmOnline.Operation
                 txt.CssClass = "form-control";
 
                 //创建格式验证控件，并且将其关联到对应的TextBox   
-                rev = new RegularExpressionValidator();
-                rev.ID = "rev" + id;
-                rev.ControlToValidate = txt.ID;
-                rev.Display = ValidatorDisplay.Dynamic;
-                rev.ValidationGroup = "ShowListContent";
-                rev.ValidationExpression = @"(http(s)?://)?([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?";
-                rev.ErrorMessage = "Invalid url Address!";
+                //rev = new RegularExpressionValidator();
+                //rev.ID = "rev" + id;
+                //rev.ControlToValidate = txt.ID;
+                //rev.Display = ValidatorDisplay.Dynamic;
+                //rev.ValidationGroup = "ShowListContent";
+                //rev.ValidationExpression = @"(http(s)?://)?([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?";
+                //rev.ErrorMessage = "Invalid url Address!";
 
                 //添加控件到容器   
                 div.Controls.Add(span);
                 div.Controls.Add(txt);
-                div.Controls.Add(rev);
+                //div.Controls.Add(rev);
                 divContainer.Controls.Add(div);
 
         }
