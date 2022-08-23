@@ -34,10 +34,12 @@ namespace ConfirmOnline
             //添加路由
             RegisterCustomRoutes(RouteTable.Routes);
 
-            //读取配置 不管用
+            //读取配置
             Application["SystemSet"] = GetSiteSetting().First();
-            ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("App_Data/")+((SiteSetting)Application["SystemSet"]).DataSource, Server.MapPath("App_Data/") + ((SiteSetting)Application["SystemSet"]).DataTable);
-            Application["WorkSheet"] = visiter.getDataSet();
+
+            //将数据表读取全局 不适用
+            //ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("App_Data/")+((SiteSetting)Application["SystemSet"]).DataSource, Server.MapPath("App_Data/") + ((SiteSetting)Application["SystemSet"]).DataTable);
+            //Application["WorkSheet"] = visiter.getDataSet();
         }
 
         public IQueryable<SiteSetting> GetSiteSetting()
