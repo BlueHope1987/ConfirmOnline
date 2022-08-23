@@ -35,16 +35,17 @@ namespace ConfirmOnline
             RegisterCustomRoutes(RouteTable.Routes);
 
             //读取配置 不管用
-            //SystemSet = GetSiteSetting().First();
-
+            Application["SystemSet"] = GetSiteSetting().First();
+            ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("App_Data/")+((SiteSetting)Application["SystemSet"]).DataSource, Server.MapPath("App_Data/") + ((SiteSetting)Application["SystemSet"]).DataTable);
+            Application["WorkSheet"] = visiter.getDataSet();
         }
 
-        //public IQueryable<SiteSetting> GetSiteSetting()
-        //{
-        //    var _db = new ConfirmOnline.Models.SiteContext();
-        //    IQueryable<SiteSetting> query = _db.SiteSetting.Where(s => s.CfgIsEnable == true);
-        //    return query;
-        //}
+        public IQueryable<SiteSetting> GetSiteSetting()
+        {
+            var _db = new ConfirmOnline.Models.SiteContext();
+            IQueryable<SiteSetting> query = _db.SiteSetting.Where(s => s.CfgIsEnable == true);
+            return query;
+        }
 
         void RegisterCustomRoutes(RouteCollection routes)
         {

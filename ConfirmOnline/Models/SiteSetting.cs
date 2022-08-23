@@ -38,7 +38,9 @@ namespace ConfirmOnline.Models
 
         public int AllowFixTimes { get; set; } //允许数据重复修改次数，0为不允许，负为无限制或其他定义
 
-        public string DateSource { get; set; } //数据源 数据驱动:工作簿:工作表
+        public string DataSource { get; set; } //数据源 工作簿
+
+        public string DataTable { get; set; } //数据源 工作表
 
         public string SouColReDef { get; set; } //列名重路由 2:命名,1:命名,3:命名...
 

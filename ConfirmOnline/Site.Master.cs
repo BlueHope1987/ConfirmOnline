@@ -74,8 +74,7 @@ namespace ConfirmOnline
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SystemSet = GetSiteSetting().First();
-            //SystemSet = ((Global)this.Context.ApplicationInstance).SystemSet;
+            SystemSet = (SiteSetting)Application["SystemSet"];
             if (HttpContext.Current.User.IsInRole("Admin"))
             {
                 adminLink.Visible = true;

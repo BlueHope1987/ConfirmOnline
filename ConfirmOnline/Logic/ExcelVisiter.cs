@@ -9,10 +9,61 @@ namespace ConfirmOnline.Logic
     public class ExcelVisiter
     {
         readonly string filepath;
+        readonly string dataTable;
 
-        public ExcelVisiter(string fp)
+        public ExcelVisiter(string fp,string dt)
         {
             filepath = fp;
+            dataTable= dt;
+        }
+
+        public DataSet getDataSet()
+        {
+            string sConnectionString;
+
+            if (System.IO.Path.GetExtension(filepath).Equals(".xls"))
+            {
+                sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
+                    "Data Source=" + filepath + ";" +
+                    "Extended Properties='Excel 8.0; HDR=NO; IMEX=1'";
+            }
+            else if (System.IO.Path.GetExtension(filepath).Equals(".xlsx"))
+            {
+                sConnectionString = "Provider=Microsoft.Ace.OleDb.12.0;" +
+                "data source=" + filepath + ";" +
+                "Extended Properties='Excel 12.0; HDR=NO; IMEX=1'";
+            }
+            else
+            {
+                return null;
+            }
+
+            // Create connection object by using the preceding connection string.
+            OleDbConnection objConn = new OleDbConnection(sConnectionString);
+
+            // Open connection with the database.
+            objConn.Open();
+
+            // The code to follow uses a SQL SELECT command to display the data from the worksheet.
+            // Create new OleDbCommand to return data from worksheet.
+            OleDbCommand objCmdSelect = new OleDbCommand("SELECT * FROM [Sheet1$]", objConn);
+            //需要在Excel 插入菜单-名称-定义 将数据选区定义为myRange1 若工作表为 [Sheet1$] 若不指特定第一个[$A1:R65536]
+
+            // Create new OleDbDataAdapter that is used to build a DataSet
+            // based on the preceding SQL SELECT statement.
+            OleDbDataAdapter objAdapter1 = new OleDbDataAdapter();
+
+            // Pass the Select command to the adapter.
+            objAdapter1.SelectCommand = objCmdSelect;
+
+            // Create new DataSet to hold information from the worksheet.
+            DataSet objDataset1 = new DataSet();
+
+            // Fill the DataSet with the information from the worksheet.
+            objAdapter1.Fill(objDataset1, "XLData");
+
+            objConn.Close();
+            return objDataset1;
         }
 
         public bool Test(System.Web.UI.WebControls.GridView dg)
