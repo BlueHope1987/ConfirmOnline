@@ -191,7 +191,9 @@
     <Content Include="Admin\Web.config" />
     <Content Include="App_Data\test.xlsx" />
     <Content Include="App_Data\test.xls" />
+    <Content Include="Operation\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Operation\dataviewtest.aspx" />
     <Content Include="Operation\RecodeLookup.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -383,6 +385,13 @@
     <Compile Include="Models\SiteContext.cs" />
     <Compile Include="Models\SiteDbInitializer.cs" />
     <Compile Include="Models\SiteSetting.cs" />
+    <Compile Include="Operation\dataviewtest.aspx.cs">
+      <DependentUpon>dataviewtest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Operation\dataviewtest.aspx.designer.cs">
+      <DependentUpon>dataviewtest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Operation\RecodeLookup.aspx.cs">
       <DependentUpon>RecodeLookup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
