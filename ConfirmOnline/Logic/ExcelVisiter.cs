@@ -10,16 +10,13 @@ namespace ConfirmOnline.Logic
     {
         readonly string filepath;
         readonly string dataTable;
+        readonly string sConnectionString;
+        readonly public List<string> columnName;
 
         public ExcelVisiter(string fp,string dt)
         {
             filepath = fp;
             dataTable= dt;
-        }
-
-        public DataSet getDataSet()
-        {
-            string sConnectionString;
 
             if (System.IO.Path.GetExtension(filepath).Equals(".xls"))
             {
@@ -35,9 +32,23 @@ namespace ConfirmOnline.Logic
             }
             else
             {
-                return null;
+                return;
             }
 
+            // 获取活动工作表数据集列名
+            List<string> columnName = new List<string>();
+            OleDbConnection con = new OleDbConnection(sConnectionString);
+            con.Open();
+            DataTable sheetTable = con.GetOleDbSchemaTable(OleDbSchemaGuid.Columns, new object[] { null, null, dataTable + "$", null });
+            con.Close();
+            foreach (DataRow rows in sheetTable.Rows)
+            {
+                columnName.Add(rows["COLUMN_NAME"].ToString());
+            }
+        }
+
+        public DataSet getDataSet()
+        {
             // Create connection object by using the preceding connection string.
             OleDbConnection objConn = new OleDbConnection(sConnectionString);
 

@@ -45,6 +45,7 @@ namespace ConfirmOnline.Operation
                 {
                     RecodeLookup PrePage = (RecodeLookup)Page.PreviousPage;
                     textlist = PrePage.queryList;
+
                     //if (PrePage != null)
                     //{
                     //    foreach (string s in souCol)

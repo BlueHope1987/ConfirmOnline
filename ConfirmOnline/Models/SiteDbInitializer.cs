@@ -30,7 +30,7 @@ namespace ConfirmOnline.Models
                     DataTable="Sheet1",
                     FixEntNum=0,
                     QueryMeth="1,2",
-                    QueryMethRef="",
+                    QueryMethRef="1:string:6|2,2:nub:8,3:select:男|女,4:date:yyyy-mm-dd",
                     SiteContactStr="",
                     SiteCopyRightStr="BlueHope",
                     SiteEnabTimEd=new DateTime(1980,1,1,1,1,1),
