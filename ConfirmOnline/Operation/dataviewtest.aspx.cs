@@ -44,7 +44,7 @@ namespace ConfirmOnline.Operation
                 if (Page.PreviousPage != null)// 页面本身也是一个类
                 {
                     RecodeLookup PrePage = (RecodeLookup)Page.PreviousPage;
-                    textlist = PrePage.queryList;
+                    //textlist = PrePage.queryList;
 
                     //if (PrePage != null)
                     //{

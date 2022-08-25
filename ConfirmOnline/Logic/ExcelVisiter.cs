@@ -8,9 +8,7 @@ namespace ConfirmOnline.Logic
 {
     public class ExcelVisiter
     {
-        readonly string filepath;
-        readonly string dataTable;
-        readonly string sConnectionString;
+        readonly public string filepath , dataTable, sConnectionString;
         readonly public List<string> columnName;
 
         public ExcelVisiter(string fp,string dt)
@@ -36,7 +34,7 @@ namespace ConfirmOnline.Logic
             }
 
             // 获取活动工作表数据集列名
-            List<string> columnName = new List<string>();
+            columnName = new List<string>();
             OleDbConnection con = new OleDbConnection(sConnectionString);
             con.Open();
             DataTable sheetTable = con.GetOleDbSchemaTable(OleDbSchemaGuid.Columns, new object[] { null, null, dataTable + "$", null });
@@ -57,7 +55,7 @@ namespace ConfirmOnline.Logic
 
             // The code to follow uses a SQL SELECT command to display the data from the worksheet.
             // Create new OleDbCommand to return data from worksheet.
-            OleDbCommand objCmdSelect = new OleDbCommand("SELECT * FROM [Sheet1$]", objConn);
+            OleDbCommand objCmdSelect = new OleDbCommand("SELECT * FROM ["+ dataTable + "$]", objConn);
             //需要在Excel 插入菜单-名称-定义 将数据选区定义为myRange1 若工作表为 [Sheet1$] 若不指特定第一个[$A1:R65536]
 
             // Create new OleDbDataAdapter that is used to build a DataSet
@@ -74,6 +72,20 @@ namespace ConfirmOnline.Logic
             objAdapter1.Fill(objDataset1, "XLData");
 
             objConn.Close();
+            return objDataset1;
+        }
+
+        public DataSet getDataSet(string sql)
+        {
+            OleDbConnection objConn = new OleDbConnection(sConnectionString);
+            OleDbDataAdapter objAdapter1 = new OleDbDataAdapter();
+            DataSet objDataset1 = new DataSet();
+
+            objConn.Open();
+            objAdapter1.SelectCommand = new OleDbCommand(sql, objConn); ;
+            objAdapter1.Fill(objDataset1, "XLData");
+            objConn.Close();
+
             return objDataset1;
         }
 

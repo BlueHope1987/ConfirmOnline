@@ -14,8 +14,7 @@ namespace ConfirmOnline.Operation
     public partial class RecodeLookup : System.Web.UI.Page
     {
         public SiteMaster mstPg;
-        private List<string> souCol, qurMth, errList;//列号:列名, 排序后查询列号, 错误清单
-        public Dictionary<string, string> qurkey, queryList;//查询项列号-名称 提交列号-赋值
+        private List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值, 错误清单
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,7 +22,8 @@ namespace ConfirmOnline.Operation
             //页面Page_Load优先于Master的，不能取Master，可取全局的
             souCol = new List<string>(((SiteSetting)Application["SystemSet"]).SouColReDef.Split(','));
             qurMth = new List<string>(((SiteSetting)Application["SystemSet"]).QueryMeth.Split(',')); //TODO:空值处理错误处理
-            qurkey = new Dictionary<string, string>();
+            qurName = new List<string>();
+            qurKey = new List<string>();
 
             foreach (string s in souCol)
             {
@@ -31,7 +31,8 @@ namespace ConfirmOnline.Operation
                 {
                     if (s.IndexOf(q) == 0)
                     {
-                        qurkey.Add(s.Split(':')[0], s.Split(':')[1]);
+                        qurKey.Add(s.Split(':')[0]);
+                        qurName.Add(s.Split(':')[1]);
                         CreateTextBoxList(s.Split(':')[0], s.Split(':')[1]);
                     }
                 }
@@ -72,47 +73,75 @@ namespace ConfirmOnline.Operation
 
         protected void btn_Submit_Click(object sender, EventArgs e)
         {
-            queryList = new Dictionary<string, string>();
+            qurVal = new List<string>();
             TextBox txb;
 
             foreach (string s in souCol)
             {
-                foreach (string q in qurMth)
+                foreach (string q in qurKey)
                 {
                     if (s.IndexOf(q) == 0)
                     {
                         txb = divContainer.FindControl("txt" + s.Split(':')[0]) as TextBox;
-                        queryList.Add(q, txb.Text);
+                        qurVal.Add(txb.Text);
                     }
                 }
             }
-            if (submitChck(queryList))
+            if (submitChck())
                 Server.Transfer("dataviewtest.aspx",false);
             return;
         }
 
-        protected bool submitChck(Dictionary<string, string> ql)
+        protected bool submitChck()
         {
             errList = new List<string>();
-            foreach(var item in ql){
-                if (item.Value == "")
+            for(int i = 0; i < qurVal.Count; i++)
+            {
+                if (qurVal[i] == "")
                 {
-                    errList.Add(qurkey[item.Key] + "的值不能为空，请检查后重试。");
+                    errList.Add(qurName[i] + "的值不能为空，请检查后重试。");
                     HtmlGenericControl p = new HtmlGenericControl("p");
-                    p.InnerText = qurkey[item.Key] + "的值不能为空，请检查后重试。";
+                    p.InnerText = qurName[i] + "的值不能为空，请检查后重试。";
                     p.Style.Add(HtmlTextWriterStyle.Color, "red");
-                    p.Style.Add(HtmlTextWriterStyle.TextAlign,"center");
+                    p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
                     p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
                     p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
                     p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
                     divContainer.Controls.Add(p);
                 }
             }
+
             if (errList.Count > 0) return false;
 
             ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("../App_Data/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
 
-            //List<string> ColName=visiter.columnName;
+            List<string> ColName=visiter.columnName;
+            string sqlwhere=" Where ";
+            for(int i=0;i<qurVal.Count;i++)
+            {
+                if (i != 0) sqlwhere = sqlwhere + "AND ";
+                sqlwhere = sqlwhere +
+                            visiter.columnName[(int.Parse(qurKey[i]))-1] +
+                            "='" +
+                            qurVal[i] +
+                            "' ";
+            }//列号需要从0排吗？
+
+            DataSet data = visiter.getDataSet("SELECT * FROM ["+visiter.dataTable+"$]"+ sqlwhere);
+
+            if (data.Tables[0].Rows.Count == 0)
+            {
+                errList.Add("没有查询到条目，请检查后重试。");
+                HtmlGenericControl p = new HtmlGenericControl("p");
+                p.InnerText ="没有查询到条目，请检查后重试。";
+                p.Style.Add(HtmlTextWriterStyle.Color, "red");
+                p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
+                p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
+                p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
+                p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                divContainer.Controls.Add(p);
+                return false;
+            }
 
             return true;
         }
