@@ -15,23 +15,37 @@ namespace ConfirmOnline.Operation
     {
 
         public SiteMaster mstPg;
-        private List<string> souCol, qurMth;
+        RecodeLookup PrePage;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            souCol = new List<string>(((SiteSetting)Application["SystemSet"]).SouColReDef.Split(','));
-            qurMth = new List<string>(((SiteSetting)Application["SystemSet"]).QueryMeth.Split(',')); //TODO:空值处理错误处理
 
-            prossPrePage(sender,e);
+            if (!IsPostBack)
+                if (Page.PreviousPage != null)// 页面本身也是一个类
+                {
+                    PrePage = (RecodeLookup)Page.PreviousPage;
+                }
+                else
+                {
+                    Response.Redirect("RecodeLookup");
+                };
 
+            //public SiteMaster mstPg;
+            //public List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值, 错误清单
+            
+
+            //prossPrePage(sender,e);
             //Request.Form;
             ExcelVisiter visiter=new ExcelVisiter(Server.MapPath("../App_Data/") + ((SiteSetting)Application["SystemSet"]).DataSource,((SiteSetting)Application["SystemSet"]).DataTable);
-  
-            DataGrid1.DataSource = visiter.getDataSet().Tables[0].DefaultView;
-            DataGrid1.DataBind();
 
-            //Page.Application
+            //visiter.getDataSet().Tables[0].DefaultView
+
+
+
+
+            //DataGrid1.DataSource = visiter.getDataSet().Tables[0].DefaultView;
+            //DataGrid1.DataBind();
         }
 
         protected void prossPrePage(object sender, EventArgs e)

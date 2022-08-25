@@ -14,7 +14,7 @@ namespace ConfirmOnline.Operation
     public partial class RecodeLookup : System.Web.UI.Page
     {
         public SiteMaster mstPg;
-        private List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值, 错误清单
+        public List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值, 错误清单
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -115,7 +115,6 @@ namespace ConfirmOnline.Operation
 
             ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("../App_Data/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
 
-            List<string> ColName=visiter.columnName;
             string sqlwhere=" Where ";
             for(int i=0;i<qurVal.Count;i++)
             {
@@ -143,6 +142,19 @@ namespace ConfirmOnline.Operation
                 return false;
             }
 
+            if (data.Tables[0].Rows.Count > 1)
+            {
+                errList.Add("查询到不止一条条目，请与管理员联系。");
+                HtmlGenericControl p = new HtmlGenericControl("p");
+                p.InnerText = "查询到不止一条条目，请与管理员联系。";
+                p.Style.Add(HtmlTextWriterStyle.Color, "red");
+                p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
+                p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
+                p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
+                p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                divContainer.Controls.Add(p);
+                return false;
+            }
             return true;
         }
     }
