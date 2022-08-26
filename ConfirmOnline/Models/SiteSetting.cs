@@ -42,7 +42,7 @@ namespace ConfirmOnline.Models
 
         public string DataTable { get; set; } //数据源 工作表
 
-        public string SouColReDef { get; set; } //列名重路由 2:命名,1:命名,3:命名...
+        public string SouColReDef { get; set; } //列名重路由 真实列号 2:命名,1:命名,3:命名...
 
         public int SouRowRangeStart { get; set; } //数据起始列(0为无限制)
 

@@ -45,6 +45,10 @@ namespace ConfirmOnline.Logic
             }
         }
 
+        /// <summary>
+        /// 返回工作表所有数据
+        /// </summary>
+        /// <returns></returns>
         public DataSet getDataSet()
         {
             // Create connection object by using the preceding connection string.
@@ -75,6 +79,11 @@ namespace ConfirmOnline.Logic
             return objDataset1;
         }
 
+        /// <summary>
+        /// 通过sql语句对文件进行查询
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public DataSet getDataSet(string sql)
         {
             OleDbConnection objConn = new OleDbConnection(sConnectionString);
@@ -89,65 +98,37 @@ namespace ConfirmOnline.Logic
             return objDataset1;
         }
 
-        public bool Test(System.Web.UI.WebControls.GridView dg)
+        /// <summary>
+        /// 通过键值列表对工作表进行查询
+        /// </summary>
+        /// <param name="qurKey"></param>
+        /// <param name="qurVal"></param>
+        /// <returns></returns>
+        public DataTable getDataSet(List<string> qurKey, List<string> qurVal)
         {
-            string sConnectionString;
+            string sqlwhere = " Where ";
+            for(int i=0;i<qurVal.Count;i++)
+            {
+                if (i != 0) sqlwhere = sqlwhere + "AND ";
+                sqlwhere = sqlwhere +
+                            columnName[(int.Parse(qurKey[i])) - 1] +
+                            "='" +
+                            qurVal[i] +
+                            "' ";
+            }//列号需要从0排吗？
 
-            if (System.IO.Path.GetExtension(filepath).Equals(".xls"))
-            {
-                // xls Microsoft.Jet.OLEDB.4.0 不好用
-                //HDR=YES/NO 第一行是否有字段名默认YES
-                //IMEX=1 解决数字字符混合不正常 0汇出模式仅写入 1汇入模式仅读取 2连接模式可读写
-                sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
-                    "Data Source=" + filepath + ";" +
-                    "Extended Properties='Excel 8.0; HDR=NO; IMEX=1'";
-            }
-            else if (System.IO.Path.GetExtension(filepath).Equals(".xlsx"))
-            {
-                //xlsx Microsoft.Ace.OleDb.12.0 缺组件安装AccessDatabaseEngine2010x86
-                sConnectionString = "Provider=Microsoft.Ace.OleDb.12.0;" +
-                "data source=" + filepath + ";" +
-                "Extended Properties='Excel 12.0; HDR=NO; IMEX=1'";
-                //filepath=Server.MapPath("../App_Data/test.xlsx")
-            }
-            else
-            {
-                return false;
-            }
-
-            // Create connection object by using the preceding connection string.
             OleDbConnection objConn = new OleDbConnection(sConnectionString);
-
-            // Open connection with the database.
-            objConn.Open();
-
-            // The code to follow uses a SQL SELECT command to display the data from the worksheet.
-            // Create new OleDbCommand to return data from worksheet.
-            OleDbCommand objCmdSelect = new OleDbCommand("SELECT * FROM [Sheet1$]", objConn);
-            //需要在Excel 插入菜单-名称-定义 将数据选区定义为myRange1 若工作表为 [Sheet1$] 若不指特定第一个[$A1:R65536]
-
-            // Create new OleDbDataAdapter that is used to build a DataSet
-            // based on the preceding SQL SELECT statement.
             OleDbDataAdapter objAdapter1 = new OleDbDataAdapter();
-
-            // Pass the Select command to the adapter.
-            objAdapter1.SelectCommand = objCmdSelect;
-
-            // Create new DataSet to hold information from the worksheet.
             DataSet objDataset1 = new DataSet();
 
-            // Fill the DataSet with the information from the worksheet.
+            objConn.Open();
+            objAdapter1.SelectCommand = new OleDbCommand("SELECT * FROM [" + dataTable + "$]" + sqlwhere, objConn); 
             objAdapter1.Fill(objDataset1, "XLData");
-
-            // Bind data to DataGrid control.
-            dg.DataSource = objDataset1.Tables[0].DefaultView;
-            dg.DataBind();
-
-            // Clean up objects.
             objConn.Close();
 
-            return true;
+            return objDataset1.Tables[0];
         }
+
 
         //待研究返回工作表清单
         public List<string> ListSheetInExcel()

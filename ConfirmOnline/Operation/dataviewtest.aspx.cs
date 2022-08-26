@@ -31,21 +31,53 @@ namespace ConfirmOnline.Operation
                     Response.Redirect("RecodeLookup");
                 };
 
-            //public SiteMaster mstPg;
-            //public List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值, 错误清单
-            
+            foreach (string s in PrePage.souCol)
+            {
+                if(!PrePage.qurMth.Exists(ex => ex== s.Split(':')[0]))
+                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1], Convert.ToString(PrePage.qurResult.Rows[0][(int.Parse(s.Split(':')[0]) -1)]));
+            }
+        }
 
-            //prossPrePage(sender,e);
-            //Request.Form;
-            ExcelVisiter visiter=new ExcelVisiter(Server.MapPath("../App_Data/") + ((SiteSetting)Application["SystemSet"]).DataSource,((SiteSetting)Application["SystemSet"]).DataTable);
+        private void CreateTextBoxList(string id, string describe, string text)
+        {
+            HtmlGenericControl div = new HtmlGenericControl("div");
+            HtmlGenericControl span = new HtmlGenericControl("span");
+            HtmlGenericControl btn = new HtmlGenericControl("button");
+            TextBox txt;
 
-            //visiter.getDataSet().Tables[0].DefaultView
+            //创建div   
+            div = new HtmlGenericControl();
+            div.TagName = "div";
+            div.ID = "divTextBox" + id;
+            div.Attributes["class"] = "input-group input-group-md col-md-offset-2";
+            div.Attributes["style"] = "margin-top: 10px;";
+
+            //创建span   
+            span = new HtmlGenericControl();
+            span.ID = "spanTextBox" + id;
+            span.InnerHtml = describe + ":";
+            span.Attributes["class"] = "input-group-addon control-label";
 
 
+            //创建TextBox   
+            txt = new TextBox();
+            txt.ID = "txt" + id;
+            txt.CssClass = "form-control";
+            txt.Text = text;
+            txt.ReadOnly=true;
 
+            //创建修订span   
+            btn = new HtmlGenericControl();
+            btn.ID = "btnFix" + id;
+            btn.InnerHtml = "修订";
+            btn.Attributes["class"] = "btn btn-defult";
 
-            //DataGrid1.DataSource = visiter.getDataSet().Tables[0].DefaultView;
-            //DataGrid1.DataBind();
+            //添加控件到容器   
+            div.Controls.Add(span);
+            div.Controls.Add(txt);
+            div.Controls.Add(btn);
+            divContainer.Controls.Add(div);
+
         }
 
         protected void prossPrePage(object sender, EventArgs e)
@@ -80,6 +112,9 @@ namespace ConfirmOnline.Operation
 
         }
 
+        protected void btn_Submit_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace ConfirmOnline.Operation
     {
         public SiteMaster mstPg;
         public List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值, 错误清单
+        public DataTable qurResult;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -115,20 +116,9 @@ namespace ConfirmOnline.Operation
 
             ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("../App_Data/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
 
-            string sqlwhere=" Where ";
-            for(int i=0;i<qurVal.Count;i++)
-            {
-                if (i != 0) sqlwhere = sqlwhere + "AND ";
-                sqlwhere = sqlwhere +
-                            visiter.columnName[(int.Parse(qurKey[i]))-1] +
-                            "='" +
-                            qurVal[i] +
-                            "' ";
-            }//列号需要从0排吗？
+            qurResult = visiter.getDataSet(qurKey, qurVal);
 
-            DataSet data = visiter.getDataSet("SELECT * FROM ["+visiter.dataTable+"$]"+ sqlwhere);
-
-            if (data.Tables[0].Rows.Count == 0)
+            if (qurResult.Rows.Count == 0)
             {
                 errList.Add("没有查询到条目，请检查后重试。");
                 HtmlGenericControl p = new HtmlGenericControl("p");
@@ -142,7 +132,7 @@ namespace ConfirmOnline.Operation
                 return false;
             }
 
-            if (data.Tables[0].Rows.Count > 1)
+            if (qurResult.Rows.Count > 1)
             {
                 errList.Add("查询到不止一条条目，请与管理员联系。");
                 HtmlGenericControl p = new HtmlGenericControl("p");
