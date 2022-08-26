@@ -42,18 +42,17 @@ namespace ConfirmOnline.Operation
         {
             HtmlGenericControl div = new HtmlGenericControl("div");
             HtmlGenericControl span = new HtmlGenericControl("span");
-            HtmlGenericControl btn = new HtmlGenericControl("button");
+            HtmlGenericControl btnspan = new HtmlGenericControl("span");
+            HtmlButton btn = new HtmlButton();
             TextBox txt;
 
             //创建div   
-            div = new HtmlGenericControl();
             div.TagName = "div";
             div.ID = "divTextBox" + id;
             div.Attributes["class"] = "input-group input-group-md col-md-offset-2";
             div.Attributes["style"] = "margin-top: 10px;";
 
             //创建span   
-            span = new HtmlGenericControl();
             span.ID = "spanTextBox" + id;
             span.InnerHtml = describe + ":";
             span.Attributes["class"] = "input-group-addon control-label";
@@ -66,16 +65,22 @@ namespace ConfirmOnline.Operation
             txt.Text = text;
             txt.ReadOnly=true;
 
-            //创建修订span   
-            btn = new HtmlGenericControl();
+            //创建按钮   
             btn.ID = "btnFix" + id;
             btn.InnerHtml = "修订";
-            btn.Attributes["class"] = "btn btn-defult";
+            btn.Attributes["class"] = "btn btn-warning glyphicon glyphicon-pencil";
+
+            //创建修订span   
+            btnspan = new HtmlGenericControl();
+            btnspan.ID = "btnSpan" + id;
+            btnspan.Attributes["class"] = "input-group-btn";
+            btnspan.Style.Add("float", "left");
+            btnspan.Controls.Add(btn);
 
             //添加控件到容器   
             div.Controls.Add(span);
             div.Controls.Add(txt);
-            div.Controls.Add(btn);
+            div.Controls.Add(btnspan);
             divContainer.Controls.Add(div);
 
         }
