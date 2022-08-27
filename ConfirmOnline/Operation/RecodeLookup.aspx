@@ -10,6 +10,7 @@
                     <div id="divContainer" style="margin-top: 30px;" runat="server">
                     </div>
                     <asp:Button ID="btn_Submit" type="submit" class="btn btn-success btn-block" style="margin-top: 25px;" runat="server" Text="查询" OnClick="btn_Submit_Click"/>
+<%--                    <asp:Button ID="btn_Submit" type="submit" class="btn btn-success btn-block" style="margin-top: 25px;" runat="server" Text="查询" PostBackUrl="dataviewtest.aspx"/>--%>
             </div>
         </div>
     </div>

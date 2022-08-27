@@ -51,7 +51,9 @@ namespace ConfirmOnline
 
         void RegisterCustomRoutes(RouteCollection routes)
         {
+            routes.Ignore("Operation/{resource}");
             routes.Ignore("Operation/{*pathInfo}");
+            routes.Ignore("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
 
             //routes.MapPageRoute(
             //    "ProductsByCategoryRoute",

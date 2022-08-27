@@ -89,7 +89,17 @@ namespace ConfirmOnline.Operation
                 }
             }
             if (submitChck())
-                Server.Transfer("dataviewtest.aspx",false);
+            {
+                //Server.Transfer("dataviewtest.aspx", false);
+                Session["Struct"] = "LookupOK";
+                Session["souCol"] = souCol;
+                Session["qurMth"] = qurMth;
+                Session["qurKey"] = qurKey;
+                Session["qurName"] = qurName;
+                Session["qurVal"] = qurVal;
+                Session["qurResult"] = qurResult;
+                Response.Redirect("dataviewtest.aspx");
+            }
             return;
         }
 

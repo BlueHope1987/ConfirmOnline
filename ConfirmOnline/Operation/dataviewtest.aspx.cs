@@ -15,26 +15,36 @@ namespace ConfirmOnline.Operation
     {
 
         public SiteMaster mstPg;
-        RecodeLookup PrePage;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (!IsPostBack)
-                if (Page.PreviousPage != null)// 页面本身也是一个类
-                {
-                    PrePage = (RecodeLookup)Page.PreviousPage;
-                }
-                else
-                {
-                    Response.Redirect("RecodeLookup");
-                };
+            //if (!IsPostBack)
+            //    if (Page.PreviousPage != null)// 页面本身也是一个类
+            //    {
+            //        PrePage = (RecodeLookup)Page.PreviousPage;
+            //    }
+            //    else
+            //    {
+            //        Response.Redirect("RecodeLookup");
+            //    };
 
-            foreach (string s in PrePage.souCol)
+            //string eventArgument = Page.Request.Form["__EVENTARGUMENT"];
+            //if (!String.IsNullOrEmpty(eventArgument)
+            //  && eventArgument.Equals("btnMyQuery"))
+            //{
+            //    string a = "";
+            //    //执行您的回发处理代码
+            //}
+
+            if((string)Session["Struct"] != "LookupOK")
+                Response.Redirect("RecodeLookup");
+
+            foreach (string s in (List<string>)Session["souCol"])
             {
-                if(!PrePage.qurMth.Exists(ex => ex== s.Split(':')[0]))
-                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1], Convert.ToString(PrePage.qurResult.Rows[0][(int.Parse(s.Split(':')[0]) -1)]));
+                if(!((List<string>)Session["qurMth"]).Exists(ex => ex== s.Split(':')[0]))
+                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1], Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][(int.Parse(s.Split(':')[0]) -1)]));
             }
         }
 
@@ -69,6 +79,7 @@ namespace ConfirmOnline.Operation
             btn.ID = "btnFix" + id;
             btn.InnerHtml = "修订";
             btn.Attributes["class"] = "btn btn-warning glyphicon glyphicon-pencil";
+            btn.Attributes.Add("onclick", Page.ClientScript.GetPostBackEventReference(this, "btnMyQuery"));
 
             //创建修订span   
             btnspan = new HtmlGenericControl();
@@ -119,7 +130,7 @@ namespace ConfirmOnline.Operation
 
         protected void btn_Submit_Click(object sender, EventArgs e)
         {
-
+            string a = "";
         }
     }
 }

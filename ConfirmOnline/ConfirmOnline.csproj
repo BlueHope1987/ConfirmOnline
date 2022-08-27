@@ -191,7 +191,6 @@
     <Content Include="Admin\Web.config" />
     <Content Include="App_Data\test.xlsx" />
     <Content Include="App_Data\test.xls" />
-    <Content Include="Operation\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Operation\dataviewtest.aspx" />
     <Content Include="Operation\RecodeLookup.aspx" />
