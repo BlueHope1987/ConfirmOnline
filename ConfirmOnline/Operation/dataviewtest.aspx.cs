@@ -41,12 +41,29 @@ namespace ConfirmOnline.Operation
             if((string)Session["Struct"] != "LookupOK")
                 Response.Redirect("RecodeLookup");
 
+            IQueryable<EditFlow> editHistory = GetEditHistory();
+            if (editHistory.Count() != 0)
+            {
+                if(editHistory.Count() >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes)
+                {
+
+                }
+            }
+
             foreach (string s in (List<string>)Session["souCol"])
             {
                 if(!((List<string>)Session["qurMth"]).Exists(ex => ex== s.Split(':')[0]))
                     CreateTextBoxList(s.Split(':')[0], s.Split(':')[1], Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][(int.Parse(s.Split(':')[0]) -1)]));
             }
         }
+
+        public IQueryable<EditFlow> GetEditHistory()
+        {
+            var _db = new ConfirmOnline.Models.SiteContext();
+            IQueryable<EditFlow> query = _db.EditFlow.Where(s => s.FixCol == (string)Session["qurKey"]);
+            return query;
+        }
+
 
         private void CreateTextBoxList(string id, string describe, string text)
         {
