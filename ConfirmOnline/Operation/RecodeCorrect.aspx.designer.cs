@@ -11,7 +11,7 @@ namespace ConfirmOnline.Operation
 {
 
 
-    public partial class dataviewtest
+    public partial class RecodeCorrect
     {
 
         /// <summary>
@@ -31,6 +31,15 @@ namespace ConfirmOnline.Operation
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divContainer;
+
+        /// <summary>
+        /// HiddenField1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
 
         /// <summary>
         /// btn_Submit 控件。

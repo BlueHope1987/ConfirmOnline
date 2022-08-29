@@ -14,7 +14,7 @@ namespace ConfirmOnline.Operation
     public partial class RecodeLookup : System.Web.UI.Page
     {
         public SiteMaster mstPg;
-        public List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值, 错误清单
+        public List<string> souCol, qurMth, qurKey, qurName, qurVal, errList;//列号:列名,查询列号, 无序列号, 对应列名, 列值(放回会话时恢复排序), 错误清单
         public DataTable qurResult;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -90,15 +90,20 @@ namespace ConfirmOnline.Operation
             }
             if (submitChck())
             {
-                //Server.Transfer("dataviewtest.aspx", false);
+                List<string> qv=new List<string>();
+                foreach (string s in qurMth)
+                {
+                    qv.Add(qurVal[qurKey.IndexOf(s)]);
+                }
+                //Server.Transfer("RecodeCorrect.aspx", false);
                 Session["Struct"] = "LookupOK";
                 Session["souCol"] = souCol;
                 Session["qurMth"] = qurMth;
                 Session["qurKey"] = qurKey;
                 Session["qurName"] = qurName;
-                Session["qurVal"] = qurVal;
+                Session["qurVal"] = qv;//将qurVal转成qurMth顺序
                 Session["qurResult"] = qurResult;
-                Response.Redirect("dataviewtest.aspx");
+                Response.Redirect("RecodeCorrect.aspx");
             }
             return;
         }
@@ -111,14 +116,20 @@ namespace ConfirmOnline.Operation
                 if (qurVal[i] == "")
                 {
                     errList.Add(qurName[i] + "的值不能为空，请检查后重试。");
-                    HtmlGenericControl p = new HtmlGenericControl("p");
-                    p.InnerText = qurName[i] + "的值不能为空，请检查后重试。";
-                    p.Style.Add(HtmlTextWriterStyle.Color, "red");
-                    p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
-                    p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
-                    p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
-                    p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
-                    divContainer.Controls.Add(p);
+                    //HtmlGenericControl p = new HtmlGenericControl("p");
+                    //p.InnerText = qurName[i] + "的值不能为空，请检查后重试。";
+                    //p.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    //p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
+                    //p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
+                    //p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
+                    //p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                    //divContainer.Controls.Add(p);
+                    HtmlGenericControl div = new HtmlGenericControl("div");
+                    div.Attributes["class"] = "alert alert-danger";
+                    div.InnerText = qurName[i] + "的值不能为空，请检查后重试。";
+                    div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                    div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
+                    divContainer.Controls.Add(div);
                 }
             }
 
@@ -131,28 +142,40 @@ namespace ConfirmOnline.Operation
             if (qurResult.Rows.Count == 0)
             {
                 errList.Add("没有查询到条目，请检查后重试。");
-                HtmlGenericControl p = new HtmlGenericControl("p");
-                p.InnerText ="没有查询到条目，请检查后重试。";
-                p.Style.Add(HtmlTextWriterStyle.Color, "red");
-                p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
-                p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
-                p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
-                p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
-                divContainer.Controls.Add(p);
+                //HtmlGenericControl p = new HtmlGenericControl("p");
+                //p.InnerText ="没有查询到条目，请检查后重试。";
+                //p.Style.Add(HtmlTextWriterStyle.Color, "red");
+                //p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
+                //p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
+                //p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
+                //p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                //divContainer.Controls.Add(p);
+                HtmlGenericControl div=new HtmlGenericControl("div");
+                div.Attributes["class"] = "alert alert-danger";
+                div.InnerText = "没有查询到条目，请检查后重试。";
+                div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
+                divContainer.Controls.Add(div);
                 return false;
             }
 
             if (qurResult.Rows.Count > 1)
             {
                 errList.Add("查询到不止一条条目，请与管理员联系。");
-                HtmlGenericControl p = new HtmlGenericControl("p");
-                p.InnerText = "查询到不止一条条目，请与管理员联系。";
-                p.Style.Add(HtmlTextWriterStyle.Color, "red");
-                p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
-                p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
-                p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
-                p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
-                divContainer.Controls.Add(p);
+                //HtmlGenericControl p = new HtmlGenericControl("p");
+                //p.InnerText = "查询到不止一条条目，请与管理员联系。";
+                //p.Style.Add(HtmlTextWriterStyle.Color, "red");
+                //p.Style.Add(HtmlTextWriterStyle.TextAlign, "center");
+                //p.Style.Add(HtmlTextWriterStyle.FontSize, "10px");
+                //p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
+                //p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                //divContainer.Controls.Add(p);
+                HtmlGenericControl div = new HtmlGenericControl("div");
+                div.Attributes["class"] = "alert alert-danger";
+                div.InnerText = "查询到不止一条条目，请与管理员联系。";
+                div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
+                divContainer.Controls.Add(div);
                 return false;
             }
             return true;

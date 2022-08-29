@@ -192,7 +192,8 @@
     <Content Include="App_Data\test.xlsx" />
     <Content Include="App_Data\test.xls" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Operation\dataviewtest.aspx" />
+    <Content Include="Operation\RecodeCorrect.aspx" />
+    <Content Include="Operation\RecodeCorrectFinished.aspx" />
     <Content Include="Operation\RecodeLookup.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -384,12 +385,19 @@
     <Compile Include="Models\SiteContext.cs" />
     <Compile Include="Models\SiteDbInitializer.cs" />
     <Compile Include="Models\SiteSetting.cs" />
-    <Compile Include="Operation\dataviewtest.aspx.cs">
-      <DependentUpon>dataviewtest.aspx</DependentUpon>
+    <Compile Include="Operation\RecodeCorrect.aspx.cs">
+      <DependentUpon>RecodeCorrect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Operation\dataviewtest.aspx.designer.cs">
-      <DependentUpon>dataviewtest.aspx</DependentUpon>
+    <Compile Include="Operation\RecodeCorrect.aspx.designer.cs">
+      <DependentUpon>RecodeCorrect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operation\RecodeCorrectFinished.aspx.cs">
+      <DependentUpon>RecodeCorrectFinished.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Operation\RecodeCorrectFinished.aspx.designer.cs">
+      <DependentUpon>RecodeCorrectFinished.aspx</DependentUpon>
     </Compile>
     <Compile Include="Operation\RecodeLookup.aspx.cs">
       <DependentUpon>RecodeLookup.aspx</DependentUpon>

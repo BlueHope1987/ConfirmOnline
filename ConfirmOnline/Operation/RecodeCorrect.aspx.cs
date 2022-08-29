@@ -11,7 +11,7 @@ using ConfirmOnline.Models;
 
 namespace ConfirmOnline.Operation
 {
-    public partial class dataviewtest : System.Web.UI.Page
+    public partial class RecodeCorrect : System.Web.UI.Page
     {
 
         public SiteMaster mstPg;
@@ -41,13 +41,20 @@ namespace ConfirmOnline.Operation
             if((string)Session["Struct"] != "LookupOK")
                 Response.Redirect("RecodeLookup");
 
-            IQueryable<EditFlow> editHistory = GetEditHistory();
-            if (editHistory.Count() != 0)
+            //修订记录检查
+            int editHitryCount = GetEditHistory().Count();
+            if (editHitryCount != 0)
             {
-                if(editHistory.Count() >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes)
+                if(editHitryCount - 1 >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes && ((SiteSetting)Application["SystemSet"]).AllowFixTimes >= 0)
                 {
-
+                    Response.Redirect("RecodeCorrectFinished.aspx?ref=outfixtimes");//
                 }
+                HtmlGenericControl div = new HtmlGenericControl("div");
+                div.Attributes["class"] = "glyphicon glyphicon-info-sign alert alert-warning";
+                div.InnerText = "本条记录已被核实"+ editHitryCount.ToString()+"次。";
+                div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
+                divContainer.Controls.Add(div);
             }
 
             foreach (string s in (List<string>)Session["souCol"])
@@ -60,7 +67,10 @@ namespace ConfirmOnline.Operation
         public IQueryable<EditFlow> GetEditHistory()
         {
             var _db = new ConfirmOnline.Models.SiteContext();
-            IQueryable<EditFlow> query = _db.EditFlow.Where(s => s.FixCol == (string)Session["qurKey"]);
+            //string qk = ((SiteSetting)Application["SystemSet"]).QueryMeth;
+            //string qk = String.Join(",", ((List<string>)Session["qurKey"]).ToArray());
+            string qk = String.Join(",", ((List<string>)Session["qurVal"]).ToArray());
+            IQueryable<EditFlow> query = _db.EditFlow.Where(s => s.FixRow == qk);
             return query;
         }
 
@@ -70,7 +80,8 @@ namespace ConfirmOnline.Operation
             HtmlGenericControl div = new HtmlGenericControl("div");
             HtmlGenericControl span = new HtmlGenericControl("span");
             HtmlGenericControl btnspan = new HtmlGenericControl("span");
-            HtmlButton btn = new HtmlButton();
+            HtmlGenericControl btn = new HtmlGenericControl("span");
+            //HtmlButton btn = new HtmlButton();
             TextBox txt;
 
             //创建div   
@@ -88,7 +99,7 @@ namespace ConfirmOnline.Operation
             //创建TextBox   
             txt = new TextBox();
             txt.ID = "txt" + id;
-            txt.CssClass = "form-control";
+            txt.CssClass = "form-control correctDataForm";
             txt.Text = text;
             txt.ReadOnly=true;
 
@@ -96,7 +107,9 @@ namespace ConfirmOnline.Operation
             btn.ID = "btnFix" + id;
             btn.InnerHtml = "修订";
             btn.Attributes["class"] = "btn btn-warning glyphicon glyphicon-pencil";
-            btn.Attributes.Add("onclick", Page.ClientScript.GetPostBackEventReference(this, "btnMyQuery"));
+            //btn.Attributes.Add("onclick", Page.ClientScript.GetPostBackEventReference(this, "btnMyQuery"));
+            btn.Attributes.Add("data-toggle", "modal");
+            btn.Attributes.Add("data-target", "#correctModal");
 
             //创建修订span   
             btnspan = new HtmlGenericControl();

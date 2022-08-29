@@ -13,6 +13,7 @@ namespace ConfirmOnline.Models
         protected override void Seed(SiteContext context)
         {
             GetSiteSetting().ForEach(s => context.SiteSetting.Add(s));
+            GetEditFlow().ForEach(s => context.EditFlow.Add(s));
         }
 
         private static List<SiteSetting> GetSiteSetting()
@@ -46,6 +47,39 @@ namespace ConfirmOnline.Models
                 }
             };
             return SiteSettings;
+        }
+
+        private static List<EditFlow> GetEditFlow()
+        {
+            var EditFlows = new List<EditFlow>
+            {
+                new EditFlow
+                {
+                    Id=1,
+                    CfgID=1,
+                    FixRow="张三,29",
+                    FixerDate=new DateTime(2018,8,28,16,43,27),
+                    FixerID="null",
+                    FixerDetal="",
+                    FixCol="4,5",
+                    FixNew="1991-5-23,1300101123",
+                    FixOld="1990-5-23,13001000001",
+                },
+
+                new EditFlow
+                {
+                    Id=2,
+                    CfgID=1,
+                    FixRow="张三,29",
+                    FixerDate=new DateTime(2018,8,28,18,16,50),
+                    FixerID="null",
+                    FixerDetal="",
+                    FixCol="4,5",
+                    FixNew="1991-4-23,1300111123",
+                    FixOld="1991-5-23,1300101123",
+                }
+            };
+            return EditFlows;
         }
     }
 }
