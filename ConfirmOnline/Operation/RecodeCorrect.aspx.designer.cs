@@ -33,13 +33,13 @@ namespace ConfirmOnline.Operation
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divContainer;
 
         /// <summary>
-        /// HiddenField1 控件。
+        /// HiddenField 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
+        protected global::System.Web.UI.WebControls.HiddenField HiddenField;
 
         /// <summary>
         /// btn_Submit 控件。
@@ -48,7 +48,7 @@ namespace ConfirmOnline.Operation
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_Submit;
+        protected global::System.Web.UI.WebControls.LinkButton btn_Submit;
 
         /// <summary>
         /// DataGrid1 控件。

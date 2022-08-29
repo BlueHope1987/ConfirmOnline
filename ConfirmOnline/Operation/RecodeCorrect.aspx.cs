@@ -15,7 +15,7 @@ namespace ConfirmOnline.Operation
     {
 
         public SiteMaster mstPg;
-
+        List<string> correctKey, originalVal, correctVal, fixedKey , fixedOld, fixedNew;//参与修订键 全部原始值 全部新值 已修订键 已修订原始值 已修订新值
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -57,6 +57,9 @@ namespace ConfirmOnline.Operation
                 divContainer.Controls.Add(div);
             }
 
+            originalVal = new List<string>();
+            correctKey = new List<string>();
+
             foreach (string s in (List<string>)Session["souCol"])
             {
                 if(!((List<string>)Session["qurMth"]).Exists(ex => ex== s.Split(':')[0]))
@@ -64,6 +67,40 @@ namespace ConfirmOnline.Operation
             }
         }
 
+        protected void btn_Submit_Click(object sender, EventArgs e)
+        {
+            List<string> ret = new List<string>(HiddenField.Value.Split(';'));
+
+            correctVal = new List<string>();
+            TextBox txb;
+
+            foreach (string s in (List<string>)Session["souCol"])
+            {
+                if (!((List<string>)Session["qurMth"]).Exists(ex => ex == s.Split(':')[0]))
+                {
+                    txb = divContainer.FindControl("corrtxt" + s.Split(':')[0]) as TextBox;
+                    correctVal.Add(txb.Text);
+                }
+            }
+
+            fixedKey = new List<string>();
+            fixedOld = new List<string>();
+            fixedNew = new List<string>();
+            //问题：无法得到文本框内容
+            for (int s = 0; s < correctKey.Count(); s++)
+            {
+                if (correctVal[s] != originalVal[s])
+                {
+                    fixedKey.Add(correctKey[s]);
+                    fixedOld.Add(originalVal[s]);
+                    fixedNew.Add(correctVal[s]);
+                }
+            }
+
+            string fk = String.Join(",", fixedKey);
+            string fo = String.Join(",", fixedOld);
+            string fn = String.Join(",", fixedNew);
+        }
         public IQueryable<EditFlow> GetEditHistory()
         {
             var _db = new ConfirmOnline.Models.SiteContext();
@@ -77,6 +114,9 @@ namespace ConfirmOnline.Operation
 
         private void CreateTextBoxList(string id, string describe, string text)
         {
+            correctKey.Add(id);
+            originalVal.Add(text);
+
             HtmlGenericControl div = new HtmlGenericControl("div");
             HtmlGenericControl span = new HtmlGenericControl("span");
             HtmlGenericControl btnspan = new HtmlGenericControl("span");
@@ -98,7 +138,7 @@ namespace ConfirmOnline.Operation
 
             //创建TextBox   
             txt = new TextBox();
-            txt.ID = "txt" + id;
+            txt.ID = "corrtxt" + id;
             txt.CssClass = "form-control correctDataForm";
             txt.Text = text;
             txt.ReadOnly=true;
@@ -126,41 +166,36 @@ namespace ConfirmOnline.Operation
 
         }
 
-        protected void prossPrePage(object sender, EventArgs e)
-        {
-            Dictionary<string, string> textlist = new Dictionary<string, string>();
-            TextBox txt;
+        //protected void prossPrePage(object sender, EventArgs e)
+        //{
+        //    Dictionary<string, string> textlist = new Dictionary<string, string>();
+        //    TextBox txt;
 
-            if (!IsPostBack)
-            {
-                if (Page.PreviousPage != null)// 页面本身也是一个类
-                {
-                    RecodeLookup PrePage = (RecodeLookup)Page.PreviousPage;
-                    //textlist = PrePage.queryList;
+        //    if (!IsPostBack)
+        //    {
+        //        if (Page.PreviousPage != null)// 页面本身也是一个类
+        //        {
+        //            RecodeLookup PrePage = (RecodeLookup)Page.PreviousPage;
+        //            //textlist = PrePage.queryList;
 
-                    //if (PrePage != null)
-                    //{
-                    //    foreach (string s in souCol)
-                    //    {
-                    //        foreach (string q in qurMth)
-                    //        {
-                    //            if (s.IndexOf(q) == 0)
-                    //            {
-                    //                txt = PrePage.FindControl("txt" + s.Split(':')[0]) as TextBox;
-                    //                textlist.Add(q, txt.Text);
-                    //            }
-                    //        }
-                    //    }
-                    //    return;
-                    //}
-                }
-            }
+        //            //if (PrePage != null)
+        //            //{
+        //            //    foreach (string s in souCol)
+        //            //    {
+        //            //        foreach (string q in qurMth)
+        //            //        {
+        //            //            if (s.IndexOf(q) == 0)
+        //            //            {
+        //            //                txt = PrePage.FindControl("txt" + s.Split(':')[0]) as TextBox;
+        //            //                textlist.Add(q, txt.Text);
+        //            //            }
+        //            //        }
+        //            //    }
+        //            //    return;
+        //            //}
+        //        }
+        //    }
+        //}
 
-        }
-
-        protected void btn_Submit_Click(object sender, EventArgs e)
-        {
-            string a = "";
-        }
     }
 }
