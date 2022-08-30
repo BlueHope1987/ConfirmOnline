@@ -11,7 +11,7 @@ namespace ConfirmOnline.Admin
 {
 
 
-    public partial class AdminPage
+    public partial class Users
     {
 
         /// <summary>

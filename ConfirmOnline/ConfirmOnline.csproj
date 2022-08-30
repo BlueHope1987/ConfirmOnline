@@ -168,6 +168,11 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\AdminPage.aspx" />
+    <Content Include="Admin\CfgSetting.aspx" />
+    <Content Include="Admin\Editflow.aspx" />
+    <Content Include="Admin\SiteCfgs.aspx" />
+    <Content Include="Admin\Users.aspx" />
+    <Content Include="Admin\WorkTable.aspx" />
     <Content Include="App_Data\aspnet-ConfirmOnline-20220818112138.mdf" />
     <Content Include="App_Data\aspnet-ConfirmOnline-20220818112138_log.ldf">
       <DependentUpon>aspnet-ConfirmOnline-20220818112138.mdf</DependentUpon>
@@ -343,6 +348,41 @@
     </Compile>
     <Compile Include="Admin\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CfgSetting.aspx.cs">
+      <DependentUpon>CfgSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\CfgSetting.aspx.designer.cs">
+      <DependentUpon>CfgSetting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Editflow.aspx.cs">
+      <DependentUpon>Editflow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Editflow.aspx.designer.cs">
+      <DependentUpon>Editflow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\SiteCfgs.aspx.cs">
+      <DependentUpon>SiteCfgs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\SiteCfgs.aspx.designer.cs">
+      <DependentUpon>SiteCfgs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\WorkTable.aspx.cs">
+      <DependentUpon>WorkTable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\WorkTable.aspx.designer.cs">
+      <DependentUpon>WorkTable.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">

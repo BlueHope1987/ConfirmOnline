@@ -1,14 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminPage.aspx.cs" Inherits="ConfirmOnline.Admin.AdminPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WorkTable.aspx.cs" Inherits="ConfirmOnline.Admin.WorkTable" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <div id="Container" runat="server">
+    <div id="Container" runat="server">
         <div class="row " style="height:20px;"></div>
         <div class="row ">
             <div class="col-md-3">
                 <ul class="nav nav-pills nav-stacked">
-	                <li class="active"><a href="#">Home</a></li>
+	                <li><a href="AdminPage">Home</a></li>
 	                <li><a href="SiteCfgs">配置式</a></li>
 	                <li><a href="CfgSetting">全局设定</a></li>
-	                <li><a href="WorkTable">工作表</a></li>
+	                <li class="active"><a href="#">工作表</a></li>
 	                <li><a href="Editflow">编辑纪录</a></li>
 	                <li><a href="Users">用户</a></li>
                 </ul>
