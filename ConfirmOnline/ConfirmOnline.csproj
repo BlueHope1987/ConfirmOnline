@@ -192,6 +192,7 @@
     <Content Include="App_Data\test.xlsx" />
     <Content Include="App_Data\test.xls" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Operation\finish.gif" />
     <Content Include="Operation\RecodeCorrect.aspx" />
     <Content Include="Operation\RecodeCorrectFinished.aspx" />
     <Content Include="Operation\RecodeLookup.aspx" />

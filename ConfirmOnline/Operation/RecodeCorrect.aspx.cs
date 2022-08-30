@@ -43,6 +43,7 @@ namespace ConfirmOnline.Operation
 
             //修订记录检查
             List<EditFlow> editHistory = GetEditHistory().ToList();
+            List<string> qResult = new List<string>();
 
             if (editHistory.Count != 0)
             {
@@ -52,11 +53,35 @@ namespace ConfirmOnline.Operation
                     Response.Redirect("RecodeCorrectFinished");
                 }
 
+                List<string> fixcol = new List<string>();
 
+                for(int i=0;i< ((DataTable)Session["qurResult"]).Columns.Count; i++)
+                {
+                    qResult.Add(Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][i]));
+                }
+                
+                foreach (EditFlow flow in editHistory)
+                {
+                    List<string> fc = flow.FixCol.Split(',').ToList<string>();
+                    List<string> fn = flow.FixNew.Split(',').ToList<string>();
+                    List<string> fo = flow.FixOld.Split(',').ToList<string>();
+                    Dictionary<string, string> dic = new Dictionary<string, string>();
+                    for(int i = 0; i < fc.Count; i++)
+                    {
+                        if(qResult[int.Parse(fc[i]) - 1] == fo[i].Replace("&comma&", ","))
+                        {
+                            qResult[int.Parse(fc[i]) - 1] = fn[i].Replace("&comma&", ",");//转义逗号
+                        }
+                        else
+                        {
+                            throw new ArgumentNullException();
+                        }
+                    }
+                }
 
                 HtmlGenericControl div = new HtmlGenericControl("div");
                 div.Attributes["class"] = "glyphicon glyphicon-info-sign alert alert-warning";
-                div.InnerText = "本条记录已被核实"+ editHistory.Count.ToString()+"次。";
+                div.InnerText = "本条记录已被核实修订"+ editHistory.Count.ToString()+"次。";
                 div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
                 div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
                 divContainer.Controls.Add(div);
@@ -68,7 +93,7 @@ namespace ConfirmOnline.Operation
             foreach (string s in (List<string>)Session["souCol"])
             {
                 if(!((List<string>)Session["qurMth"]).Exists(ex => ex== s.Split(':')[0]))
-                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1].Replace("&comma&", ","), Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][(int.Parse(s.Split(':')[0]) -1)])); //转义逗号
+                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1].Replace("&comma&", ","), qResult[(int.Parse(s.Split(':')[0]) -1)]); //转义逗号
             }
         }
 

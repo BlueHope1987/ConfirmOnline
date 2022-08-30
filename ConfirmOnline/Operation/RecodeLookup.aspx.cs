@@ -19,6 +19,14 @@ namespace ConfirmOnline.Operation
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if ((string)Session["Struct"] == "LookupOK")
+            {
+                Response.Redirect("RecodeCorrect");
+            }
+            if ((string)Session["Struct"] == "FinishFix")
+            {
+                Response.Redirect("RecodeCorrectFinished");
+            }
 
             //页面Page_Load优先于Master的，不能取Master，可取全局的
             souCol = new List<string>(((SiteSetting)Application["SystemSet"]).SouColReDef.Split(','));
