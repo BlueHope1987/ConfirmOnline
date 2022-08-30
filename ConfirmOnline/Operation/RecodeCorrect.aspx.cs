@@ -42,16 +42,21 @@ namespace ConfirmOnline.Operation
                 Response.Redirect("RecodeLookup");
 
             //修订记录检查
-            int editHitryCount = GetEditHistory().Count();
-            if (editHitryCount != 0)
+            List<EditFlow> editHistory = GetEditHistory().ToList();
+
+            if (editHistory.Count != 0)
             {
-                if(editHitryCount - 1 >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes && ((SiteSetting)Application["SystemSet"]).AllowFixTimes >= 0)
+                if(editHistory.Count - 1 >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes && ((SiteSetting)Application["SystemSet"]).AllowFixTimes >= 0)
                 {
-                    Response.Redirect("RecodeCorrectFinished.aspx?ref=outfixtimes");//
+                    Session["Struct"] = "OutFixTimes";
+                    Response.Redirect("RecodeCorrectFinished");
                 }
+
+
+
                 HtmlGenericControl div = new HtmlGenericControl("div");
                 div.Attributes["class"] = "glyphicon glyphicon-info-sign alert alert-warning";
-                div.InnerText = "本条记录已被核实"+ editHitryCount.ToString()+"次。";
+                div.InnerText = "本条记录已被核实"+ editHistory.Count.ToString()+"次。";
                 div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
                 div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
                 divContainer.Controls.Add(div);
@@ -63,7 +68,7 @@ namespace ConfirmOnline.Operation
             foreach (string s in (List<string>)Session["souCol"])
             {
                 if(!((List<string>)Session["qurMth"]).Exists(ex => ex== s.Split(':')[0]))
-                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1], Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][(int.Parse(s.Split(':')[0]) -1)]));
+                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1].Replace("&comma&", ","), Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][(int.Parse(s.Split(':')[0]) -1)])); //转义逗号
             }
         }
 
@@ -86,20 +91,50 @@ namespace ConfirmOnline.Operation
             fixedKey = new List<string>();
             fixedOld = new List<string>();
             fixedNew = new List<string>();
-            //问题：无法得到文本框内容
+
+            //问题：无法得到文本框内容：已解决，使用.Attributes["ReadOnly"]
             for (int s = 0; s < correctKey.Count(); s++)
             {
                 if (correctVal[s] != originalVal[s])
                 {
                     fixedKey.Add(correctKey[s]);
-                    fixedOld.Add(originalVal[s]);
-                    fixedNew.Add(correctVal[s]);
+                    fixedOld.Add(originalVal[s].Replace(",", "&comma&"));//逗号转义
+                    fixedNew.Add(correctVal[s].Replace(",", "&comma&"));
                 }
             }
 
-            string fk = String.Join(",", fixedKey);
-            string fo = String.Join(",", fixedOld);
-            string fn = String.Join(",", fixedNew);
+            try
+            {
+                var nEF = new EditFlow();
+                nEF.FixerID = "";
+                nEF.FixerDetal = Request.UserHostName + "," + Request.UserHostAddress + "," +Request.ServerVariables["HTTP_USER_AGENT"];
+                nEF.FixerDate = DateTime.Now;
+                nEF.FixNew= String.Join(",", fixedNew);
+                nEF.FixOld = String.Join(",", fixedOld);
+                nEF.FixCol= String.Join(",", fixedKey);
+                nEF.FixRow= String.Join(",", ((List<string>)Session["qurVal"]).ToArray());
+                nEF.CfgID = ((SiteSetting)Application["SystemSet"]).CfgID;
+
+                using (SiteContext _db = new SiteContext())
+                {
+                    // Add product to DB.
+                    _db.EditFlow.Add(nEF);
+                    _db.SaveChanges();
+                }
+
+                Session["Struct"] = "FinishFix";
+                Response.Redirect("RecodeCorrectFinished");
+
+            }
+            catch (Exception)
+            {
+                HtmlGenericControl div = new HtmlGenericControl("div");
+                div.Attributes["class"] = "glyphicon glyphicon-info-sign alert alert-warning";
+                div.InnerText = "修订记录保存出错！";
+                div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
+                div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
+                divContainer.Controls.Add(div);
+            }
         }
         public IQueryable<EditFlow> GetEditHistory()
         {
@@ -107,7 +142,7 @@ namespace ConfirmOnline.Operation
             //string qk = ((SiteSetting)Application["SystemSet"]).QueryMeth;
             //string qk = String.Join(",", ((List<string>)Session["qurKey"]).ToArray());
             string qk = String.Join(",", ((List<string>)Session["qurVal"]).ToArray());
-            IQueryable<EditFlow> query = _db.EditFlow.Where(s => s.FixRow == qk);
+            IQueryable<EditFlow> query = _db.EditFlow.Where(s => s.FixRow == qk).OrderBy(x=>x.FixerDate);
             return query;
         }
 
@@ -141,7 +176,8 @@ namespace ConfirmOnline.Operation
             txt.ID = "corrtxt" + id;
             txt.CssClass = "form-control correctDataForm";
             txt.Text = text;
-            txt.ReadOnly=true;
+            //txt.ReadOnly=true; //这样设置后后台得不到值
+            txt.Attributes["ReadOnly"] = "true";
 
             //创建按钮   
             btn.ID = "btnFix" + id;

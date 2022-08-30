@@ -44,7 +44,6 @@
         currButton = $(event.relatedTarget);
         currCorrect = $(event.relatedTarget.parentNode.parentNode).find('.correctDataForm'); // Button that triggered the modal
         $('#correctTxt').val(currCorrect.val());
-        $('#correctTxt').attr("Value", currCorrect.val());
     });
 
     $('#btn-modal-ok').on('click', function (event) {
@@ -52,6 +51,7 @@
             if ($('[id$=HiddenField]').val() != "") $('[id$=HiddenField]').val($('[id$=HiddenField]').val() + ";");
             $('[id$=HiddenField]').val($('[id$=HiddenField]').val() + escape(currCorrect.attr("id")) + ":" + escape(currCorrect.val()) + "," + escape($('#correctTxt').val()));
             currCorrect.val($('#correctTxt').val());
+            currCorrect.attr("value", $('#correctTxt').val());
             currButton.removeClass("glyphicon-pencil");
             currButton.text("再次改动");
             currButton.addClass("glyphicon-ok-sign active");

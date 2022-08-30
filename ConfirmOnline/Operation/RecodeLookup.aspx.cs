@@ -33,7 +33,7 @@ namespace ConfirmOnline.Operation
                     if (s.IndexOf(q) == 0)
                     {
                         qurKey.Add(s.Split(':')[0]);
-                        qurName.Add(s.Split(':')[1]);
+                        qurName.Add(s.Split(':')[1].Replace("&comma&",","));//转义逗号
                         CreateTextBoxList(s.Split(':')[0], s.Split(':')[1]);
                     }
                 }
@@ -93,7 +93,7 @@ namespace ConfirmOnline.Operation
                 List<string> qv=new List<string>();
                 foreach (string s in qurMth)
                 {
-                    qv.Add(qurVal[qurKey.IndexOf(s)]);
+                    qv.Add(qurVal[qurKey.IndexOf(s)].Replace(",","&comma&"));//逗号转义
                 }
                 //Server.Transfer("RecodeCorrect.aspx", false);
                 Session["Struct"] = "LookupOK";

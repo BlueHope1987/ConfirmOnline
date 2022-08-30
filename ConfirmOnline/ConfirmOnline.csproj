@@ -195,6 +195,7 @@
     <Content Include="Operation\RecodeCorrect.aspx" />
     <Content Include="Operation\RecodeCorrectFinished.aspx" />
     <Content Include="Operation\RecodeLookup.aspx" />
+    <Content Include="Operation\WebFormTest.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -405,6 +406,13 @@
     </Compile>
     <Compile Include="Operation\RecodeLookup.aspx.designer.cs">
       <DependentUpon>RecodeLookup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operation\WebFormTest.aspx.cs">
+      <DependentUpon>WebFormTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Operation\WebFormTest.aspx.designer.cs">
+      <DependentUpon>WebFormTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

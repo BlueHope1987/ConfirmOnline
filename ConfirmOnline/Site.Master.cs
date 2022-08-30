@@ -81,13 +81,6 @@ namespace ConfirmOnline
             }
         }
 
-        public IQueryable<SiteSetting> GetSiteSetting()
-        {
-            var _db = new ConfirmOnline.Models.SiteContext();
-            IQueryable<SiteSetting> query = _db.SiteSetting.Where(s=>s.CfgIsEnable==true);
-            return query;
-        }
-
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
