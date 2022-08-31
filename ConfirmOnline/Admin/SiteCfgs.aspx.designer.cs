@@ -24,6 +24,24 @@ namespace ConfirmOnline.Admin
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Container;
 
         /// <summary>
+        /// GetCfgList 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource GetCfgList;
+
+        /// <summary>
+        /// SelectdCfg 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SelectdCfg;
+
+        /// <summary>
         /// CfgList 控件。
         /// </summary>
         /// <remarks>
@@ -40,15 +58,6 @@ namespace ConfirmOnline.Admin
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView ListView1;
-
-        /// <summary>
-        /// SqlDataSource1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
 
         /// <summary>
         /// OpsAre 控件。
@@ -87,22 +96,13 @@ namespace ConfirmOnline.Admin
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EditAreTitle;
 
         /// <summary>
-        /// FormView1 控件。
+        /// CfgEditForm 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView FormView1;
-
-        /// <summary>
-        /// SelectdCfg 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SelectdCfg;
+        protected global::System.Web.UI.WebControls.FormView CfgEditForm;
 
         /// <summary>
         /// CfgSave 控件。
@@ -121,6 +121,15 @@ namespace ConfirmOnline.Admin
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton CfgSaveNew;
+
+        /// <summary>
+        /// CfgDelete 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton CfgDelete;
 
         /// <summary>
         /// CancelEdit 控件。

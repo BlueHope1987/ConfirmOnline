@@ -168,7 +168,6 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\AdminPage.aspx" />
-    <Content Include="Admin\CfgSetting.aspx" />
     <Content Include="Admin\Editflow.aspx" />
     <Content Include="Admin\SiteCfgs.aspx" />
     <Content Include="Admin\Users.aspx" />
@@ -348,13 +347,6 @@
     </Compile>
     <Compile Include="Admin\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\CfgSetting.aspx.cs">
-      <DependentUpon>CfgSetting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\CfgSetting.aspx.designer.cs">
-      <DependentUpon>CfgSetting.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Editflow.aspx.cs">
       <DependentUpon>Editflow.aspx</DependentUpon>

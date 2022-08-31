@@ -7,16 +7,87 @@
             <div class="col-md-3">
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="AdminPage">Home</a></li>
-                    <li class="active"><a href="#">配置式</a></li>
-                    <li><a href="CfgSetting">全局设定</a></li>
+                    <li class="active"><a href="#">全局设定</a></li>
                     <li><a href="WorkTable">工作表</a></li>
                     <li><a href="Editflow">编辑纪录</a></li>
                     <li><a href="Users">用户</a></li>
                 </ul>
             </div>
+
+
+            <asp:SqlDataSource ID="GetCfgList" runat="server" ConnectionString="<%$ ConnectionStrings:SiteContext %>" DeleteCommand="DELETE FROM [SiteSettings] WHERE [CfgID] = @CfgID" InsertCommand="INSERT INTO [SiteSettings] ([CfgName], [CfgCreator], [CfgCrtTime], [CfgIsEnable]) VALUES (@CfgName, @CfgCreator, @CfgCrtTime, @CfgIsEnable)" SelectCommand="SELECT [CfgID], [CfgName], [CfgCreator], [CfgCrtTime], [CfgIsEnable] FROM [SiteSettings]" UpdateCommand="UPDATE [SiteSettings] SET [CfgName] = @CfgName, [CfgCreator] = @CfgCreator, [CfgCrtTime] = @CfgCrtTime, [CfgIsEnable] = @CfgIsEnable WHERE [CfgID] = @CfgID">
+                <DeleteParameters>
+                    <asp:Parameter Name="CfgID" Type="Int32" />
+                </DeleteParameters>
+                <InsertParameters>
+                    <asp:Parameter Name="CfgName" Type="String" />
+                    <asp:Parameter Name="CfgCreator" Type="String" />
+                    <asp:Parameter Name="CfgCrtTime" Type="DateTime" />
+                    <asp:Parameter Name="CfgIsEnable" Type="Boolean" />
+                </InsertParameters>
+                <UpdateParameters>
+                    <asp:Parameter Name="CfgName" Type="String" />
+                    <asp:Parameter Name="CfgCreator" Type="String" />
+                    <asp:Parameter Name="CfgCrtTime" Type="DateTime" />
+                    <asp:Parameter Name="CfgIsEnable" Type="Boolean" />
+                    <asp:Parameter Name="CfgID" Type="Int32" />
+                </UpdateParameters>
+            </asp:SqlDataSource>
+
+            <asp:SqlDataSource ID="SelectdCfg" runat="server" ConnectionString="<%$ ConnectionStrings:SiteContext %>" DeleteCommand="DELETE FROM [SiteSettings] WHERE [CfgID] = @original_CfgID" InsertCommand="INSERT INTO [SiteSettings] ([CfgName], [CfgCreator], [CfgCrtTime], [CfgIsEnable], [SiteEnabTimSt], [SiteEnabTimEd], [SiteName], [SiteWelcomeWord], [SiteCopyRightStr], [SiteContactStr], [UserRegEnab], [AllowFixTimes], [DataSource], [DataTable], [SouColReDef], [SouRowRangeStart], [SouRowRangeEnd], [QueryMeth], [QueryMethRef], [SouEntNum], [FixEntNum]) VALUES (@CfgName, @CfgCreator, @CfgCrtTime, @CfgIsEnable, @SiteEnabTimSt, @SiteEnabTimEd, @SiteName, @SiteWelcomeWord, @SiteCopyRightStr, @SiteContactStr, @UserRegEnab, @AllowFixTimes, @DataSource, @DataTable, @SouColReDef, @SouRowRangeStart, @SouRowRangeEnd, @QueryMeth, @QueryMethRef, @SouEntNum, @FixEntNum)" OldValuesParameterFormatString="original_{0}" SelectCommand="SELECT * FROM [SiteSettings] WHERE ([CfgID] = @CfgID)" UpdateCommand="UPDATE [SiteSettings] SET [CfgName] = @CfgName, [SiteEnabTimSt] = @SiteEnabTimSt, [SiteEnabTimEd] = @SiteEnabTimEd, [SiteName] = @SiteName, [SiteWelcomeWord] = @SiteWelcomeWord, [SiteCopyRightStr] = @SiteCopyRightStr, [SiteContactStr] = @SiteContactStr, [UserRegEnab] = @UserRegEnab, [AllowFixTimes] = @AllowFixTimes, [DataSource] = @DataSource, [DataTable] = @DataTable, [SouColReDef] = @SouColReDef, [SouRowRangeStart] = @SouRowRangeStart, [SouRowRangeEnd] = @SouRowRangeEnd, [QueryMeth] = @QueryMeth, [QueryMethRef] = @QueryMethRef WHERE [CfgID] = @original_CfgID">
+                <DeleteParameters>
+                    <asp:Parameter Name="original_CfgID" Type="Int32" />
+                </DeleteParameters>
+                <InsertParameters>
+                    <asp:Parameter Name="CfgName" Type="String" />
+                    <asp:Parameter Name="CfgCreator" Type="String" />
+                    <asp:Parameter Name="CfgCrtTime" Type="DateTime" />
+                    <asp:Parameter Name="CfgIsEnable" Type="Boolean" />
+                    <asp:Parameter Name="SiteEnabTimSt" Type="DateTime" />
+                    <asp:Parameter Name="SiteEnabTimEd" Type="DateTime" />
+                    <asp:Parameter Name="SiteName" Type="String" />
+                    <asp:Parameter Name="SiteWelcomeWord" Type="String" />
+                    <asp:Parameter Name="SiteCopyRightStr" Type="String" />
+                    <asp:Parameter Name="SiteContactStr" Type="String" />
+                    <asp:Parameter Name="UserRegEnab" Type="Boolean" />
+                    <asp:Parameter Name="AllowFixTimes" Type="Int32" />
+                    <asp:Parameter Name="DataSource" Type="String" />
+                    <asp:Parameter Name="DataTable" Type="String" />
+                    <asp:Parameter Name="SouColReDef" Type="String" />
+                    <asp:Parameter Name="SouRowRangeStart" Type="Int32" />
+                    <asp:Parameter Name="SouRowRangeEnd" Type="Int32" />
+                    <asp:Parameter Name="QueryMeth" Type="String" />
+                    <asp:Parameter Name="QueryMethRef" Type="String" />
+                    <asp:Parameter Name="SouEntNum" Type="Decimal" />
+                    <asp:Parameter Name="FixEntNum" Type="Decimal" />
+                </InsertParameters>
+                <SelectParameters>
+                    <asp:ControlParameter ControlID="ListView1" Name="CfgID" PropertyName="SelectedValue" Type="Int32" />
+                </SelectParameters>
+                <UpdateParameters>
+                    <asp:Parameter Name="CfgName" Type="String" />
+                    <asp:Parameter Name="SiteEnabTimSt" Type="DateTime" />
+                    <asp:Parameter Name="SiteEnabTimEd" Type="DateTime" />
+                    <asp:Parameter Name="SiteName" Type="String" />
+                    <asp:Parameter Name="SiteWelcomeWord" Type="String" />
+                    <asp:Parameter Name="SiteCopyRightStr" Type="String" />
+                    <asp:Parameter Name="SiteContactStr" Type="String" />
+                    <asp:Parameter Name="UserRegEnab" Type="Boolean" />
+                    <asp:Parameter Name="AllowFixTimes" Type="Int32" />
+                    <asp:Parameter Name="DataSource" Type="String" />
+                    <asp:Parameter Name="DataTable" Type="String" />
+                    <asp:Parameter Name="SouColReDef" Type="String" />
+                    <asp:Parameter Name="SouRowRangeStart" Type="Int32" />
+                    <asp:Parameter Name="SouRowRangeEnd" Type="Int32" />
+                    <asp:Parameter Name="QueryMeth" Type="String" />
+                    <asp:Parameter Name="QueryMethRef" Type="String" />
+                    <asp:Parameter Name="original_CfgID" Type="Int32" />
+                </UpdateParameters>
+            </asp:SqlDataSource>
+
             <div class="col-md-9">
                 <div id="CfgList" runat="server" class="row">
-                    <asp:ListView ID="ListView1" runat="server" DataKeyNames="CfgID" DataSourceID="SqlDataSource1" OnItemDataBound="ListView1_ItemDataBound">
+                    <asp:ListView ID="ListView1" runat="server" DataKeyNames="CfgID" DataSourceID="GetCfgList" OnItemDataBound="ListView1_ItemDataBound">
                         <AlternatingItemTemplate>
                             <tr>
                                 <td>
@@ -110,303 +181,142 @@
                             </tr>
                         </SelectedItemTemplate>
                     </asp:ListView>
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SiteContext %>" DeleteCommand="DELETE FROM [SiteSettings] WHERE [CfgID] = @CfgID" InsertCommand="INSERT INTO [SiteSettings] ([CfgName], [CfgCreator], [CfgCrtTime], [CfgIsEnable]) VALUES (@CfgName, @CfgCreator, @CfgCrtTime, @CfgIsEnable)" SelectCommand="SELECT [CfgID], [CfgName], [CfgCreator], [CfgCrtTime], [CfgIsEnable] FROM [SiteSettings]" UpdateCommand="UPDATE [SiteSettings] SET [CfgName] = @CfgName, [CfgCreator] = @CfgCreator, [CfgCrtTime] = @CfgCrtTime, [CfgIsEnable] = @CfgIsEnable WHERE [CfgID] = @CfgID">
-                        <DeleteParameters>
-                            <asp:Parameter Name="CfgID" Type="Int32" />
-                        </DeleteParameters>
-                        <InsertParameters>
-                            <asp:Parameter Name="CfgName" Type="String" />
-                            <asp:Parameter Name="CfgCreator" Type="String" />
-                            <asp:Parameter Name="CfgCrtTime" Type="DateTime" />
-                            <asp:Parameter Name="CfgIsEnable" Type="Boolean" />
-                        </InsertParameters>
-                        <UpdateParameters>
-                            <asp:Parameter Name="CfgName" Type="String" />
-                            <asp:Parameter Name="CfgCreator" Type="String" />
-                            <asp:Parameter Name="CfgCrtTime" Type="DateTime" />
-                            <asp:Parameter Name="CfgIsEnable" Type="Boolean" />
-                            <asp:Parameter Name="CfgID" Type="Int32" />
-                        </UpdateParameters>
-                    </asp:SqlDataSource>
                 </div>
                 <div id="OpsAre" runat="server" class="row">
                     <asp:LinkButton ID="BtnNew" runat="server" OnClick="BtnNew_Click" type="button" class="btn btn-warning">新建配置式</asp:LinkButton>
                 </div>
+
+
+
                 <div id="EditAre" runat="server" class="row" visible="false">
                     <div class="panel panel-warning">
                         <div class="panel-heading">
                             <h3 id="EditAreTitle" runat="server" class="panel-title">面板标题</h3>
                         </div>
-                        <div class="panel-body">
-                            这是一个基本的面板
-                                <asp:FormView ID="FormView1" runat="server" DataSourceID="SelectdCfg" DataKeyNames="CfgID">
-                                    <EditItemTemplate>
-                                         <table class="col-lg-12">
+
+
+                        <asp:FormView ID="CfgEditForm" runat="server" DataKeyNames="CfgID" DataSourceID="SelectdCfg" DefaultMode="Edit" EnableViewState="True">
+                            <EditItemTemplate>
+                                <div class="panel-body">
+                                    <table class="col-lg-12">
                                                 <tr>
-                                                    <th>配置式名称</th><td><asp:DynamicControl ID="CfgNameDynamicControl" runat="server" DataField="CfgName" Mode="Edit" /></td>
-                                                    <th>站点名称</th><td<asp:DynamicControl ID="SiteNameDynamicControl" runat="server" DataField="SiteName" Mode="Edit" /></td>
-                                                    <th>仅登录使用并开放注册</th><td><asp:DynamicControl ID="UserRegEnabDynamicControl" runat="server" DataField="UserRegEnab" Mode="Edit" /></td>
+                                                    <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' /></td>
+                                                    <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' /></td>
+                                                    <th>仅登录使用并开放注册</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>欢迎词</th><td><asp:DynamicControl ID="SiteWelcomeWordDynamicControl" runat="server" DataField="SiteWelcomeWord" Mode="Edit" /></td>
-                                                    <th>版权信息</th><td><asp:DynamicControl ID="SiteCopyRightStrDynamicControl" runat="server" DataField="SiteCopyRightStr" Mode="Edit" /></td>
-                                                    <th>联系信息</th><td><asp:DynamicControl ID="SiteContactStrDynamicControl" runat="server" DataField="SiteContactStr" Mode="Edit" /></td>
+                                                    <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' /></td>
+                                                    <th>版权信息</th><td><asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' /></td>
+                                                    <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' /></td>
+                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' /></td>
+                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' /></td>
+                                                    <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' /></td>
+                                                    <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' /></td>
+                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' /></td>
+                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' /></td>
+                                                    <th></th><td></td>
+                                                </tr>
+                                                <tr>
+                                                    <th></th><td></td>
                                                 </tr>
                                         </table>
-                                        CfgName:
-                                        CfgCreator:
-                                        <asp:DynamicControl ID="CfgCreatorDynamicControl" runat="server" DataField="CfgCreator" Mode="Edit" />
-                                        <br />
-                                        CfgCrtTime:
-                                        <asp:DynamicControl ID="CfgCrtTimeDynamicControl" runat="server" DataField="CfgCrtTime" Mode="Edit" />
-                                        <br />
-                                        CfgIsEnable:
-                                        <asp:DynamicControl ID="CfgIsEnableDynamicControl" runat="server" DataField="CfgIsEnable" Mode="Edit" />
-                                        <br />
-                                        SiteEnabTimSt:
-                                        <asp:DynamicControl ID="SiteEnabTimStDynamicControl" runat="server" DataField="SiteEnabTimSt" Mode="Edit" />
-                                        <br />
-                                        SiteEnabTimEd:
-                                        <asp:DynamicControl ID="SiteEnabTimEdDynamicControl" runat="server" DataField="SiteEnabTimEd" Mode="Edit" />
-                                        <br />
-                                        SiteName:
-                                        SiteWelcomeWord:
-                                        SiteCopyRightStr:
-                                        SiteContactStr:
-                                        UserRegEnab:
-                                        AllowFixTimes:
-                                        <asp:DynamicControl ID="AllowFixTimesDynamicControl" runat="server" DataField="AllowFixTimes" Mode="Edit" />
-                                        <br />
-                                        DataSource:
-                                        <asp:DynamicControl ID="DataSourceDynamicControl" runat="server" DataField="DataSource" Mode="Edit" />
-                                        <br />
-                                        DataTable:
-                                        <asp:DynamicControl ID="DataTableDynamicControl" runat="server" DataField="DataTable" Mode="Edit" />
-                                        <br />
-                                        SouColReDef:
-                                        <asp:DynamicControl ID="SouColReDefDynamicControl" runat="server" DataField="SouColReDef" Mode="Edit" />
-                                        <br />
-                                        SouRowRangeStart:
-                                        <asp:DynamicControl ID="SouRowRangeStartDynamicControl" runat="server" DataField="SouRowRangeStart" Mode="Edit" />
-                                        <br />
-                                        SouRowRangeEnd:
-                                        <asp:DynamicControl ID="SouRowRangeEndDynamicControl" runat="server" DataField="SouRowRangeEnd" Mode="Edit" />
-                                        <br />
-                                        QueryMeth:
-                                        <asp:DynamicControl ID="QueryMethDynamicControl" runat="server" DataField="QueryMeth" Mode="Edit" />
-                                        <br />
-                                        QueryMethRef:
-                                        <asp:DynamicControl ID="QueryMethRefDynamicControl" runat="server" DataField="QueryMethRef" Mode="Edit" />
-                                        <br />
-                                        SouEntNum:
-                                        <asp:DynamicControl ID="SouEntNumDynamicControl" runat="server" DataField="SouEntNum" Mode="Edit" />
-                                        <br />
-                                        FixEntNum:
-                                        <asp:DynamicControl ID="FixEntNumDynamicControl" runat="server" DataField="FixEntNum" Mode="Edit" />
-                                        <br />
-                                        <asp:LinkButton ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="更新" ValidationGroup="Insert" />
-                                        &nbsp;<asp:LinkButton ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
-                                    </EditItemTemplate>
-                                    <InsertItemTemplate>
-                                        CfgName:
-                                        <asp:DynamicControl ID="CfgNameDynamicControl" runat="server" DataField="CfgName" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        CfgCreator:
-                                        <asp:DynamicControl ID="CfgCreatorDynamicControl" runat="server" DataField="CfgCreator" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        CfgCrtTime:
-                                        <asp:DynamicControl ID="CfgCrtTimeDynamicControl" runat="server" DataField="CfgCrtTime" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        CfgIsEnable:
-                                        <asp:DynamicControl ID="CfgIsEnableDynamicControl" runat="server" DataField="CfgIsEnable" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SiteEnabTimSt:
-                                        <asp:DynamicControl ID="SiteEnabTimStDynamicControl" runat="server" DataField="SiteEnabTimSt" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SiteEnabTimEd:
-                                        <asp:DynamicControl ID="SiteEnabTimEdDynamicControl" runat="server" DataField="SiteEnabTimEd" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SiteName:
-                                        <asp:DynamicControl ID="SiteNameDynamicControl" runat="server" DataField="SiteName" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SiteWelcomeWord:
-                                        <asp:DynamicControl ID="SiteWelcomeWordDynamicControl" runat="server" DataField="SiteWelcomeWord" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SiteCopyRightStr:
-                                        <asp:DynamicControl ID="SiteCopyRightStrDynamicControl" runat="server" DataField="SiteCopyRightStr" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SiteContactStr:
-                                        <asp:DynamicControl ID="SiteContactStrDynamicControl" runat="server" DataField="SiteContactStr" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        UserRegEnab:
-                                        <asp:DynamicControl ID="UserRegEnabDynamicControl" runat="server" DataField="UserRegEnab" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        AllowFixTimes:
-                                        <asp:DynamicControl ID="AllowFixTimesDynamicControl" runat="server" DataField="AllowFixTimes" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        DataSource:
-                                        <asp:DynamicControl ID="DataSourceDynamicControl" runat="server" DataField="DataSource" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        DataTable:
-                                        <asp:DynamicControl ID="DataTableDynamicControl" runat="server" DataField="DataTable" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SouColReDef:
-                                        <asp:DynamicControl ID="SouColReDefDynamicControl" runat="server" DataField="SouColReDef" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SouRowRangeStart:
-                                        <asp:DynamicControl ID="SouRowRangeStartDynamicControl" runat="server" DataField="SouRowRangeStart" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SouRowRangeEnd:
-                                        <asp:DynamicControl ID="SouRowRangeEndDynamicControl" runat="server" DataField="SouRowRangeEnd" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        QueryMeth:
-                                        <asp:DynamicControl ID="QueryMethDynamicControl" runat="server" DataField="QueryMeth" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        QueryMethRef:
-                                        <asp:DynamicControl ID="QueryMethRefDynamicControl" runat="server" DataField="QueryMethRef" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        SouEntNum:
-                                        <asp:DynamicControl ID="SouEntNumDynamicControl" runat="server" DataField="SouEntNum" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        FixEntNum:
-                                        <asp:DynamicControl ID="FixEntNumDynamicControl" runat="server" DataField="FixEntNum" Mode="Insert" ValidationGroup="Insert" />
-                                        <br />
-                                        <asp:LinkButton ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="插入" ValidationGroup="Insert" />
-                                        &nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
-                                    </InsertItemTemplate>
-                                    <ItemTemplate>
-                                        CfgID:
-                                        <asp:DynamicControl ID="CfgIDDynamicControl" runat="server" DataField="CfgID" Mode="ReadOnly" />
-                                        <br />
-                                        CfgName:
-                                        <asp:DynamicControl ID="CfgNameDynamicControl" runat="server" DataField="CfgName" Mode="ReadOnly" />
-                                        <br />
-                                        CfgCreator:
-                                        <asp:DynamicControl ID="CfgCreatorDynamicControl" runat="server" DataField="CfgCreator" Mode="ReadOnly" />
-                                        <br />
-                                        CfgCrtTime:
-                                        <asp:DynamicControl ID="CfgCrtTimeDynamicControl" runat="server" DataField="CfgCrtTime" Mode="ReadOnly" />
-                                        <br />
-                                        CfgIsEnable:
-                                        <asp:DynamicControl ID="CfgIsEnableDynamicControl" runat="server" DataField="CfgIsEnable" Mode="ReadOnly" />
-                                        <br />
-                                        SiteEnabTimSt:
-                                        <asp:DynamicControl ID="SiteEnabTimStDynamicControl" runat="server" DataField="SiteEnabTimSt" Mode="ReadOnly" />
-                                        <br />
-                                        SiteEnabTimEd:
-                                        <asp:DynamicControl ID="SiteEnabTimEdDynamicControl" runat="server" DataField="SiteEnabTimEd" Mode="ReadOnly" />
-                                        <br />
-                                        SiteName:
-                                        <asp:DynamicControl ID="SiteNameDynamicControl" runat="server" DataField="SiteName" Mode="ReadOnly" />
-                                        <br />
-                                        SiteWelcomeWord:
-                                        <asp:DynamicControl ID="SiteWelcomeWordDynamicControl" runat="server" DataField="SiteWelcomeWord" Mode="ReadOnly" />
-                                        <br />
-                                        SiteCopyRightStr:
-                                        <asp:DynamicControl ID="SiteCopyRightStrDynamicControl" runat="server" DataField="SiteCopyRightStr" Mode="ReadOnly" />
-                                        <br />
-                                        SiteContactStr:
-                                        <asp:DynamicControl ID="SiteContactStrDynamicControl" runat="server" DataField="SiteContactStr" Mode="ReadOnly" />
-                                        <br />
-                                        UserRegEnab:
-                                        <asp:DynamicControl ID="UserRegEnabDynamicControl" runat="server" DataField="UserRegEnab" Mode="ReadOnly" />
-                                        <br />
-                                        AllowFixTimes:
-                                        <asp:DynamicControl ID="AllowFixTimesDynamicControl" runat="server" DataField="AllowFixTimes" Mode="ReadOnly" />
-                                        <br />
-                                        DataSource:
-                                        <asp:DynamicControl ID="DataSourceDynamicControl" runat="server" DataField="DataSource" Mode="ReadOnly" />
-                                        <br />
-                                        DataTable:
-                                        <asp:DynamicControl ID="DataTableDynamicControl" runat="server" DataField="DataTable" Mode="ReadOnly" />
-                                        <br />
-                                        SouColReDef:
-                                        <asp:DynamicControl ID="SouColReDefDynamicControl" runat="server" DataField="SouColReDef" Mode="ReadOnly" />
-                                        <br />
-                                        SouRowRangeStart:
-                                        <asp:DynamicControl ID="SouRowRangeStartDynamicControl" runat="server" DataField="SouRowRangeStart" Mode="ReadOnly" />
-                                        <br />
-                                        SouRowRangeEnd:
-                                        <asp:DynamicControl ID="SouRowRangeEndDynamicControl" runat="server" DataField="SouRowRangeEnd" Mode="ReadOnly" />
-                                        <br />
-                                        QueryMeth:
-                                        <asp:DynamicControl ID="QueryMethDynamicControl" runat="server" DataField="QueryMeth" Mode="ReadOnly" />
-                                        <br />
-                                        QueryMethRef:
-                                        <asp:DynamicControl ID="QueryMethRefDynamicControl" runat="server" DataField="QueryMethRef" Mode="ReadOnly" />
-                                        <br />
-                                        SouEntNum:
-                                        <asp:DynamicControl ID="SouEntNumDynamicControl" runat="server" DataField="SouEntNum" Mode="ReadOnly" />
-                                        <br />
-                                        FixEntNum:
-                                        <asp:DynamicControl ID="FixEntNumDynamicControl" runat="server" DataField="FixEntNum" Mode="ReadOnly" />
-                                        <br />
-                                        <asp:LinkButton ID="EditButton" runat="server" CausesValidation="False" CommandName="Edit" Text="编辑" />
-                                        &nbsp;<asp:LinkButton ID="DeleteButton" runat="server" CausesValidation="False" CommandName="Delete" Text="删除" />
-                                        &nbsp;<asp:LinkButton ID="NewButton" runat="server" CausesValidation="False" CommandName="New" Text="新建" />
-                                    </ItemTemplate>
-                            </asp:FormView>
-                            <asp:SqlDataSource ID="SelectdCfg" runat="server" ConnectionString="<%$ ConnectionStrings:SiteContext %>" DeleteCommand="DELETE FROM [SiteSettings] WHERE [CfgID] = @original_CfgID" InsertCommand="INSERT INTO [SiteSettings] ([CfgName], [CfgCreator], [CfgCrtTime], [CfgIsEnable], [SiteEnabTimSt], [SiteEnabTimEd], [SiteName], [SiteWelcomeWord], [SiteCopyRightStr], [SiteContactStr], [UserRegEnab], [AllowFixTimes], [DataSource], [DataTable], [SouColReDef], [SouRowRangeStart], [SouRowRangeEnd], [QueryMeth], [QueryMethRef], [SouEntNum], [FixEntNum]) VALUES (@CfgName, @CfgCreator, @CfgCrtTime, @CfgIsEnable, @SiteEnabTimSt, @SiteEnabTimEd, @SiteName, @SiteWelcomeWord, @SiteCopyRightStr, @SiteContactStr, @UserRegEnab, @AllowFixTimes, @DataSource, @DataTable, @SouColReDef, @SouRowRangeStart, @SouRowRangeEnd, @QueryMeth, @QueryMethRef, @SouEntNum, @FixEntNum)" OldValuesParameterFormatString="original_{0}" SelectCommand="SELECT * FROM [SiteSettings] WHERE ([CfgID] = @CfgID)" UpdateCommand="UPDATE [SiteSettings] SET [CfgName] = @CfgName, [CfgCreator] = @CfgCreator, [CfgCrtTime] = @CfgCrtTime, [CfgIsEnable] = @CfgIsEnable, [SiteEnabTimSt] = @SiteEnabTimSt, [SiteEnabTimEd] = @SiteEnabTimEd, [SiteName] = @SiteName, [SiteWelcomeWord] = @SiteWelcomeWord, [SiteCopyRightStr] = @SiteCopyRightStr, [SiteContactStr] = @SiteContactStr, [UserRegEnab] = @UserRegEnab, [AllowFixTimes] = @AllowFixTimes, [DataSource] = @DataSource, [DataTable] = @DataTable, [SouColReDef] = @SouColReDef, [SouRowRangeStart] = @SouRowRangeStart, [SouRowRangeEnd] = @SouRowRangeEnd, [QueryMeth] = @QueryMeth, [QueryMethRef] = @QueryMethRef, [SouEntNum] = @SouEntNum, [FixEntNum] = @FixEntNum WHERE [CfgID] = @original_CfgID">
-                                <DeleteParameters>
-                                    <asp:Parameter Name="original_CfgID" Type="Int32" />
-                                </DeleteParameters>
-                                <InsertParameters>
-                                    <asp:Parameter Name="CfgName" Type="String" />
-                                    <asp:Parameter Name="CfgCreator" Type="String" />
-                                    <asp:Parameter Name="CfgCrtTime" Type="DateTime" />
-                                    <asp:Parameter Name="CfgIsEnable" Type="Boolean" />
-                                    <asp:Parameter Name="SiteEnabTimSt" Type="DateTime" />
-                                    <asp:Parameter Name="SiteEnabTimEd" Type="DateTime" />
-                                    <asp:Parameter Name="SiteName" Type="String" />
-                                    <asp:Parameter Name="SiteWelcomeWord" Type="String" />
-                                    <asp:Parameter Name="SiteCopyRightStr" Type="String" />
-                                    <asp:Parameter Name="SiteContactStr" Type="String" />
-                                    <asp:Parameter Name="UserRegEnab" Type="Boolean" />
-                                    <asp:Parameter Name="AllowFixTimes" Type="Int32" />
-                                    <asp:Parameter Name="DataSource" Type="String" />
-                                    <asp:Parameter Name="DataTable" Type="String" />
-                                    <asp:Parameter Name="SouColReDef" Type="String" />
-                                    <asp:Parameter Name="SouRowRangeStart" Type="Int32" />
-                                    <asp:Parameter Name="SouRowRangeEnd" Type="Int32" />
-                                    <asp:Parameter Name="QueryMeth" Type="String" />
-                                    <asp:Parameter Name="QueryMethRef" Type="String" />
-                                    <asp:Parameter Name="SouEntNum" Type="Decimal" />
-                                    <asp:Parameter Name="FixEntNum" Type="Decimal" />
-                                </InsertParameters>
-                                <SelectParameters>
-                                    <asp:ControlParameter ControlID="ListView1" Name="CfgID" PropertyName="SelectedValue" Type="Int32" />
-                                </SelectParameters>
-                                <UpdateParameters>
-                                    <asp:Parameter Name="CfgName" Type="String" />
-                                    <asp:Parameter Name="CfgCreator" Type="String" />
-                                    <asp:Parameter Name="CfgCrtTime" Type="DateTime" />
-                                    <asp:Parameter Name="CfgIsEnable" Type="Boolean" />
-                                    <asp:Parameter Name="SiteEnabTimSt" Type="DateTime" />
-                                    <asp:Parameter Name="SiteEnabTimEd" Type="DateTime" />
-                                    <asp:Parameter Name="SiteName" Type="String" />
-                                    <asp:Parameter Name="SiteWelcomeWord" Type="String" />
-                                    <asp:Parameter Name="SiteCopyRightStr" Type="String" />
-                                    <asp:Parameter Name="SiteContactStr" Type="String" />
-                                    <asp:Parameter Name="UserRegEnab" Type="Boolean" />
-                                    <asp:Parameter Name="AllowFixTimes" Type="Int32" />
-                                    <asp:Parameter Name="DataSource" Type="String" />
-                                    <asp:Parameter Name="DataTable" Type="String" />
-                                    <asp:Parameter Name="SouColReDef" Type="String" />
-                                    <asp:Parameter Name="SouRowRangeStart" Type="Int32" />
-                                    <asp:Parameter Name="SouRowRangeEnd" Type="Int32" />
-                                    <asp:Parameter Name="QueryMeth" Type="String" />
-                                    <asp:Parameter Name="QueryMethRef" Type="String" />
-                                    <asp:Parameter Name="SouEntNum" Type="Decimal" />
-                                    <asp:Parameter Name="FixEntNum" Type="Decimal" />
-                                    <asp:Parameter Name="original_CfgID" Type="Int32" />
-                                </UpdateParameters>
-                            </asp:SqlDataSource>
+                                   <%-- CfgID:
+                                    CfgCreator:
+                                    CfgCrtTime:
+                                    CfgIsEnable:
+                                    SouEntNum:
+                                    FixEntNum:
 
-                           
-                        </div>
+                                    <asp:LinkButton ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="更新" />
+                                    &nbsp;<asp:LinkButton ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />--%>
+                                    
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                CfgName:
+                                    <asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' />
+                                <br />
+                                CfgCreator:
+                                    <asp:TextBox ID="CfgCreatorTextBox" runat="server" Text='<%# Bind("CfgCreator") %>' />
+                                <br />
+                                CfgCrtTime:
+                                    <asp:TextBox ID="CfgCrtTimeTextBox" runat="server" Text='<%# Bind("CfgCrtTime") %>' />
+                                <br />
+                                CfgIsEnable:
+                                    <asp:CheckBox ID="CfgIsEnableCheckBox" runat="server" Checked='<%# Bind("CfgIsEnable") %>' />
+                                <br />
+                                SiteEnabTimSt:
+                                    <asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' />
+                                <br />
+                                SiteEnabTimEd:
+                                    <asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' />
+                                <br />
+                                SiteName:
+                                    <asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' />
+                                <br />
+                                SiteWelcomeWord:
+                                    <asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' />
+                                <br />
+                                SiteCopyRightStr:
+                                    <asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' />
+                                <br />
+                                SiteContactStr:
+                                    <asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' />
+                                <br />
+                                UserRegEnab:
+                                    <asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' />
+                                <br />
+                                AllowFixTimes:
+                                    <asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' />
+                                <br />
+                                DataSource:
+                                    <asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' />
+                                <br />
+                                DataTable:
+                                    <asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' />
+                                <br />
+                                SouColReDef:
+                                    <asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' />
+                                <br />
+                                SouRowRangeStart:
+                                    <asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' />
+                                <br />
+                                SouRowRangeEnd:
+                                    <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' />
+                                <br />
+                                QueryMeth:
+                                    <asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' />
+                                <br />
+                                QueryMethRef:
+                                    <asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' />
+                                <br />
+                                SouEntNum:
+                                    <asp:TextBox ID="SouEntNumTextBox" runat="server" Text='<%# Bind("SouEntNum") %>' />
+                                <br />
+                                FixEntNum:
+                                    <asp:TextBox ID="FixEntNumTextBox" runat="server" Text='<%# Bind("FixEntNum") %>' />
+                                <br />
+                                <asp:LinkButton ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="插入" />
+                                &nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
+                                </div>
+                            </InsertItemTemplate>
+                        </asp:FormView>
+
                         <div class="panel-footer text-right">
-                            <asp:LinkButton ID="CfgSave" runat="server" type="button" class="btn btn-warning">保存</asp:LinkButton>
-                            <asp:LinkButton ID="CfgSaveNew" runat="server" type="button" class="btn btn-warning">存为新的</asp:LinkButton>
+                            <asp:LinkButton ID="CfgSave" runat="server" type="button" class="btn btn-warning" OnClick="CfgSave_Click">保存</asp:LinkButton>
+                            <asp:LinkButton ID="CfgSaveNew" runat="server" type="button" class="btn btn-warning" OnClick="CfgSaveNew_Click">存为新的</asp:LinkButton>
+                            <asp:LinkButton ID="CfgDelete" runat="server" type="button" class="btn btn-danger" OnClick="CfgDelete_Click">删除这个</asp:LinkButton>
                             <asp:LinkButton ID="CancelEdit" runat="server" type="button" class="btn btn-primary" OnClick="CancelEdit_Click">取消</asp:LinkButton>
                         </div>
                     </div>

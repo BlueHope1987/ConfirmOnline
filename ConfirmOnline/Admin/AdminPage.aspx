@@ -6,8 +6,7 @@
             <div class="col-md-3">
                 <ul class="nav nav-pills nav-stacked">
 	                <li class="active"><a href="#">Home</a></li>
-	                <li><a href="SiteCfgs">配置式</a></li>
-	                <li><a href="CfgSetting">全局设定</a></li>
+	                <li><a href="SiteCfgs">全局设定</a></li>
 	                <li><a href="WorkTable">工作表</a></li>
 	                <li><a href="Editflow">编辑纪录</a></li>
 	                <li><a href="Users">用户</a></li>

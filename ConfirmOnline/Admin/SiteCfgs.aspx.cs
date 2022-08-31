@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ConfirmOnline.Models;
 
 namespace ConfirmOnline.Admin
 {
@@ -42,14 +43,29 @@ namespace ConfirmOnline.Admin
         {
             OpsAre.Visible= false;
             EditAre.Visible = true;
+            CfgSave.Visible = false;
+            CfgDelete.Visible = false;
             EditAreTitle.InnerText = "新建配置式";
+            CfgEditForm.ChangeMode(FormViewMode.Insert);
         }
 
         protected void BtnEdit_Click(object sender, EventArgs e)
         {
             OpsAre.Visible = false;
             EditAre.Visible = true;
+            CfgSave.Visible = true;
             EditAreTitle.InnerText = "编辑配置式";
+            CfgEditForm.ChangeMode(FormViewMode.Edit);
+
+            SiteContext context = new SiteContext();
+            if (context.SiteSetting.Count() > 1)
+            {
+                CfgDelete.Visible = true;
+            }
+            else
+            {
+                CfgDelete.Visible = false;
+            }
 
         }
 
@@ -58,7 +74,54 @@ namespace ConfirmOnline.Admin
             OpsAre.Visible = true;
             EditAre.Visible = false;
             EditAre.EnableViewState = false;
+            ListView1.DataBind();
         }
 
+        protected void CfgSave_Click(object sender, EventArgs e)
+        {
+            CfgEditForm.UpdateItem(true);
+        }
+
+        protected void CfgSaveNew_Click(object sender, EventArgs e)
+        {
+            FormViewRow row = CfgEditForm.Row;
+
+            SiteSetting ss = new SiteSetting
+            {
+                AllowFixTimes = int.Parse(((TextBox)(row.FindControl("AllowFixTimesTextBox"))).Text),
+                CfgCreator = User.Identity.Name,
+                CfgCrtTime = DateTime.Now,
+                CfgName = ((TextBox)(row.FindControl("CfgNameTextBox"))).Text,
+                DataSource = ((TextBox)(row.FindControl("DataSourceTextBox"))).Text,
+                DataTable = ((TextBox)(row.FindControl("DataTableTextBox"))).Text,
+                FixEntNum = 0,
+                QueryMeth = ((TextBox)(row.FindControl("QueryMethTextBox"))).Text,
+                QueryMethRef = ((TextBox)(row.FindControl("QueryMethRefTextBox"))).Text,
+                SiteContactStr = ((TextBox)(row.FindControl("SiteContactStrTextBox"))).Text,
+                SiteCopyRightStr = ((TextBox)(row.FindControl("SiteCopyRightStrTextBox"))).Text,
+                SiteEnabTimEd = DateTime.Parse(((TextBox)(row.FindControl("SiteEnabTimEdTextBox"))).Text),
+                SiteEnabTimSt = DateTime.Parse(((TextBox)(row.FindControl("SiteEnabTimStTextBox"))).Text),
+                CfgIsEnable = false,
+                SiteName = ((TextBox)(row.FindControl("SiteNameTextBox"))).Text,
+                SiteWelcomeWord = ((TextBox)(row.FindControl("SiteWelcomeWordTextBox"))).Text,
+                SouColReDef = ((TextBox)(row.FindControl("SouColReDefTextBox"))).Text,
+                SouEntNum = 0,
+                SouRowRangeEnd = int.Parse(((TextBox)(row.FindControl("SouRowRangeEndTextBox"))).Text),
+                SouRowRangeStart = int.Parse(((TextBox)(row.FindControl("SouRowRangeStartTextBox"))).Text),
+                UserRegEnab = ((CheckBox)(row.FindControl("UserRegEnabCheckBox"))).Checked,
+            };
+
+            SiteContext context = new SiteContext();
+            ss = context.SiteSetting.Add(ss);
+            context.SaveChanges();
+            //ListView1.SelectItem(ListView1.Items.IndexOf();
+            CancelEdit_Click(null, null);
+        }
+
+        protected void CfgDelete_Click(object sender, EventArgs e)
+        {
+            CfgEditForm.DeleteItem();
+            CancelEdit_Click(null, null);
+        }
     }
 }
