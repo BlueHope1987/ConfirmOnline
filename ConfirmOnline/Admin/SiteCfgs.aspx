@@ -86,6 +86,8 @@
             </asp:SqlDataSource>
 
             <div class="col-md-9">
+                <h3>配置式和全局设定</h3>
+                <p>配置式是一整套设置，控制网站的全局设定、对应处理的核对表格及查询方法等。不同的核对表格运行在不同的配置式下。</p>
                 <div id="CfgList" runat="server" class="row">
                     <asp:ListView ID="ListView1" runat="server" DataKeyNames="CfgID" DataSourceID="GetCfgList" OnItemDataBound="ListView1_ItemDataBound">
                         <AlternatingItemTemplate>
@@ -104,7 +106,7 @@
                                 </td>
                                 <td>
                                     <asp:Label ID="IfEnable" runat="server" Text="Label">已启用</asp:Label>
-                                    <asp:LinkButton ID="CfgDoEnable" runat="server">启用</asp:LinkButton>
+                                    <asp:LinkButton ID="CfgDoEnable" CommandArgument='<%#Eval("CfgID")%>' OnClick="BtnCfgEnable_Click" runat="server">启用</asp:LinkButton>
                                 </td>
                                 <td>
                                     <asp:LinkButton ID="BtnEdit" runat="server" CommandName="Select" OnClick="BtnEdit_Click">编辑</asp:LinkButton>
@@ -134,7 +136,7 @@
                                 </td>
                                 <td>
                                     <asp:Label ID="IfEnable" runat="server" Text="Label">已启用</asp:Label>
-                                    <asp:LinkButton ID="CfgDoEnable" runat="server">启用</asp:LinkButton>
+                                    <asp:LinkButton ID="CfgDoEnable" CommandArgument='<%#Eval("CfgID")%>' OnClick="BtnCfgEnable_Click" runat="server">启用</asp:LinkButton>
                                 </td>
                                 <td>
                                     <asp:LinkButton ID="BtnEdit" runat="server" CommandName="Select" OnClick="BtnEdit_Click">编辑</asp:LinkButton>
@@ -173,7 +175,7 @@
                                 </td>
                                 <td>
                                     <asp:Label ID="IfEnable" runat="server" Text="Label">已启用</asp:Label>
-                                    <asp:LinkButton ID="CfgDoEnable" runat="server">启用</asp:LinkButton>
+                                    <asp:LinkButton ID="CfgDoEnable" CommandArgument='<%#Eval("CfgID")%>' OnClick="BtnCfgEnable_Click" runat="server">启用</asp:LinkButton>
                                 </td>
                                 <td>
                                     <asp:LinkButton ID="BtnEdit" runat="server" CommandName="Select" OnClick="BtnEdit_Click">编辑</asp:LinkButton>

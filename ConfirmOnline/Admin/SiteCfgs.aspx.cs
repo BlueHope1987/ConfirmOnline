@@ -49,6 +49,29 @@ namespace ConfirmOnline.Admin
             CfgEditForm.ChangeMode(FormViewMode.Insert);
         }
 
+        protected void BtnCfgEnable_Click(object sender, EventArgs e)
+        {
+            LinkButton lbenable = (LinkButton)sender;
+           
+            if (lbenable.CommandArgument != "")
+            {
+                //启用逻辑
+                int id = int.Parse(lbenable.CommandArgument);
+
+                SiteContext context = new Models.SiteContext();
+                IQueryable<SiteSetting> queryTrue = context.SiteSetting.Where(s => s.CfgIsEnable == true);
+                foreach (SiteSetting setting in queryTrue)
+                    setting.CfgIsEnable = false;
+
+                IQueryable<SiteSetting> queryID = context.SiteSetting.Where(s => s.CfgID == id);
+                queryID.First().CfgIsEnable = true;
+
+                context.SaveChanges();
+                Application["SystemSet"] = queryID.First();
+                CancelEdit_Click(null, null);
+            }
+        }
+
         protected void BtnEdit_Click(object sender, EventArgs e)
         {
             OpsAre.Visible = false;
