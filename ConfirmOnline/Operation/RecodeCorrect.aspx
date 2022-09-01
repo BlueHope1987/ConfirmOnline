@@ -9,7 +9,7 @@
                     <div id="divContainer" style="margin-top: 30px;" runat="server">
                     </div>
                 <asp:HiddenField ID="HiddenField" runat="server" />
-                <asp:LinkButton ID="btn_Submit" type="submit" class="btn btn-info btn-block" style="margin-top: 25px;" runat="server" Text="点击完成核实" OnClick="btn_Submit_Click"/>
+                <asp:LinkButton ID="btn_Submit" type="submit" class="btn btn-primary btn-block" style="margin-top: 25px;" runat="server" Text="点击完成核实" OnClick="btn_Submit_Click"/>
             </div>
         </div>
     </div>

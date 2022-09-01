@@ -14,10 +14,17 @@
             </div>
             <div class="col-md-9">
                 <h3>工作表详览</h3>
-                <p>在线显示您当前配置式下工作表及修订状态，操作较大的工作表会耗费大量的服务器资源。</p>
-                <asp:LinkButton ID="LkBtnStart" class="btn btn-warning" runat="server" OnClick="LkBtnStart_Click">点击开始</asp:LinkButton>
+                <div ID="WorkTableNote" class="well col-centered" runat="server">
+                    <p>在线显示您当前配置式下工作表及修订状态，展开大型的工作表会耗费较多的服务器资源。</p>
+                    <asp:LinkButton ID="LkBtnStart" class="btn btn-warning" runat="server" OnClick="LkBtnStart_Click">点击开始</asp:LinkButton>
+                </div>
                 <div id="WorkTableDiv" runat="server" visible="false" class="row">
-                    <asp:GridView ID="WorkTableView" runat="server" CssClass="table table-striped col-md-12" OnRowCreated="WorkTableView_RowCreated"></asp:GridView>
+                    <div class="btn-group btn-group-sm pull-right">
+                        <asp:LinkButton ID="BtnDspOver" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspOver_Click">显示最终状态</asp:LinkButton>
+                        <asp:LinkButton ID="BtnColor" type="button" class="btn btn-primary" runat="server" OnClick="BtnColor_Click">着色修订项</asp:LinkButton>
+                        <asp:LinkButton ID="BtnDspNub" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspNub_Click">显示修订次数</asp:LinkButton>
+                    </div>
+                    <asp:GridView ID="WorkTableView" runat="server" CssClass="table table-responsive table-condensed table-hover table-striped" OnRowCreated="WorkTableView_RowCreated" OnRowDataBound="WorkTableView_RowDataBound" BorderStyle="None"></asp:GridView>
                 </div>
             </div>
         </div>

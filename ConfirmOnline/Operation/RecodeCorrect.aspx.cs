@@ -45,6 +45,9 @@ namespace ConfirmOnline.Operation
             List<EditFlow> editHistory = GetEditHistory().ToList();
             List<string> qResult = new List<string>();
 
+            originalVal = new List<string>();
+            correctKey = new List<string>();
+
             if (editHistory.Count != 0)
             {
                 if(editHistory.Count - 1 >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes && ((SiteSetting)Application["SystemSet"]).AllowFixTimes >= 0)
@@ -85,16 +88,24 @@ namespace ConfirmOnline.Operation
                 div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
                 div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
                 divContainer.Controls.Add(div);
+
+
+                foreach (string s in (List<string>)Session["souCol"])
+                {
+                    if (!((List<string>)Session["qurMth"]).Exists(ex => ex == s.Split(':')[0]))
+                        CreateTextBoxList(s.Split(':')[0], s.Split(':')[1].Replace("&comma&", ","), qResult[(int.Parse(s.Split(':')[0]) - 1)]); //转义逗号
+                }
             }
-
-            originalVal = new List<string>();
-            correctKey = new List<string>();
-
-            foreach (string s in (List<string>)Session["souCol"])
+            else
             {
-                if(!((List<string>)Session["qurMth"]).Exists(ex => ex== s.Split(':')[0]))
-                    CreateTextBoxList(s.Split(':')[0], s.Split(':')[1].Replace("&comma&", ","), qResult[(int.Parse(s.Split(':')[0]) -1)]); //转义逗号
+                foreach (string s in (List<string>)Session["souCol"])
+                {
+                    if (!((List<string>)Session["qurMth"]).Exists(ex => ex == s.Split(':')[0]))
+                        CreateTextBoxList(s.Split(':')[0], s.Split(':')[1].Replace("&comma&", ","), Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][(int.Parse(s.Split(':')[0]) - 1)]));//转义逗号
+                }
             }
+
+
         }
 
         protected void btn_Submit_Click(object sender, EventArgs e)
