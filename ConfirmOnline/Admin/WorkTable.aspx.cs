@@ -72,11 +72,9 @@ namespace ConfirmOnline.Admin
 
         }
 
-        protected void WorkTableView_RowCreated(object sender, GridViewRowEventArgs e)
-        {
-            
-
-        }
+        //protected void WorkTableView_RowCreated(object sender, GridViewRowEventArgs e)
+        //{
+        //}
 
         protected void WorkTableView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -135,7 +133,8 @@ namespace ConfirmOnline.Admin
                                         
                                     if (e.Row.Cells[int.Parse(fc[i]) - 1].Text.Replace("&nbsp;","") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？
                                     {
-                                       e.Row.Cells[int.Parse(fc[i]) - 1].Text = fn[i].Replace("&comma&", ",");//转义逗号
+                                        e.Row.Cells[int.Parse(fc[i]) - 1].Text = fn[i].Replace("&comma&", ",");//转义逗号
+                                        e.Row.Cells[int.Parse(fc[i]) - 1].Font.Bold = true;
                                     }
                                     else
                                     {

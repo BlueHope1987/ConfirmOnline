@@ -24,7 +24,10 @@
                         <asp:LinkButton ID="BtnColor" type="button" class="btn btn-primary" runat="server" OnClick="BtnColor_Click">着色修订项</asp:LinkButton>
                         <asp:LinkButton ID="BtnDspNub" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspNub_Click">显示修订次数</asp:LinkButton>
                     </div>
-                    <asp:GridView ID="WorkTableView" runat="server" CssClass="table table-responsive table-condensed table-hover table-striped" OnRowCreated="WorkTableView_RowCreated" OnRowDataBound="WorkTableView_RowDataBound" BorderStyle="None"></asp:GridView>
+                    <asp:GridView ID="WorkTableView" runat="server" CssClass="table table-responsive table-condensed table-hover" OnRowDataBound="WorkTableView_RowDataBound" BorderStyle="Solid" BackColor="WhiteSmoke" BorderWidth="1px" EmptyDataText="表格中没有数据，请检查您的设置。" Font-Size="Small" GridLines="None">
+                        <AlternatingRowStyle BackColor="#D6E6F5" BorderStyle="None" BorderWidth="1px" />
+                        <HeaderStyle BackColor="#85B3DC" />
+                    </asp:GridView>
                 </div>
             </div>
         </div>
