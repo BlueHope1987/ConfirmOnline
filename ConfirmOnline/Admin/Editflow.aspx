@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Editflow.aspx.cs" Inherits="ConfirmOnline.Admin.Editflow" %>
+﻿<%@ Page Title="管理编辑纪录" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Editflow.aspx.cs" Inherits="ConfirmOnline.Admin.Editflow" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div id="Container" runat="server">
         <div class="row " style="height:20px;"></div>
@@ -13,9 +13,9 @@
                 </ul>
             </div>
             <div class="col-md-9">
-                <h3>编辑记录详览</h3>
+                <h3>编辑流水记录详览</h3>
                 <div ID="EditFlowNote" class="well col-centered" runat="server">
-                    <p>在这里罗列显示配置式下工作表的编辑记录。</p>
+                    <p>在这里罗列显示配置式下工作表的编辑流水记录。</p>
                     <asp:LinkButton ID="LkBtnStart" class="btn btn-warning" runat="server" OnClick="LkBtnStart_Click">点击开始</asp:LinkButton>
                 </div>
                 <div id="EdFlViewDiv" runat="server" visible="false" class="row">

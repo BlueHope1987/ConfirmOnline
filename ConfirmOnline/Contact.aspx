@@ -1,8 +1,19 @@
-﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="ConfirmOnline.Contact" %>
+﻿<%@ Page Title="联系方式" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="ConfirmOnline.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: Title %>.</h2>
-    <h3>Your contact page.</h3>
+    <h2>ConfirmOnline：Bluehope's 在线核实修订程序</h2>
+    <h3>&copy;Buehope Studio 联系方式</h3>
+    <address>
+        河南省 平顶山市<br />
+        市妇幼保健院 妇幼信息管理科<br />
+        王迅<br />
+        <abbr title="Phone">P:</abbr>
+        13937547551
+    </address>
+    <br />
+
+   <%-- <h3>Your contact page.</h3>--%>
+     <h3>ASP.NET 4.5服务器支持</h3>
     <address>
         One Microsoft Way<br />
         Redmond, WA 98052-6399<br />
@@ -14,4 +25,6 @@
         <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
         <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
     </address>
+
+
 </asp:Content>

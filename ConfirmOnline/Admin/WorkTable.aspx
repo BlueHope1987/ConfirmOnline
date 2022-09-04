@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WorkTable.aspx.cs" Inherits="ConfirmOnline.Admin.WorkTable" %>
+﻿<%@ Page Title="管理工作表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WorkTable.aspx.cs" Inherits="ConfirmOnline.Admin.WorkTable" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div id="Container" runat="server">
         <div class="row " style="height:20px;"></div>
@@ -23,6 +23,7 @@
                         <asp:LinkButton ID="BtnDspOver" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspOver_Click">显示最终状态</asp:LinkButton>
                         <asp:LinkButton ID="BtnColor" type="button" class="btn btn-primary" runat="server" OnClick="BtnColor_Click">着色修订项</asp:LinkButton>
                         <asp:LinkButton ID="BtnDspNub" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspNub_Click">显示修订次数</asp:LinkButton>
+                        <asp:LinkButton ID="SaveTable" type="button" class="btn btn-primary" runat="server" OnClick="SaveTable_Click">保存下面的数据</asp:LinkButton>
                     </div>
                     <asp:GridView ID="WorkTableView" runat="server" CssClass="table table-responsive table-condensed table-hover" OnRowDataBound="WorkTableView_RowDataBound" BorderStyle="Solid" BackColor="WhiteSmoke" BorderWidth="1px" EmptyDataText="表格中没有数据，请检查您的设置。" Font-Size="Small" GridLines="None">
                         <AlternatingRowStyle BackColor="#D6E6F5" BorderStyle="None" BorderWidth="1px" />

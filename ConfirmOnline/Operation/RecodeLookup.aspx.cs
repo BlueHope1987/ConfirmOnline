@@ -143,7 +143,7 @@ namespace ConfirmOnline.Operation
 
             if (errList.Count > 0) return false;
 
-            ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("../App_Data/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
+            ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("../App_Data/UploadExcels/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
 
             qurResult = visiter.getDataSet(qurKey, qurVal);
 

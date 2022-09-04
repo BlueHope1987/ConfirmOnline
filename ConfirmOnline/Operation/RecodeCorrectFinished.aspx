@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RecodeCorrectFinished.aspx.cs" Inherits="ConfirmOnline.Operation.RecodeCorrectFinished" %>
+﻿<%@ Page Title="感谢使用" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RecodeCorrectFinished.aspx.cs" Inherits="ConfirmOnline.Operation.RecodeCorrectFinished" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div id="Container" runat="server">
         <div class="row" style="height:20px;"></div>

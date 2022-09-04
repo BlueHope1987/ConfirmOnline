@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SiteCfgs.aspx.cs" Inherits="ConfirmOnline.Admin.SiteCfgs" %>
+﻿<%@ Page Title="管理配置式和全局设定" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SiteCfgs.aspx.cs" Inherits="ConfirmOnline.Admin.SiteCfgs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div id="Container" runat="server">

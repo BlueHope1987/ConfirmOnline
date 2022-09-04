@@ -193,8 +193,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="Admin\Web.config" />
-    <Content Include="App_Data\test.xlsx" />
-    <Content Include="App_Data\test.xls" />
+    <Content Include="App_Data\UploadExcels\test.xlsx" />
+    <Content Include="App_Data\UploadExcels\test.xls" />
+    <Content Include="App_Data\XLSModelFile.xls" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Operation\finish.gif" />
     <Content Include="Operation\RecodeCorrect.aspx" />
@@ -471,7 +472,9 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\DownloadReady\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />

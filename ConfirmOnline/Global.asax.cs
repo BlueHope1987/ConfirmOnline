@@ -38,7 +38,7 @@ namespace ConfirmOnline
             Application["SystemSet"] = GetSiteSetting().First();
 
             //将数据表读取全局 不适用
-            //ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("App_Data/")+((SiteSetting)Application["SystemSet"]).DataSource, Server.MapPath("App_Data/") + ((SiteSetting)Application["SystemSet"]).DataTable);
+            //ExcelVisiter visiter = new ExcelVisiter(Server.MapPath("App_Data/UploadExcels/")+((SiteSetting)Application["SystemSet"]).DataSource, Server.MapPath("App_Data/UploadExcels/") + ((SiteSetting)Application["SystemSet"]).DataTable);
             //Application["WorkSheet"] = visiter.getDataSet();
         }
 

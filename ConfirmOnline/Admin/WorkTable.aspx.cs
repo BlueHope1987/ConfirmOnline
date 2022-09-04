@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
 
 namespace ConfirmOnline.Admin
 {
@@ -50,7 +51,7 @@ namespace ConfirmOnline.Admin
 
             WorkTableNote.Visible = false;
 
-            visiter = new ExcelVisiter(Server.MapPath("../App_Data/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
+            visiter = new ExcelVisiter(Server.MapPath("../App_Data/UploadExcels/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
             WorkTableView.DataSource = visiter.getDataSet();
             WorkTableView.DataBind();
 
@@ -188,6 +189,63 @@ namespace ConfirmOnline.Admin
                 BtnDspNub.CssClass = "btn btn-primary active";
             }
             LkBtnStart_Click(null, null);
+        }
+
+        protected void SaveTable_Click(object sender, EventArgs e)
+        {
+
+            LkBtnStart_Click(null, null);
+
+            DataTable dt = new DataTable("XLData");//工作簿已有工作表名
+
+            // 列强制转换
+            for (int count = 0; count < ((DataSet)WorkTableView.DataSource).Tables[0].Columns.Count; count++)
+            {
+                DataColumn dc = new DataColumn(((DataSet)WorkTableView.DataSource).Tables[0].Columns[count].Caption);
+                dt.Columns.Add(dc);
+            }
+
+            // 循环行
+            for (int count = 0; count < WorkTableView.Rows.Count; count++)
+            {
+                DataRow dr = dt.NewRow();
+                for (int countsub = 0; countsub < ((DataSet)WorkTableView.DataSource).Tables[0].Columns.Count; countsub++)
+                {
+                    if (WorkTableView.Rows[count].Cells[countsub].Text == "&nbsp;")
+                    {
+                        dr[countsub] = "";
+                    }
+                    else {
+                        dr[countsub] = Convert.ToString(WorkTableView.Rows[count].Cells[countsub].Text);
+                    }
+                }
+                dt.Rows.Add(dr);
+            }
+
+            //foreach (GridViewRow row in WorkTableView.Rows)
+            //{
+            //    dt.Rows.Add(row);
+            //}
+            string fn= DateTime.Now.ToString("s").Replace(':', '-') + ".xls";
+            string ffn = Server.MapPath("../App_Data/DownloadReady/Table") + fn;
+            ExcelVisiter.TableToExcelFile(dt, ffn, Server.MapPath("../App_Data/XLSModelFile.xls"));
+
+            FileInfo fileInfo = new FileInfo(ffn);
+            Response.Clear();
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + fn);
+            Response.AddHeader("Content-Length", fileInfo.Length.ToString());
+            Response.AddHeader("Content-Transfer-Encoding", "binary");
+            Response.ContentType = "application/octet-stream";
+            Response.ContentEncoding = System.Text.Encoding.GetEncoding("gb2312");
+            Response.WriteFile(ffn);
+            Response.Flush();
+            Response.End();
+
+
+            //Response.TransmitFile(fn);
+            return;
         }
     }
 }
