@@ -12,7 +12,10 @@
 	                <li><a href="Users">用户</a></li>
                 </ul>
             </div>
-            <div class="col-md-9"></div>
+            <div class="col-md-9">
+                <h3>开始您的管理</h3>
+                <p>您已进入应用后台，点击左边的目录导航到您需要的配置和管理项。</p>
+            </div>
         </div>
     </div>
 </asp:Content>

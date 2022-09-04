@@ -246,7 +246,41 @@
                                     
                             </EditItemTemplate>
                             <InsertItemTemplate>
-                                CfgName:
+                                <table class="col-lg-12">
+                                                <tr>
+                                                    <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' /></td>
+                                                    <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' /></td>
+                                                    <th>仅登录使用并开放注册</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' /></td>
+                                                    <th>版权信息</th><td><asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' /></td>
+                                                    <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' /></td>
+                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' /></td>
+                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' /></td>
+                                                    <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' /></td>
+                                                    <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' /></td>
+                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' /></td>
+                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' /></td>
+                                                    <th></th><td></td>
+                                                </tr>
+                                                <tr>
+                                                    <th></th><td></td>
+                                                </tr>
+                                        </table>
+                               <%-- CfgName:
                                     <asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' />
                                 <br />
                                 CfgCreator:
@@ -308,9 +342,7 @@
                                 <br />
                                 FixEntNum:
                                     <asp:TextBox ID="FixEntNumTextBox" runat="server" Text='<%# Bind("FixEntNum") %>' />
-                                <br />
-                                <asp:LinkButton ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="插入" />
-                                &nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
+                                <br />--%>
                                 </div>
                             </InsertItemTemplate>
                         </asp:FormView>

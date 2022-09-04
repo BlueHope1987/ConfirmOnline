@@ -34,9 +34,9 @@
                         <AlternatingRowStyle BackColor="#D6E6F5" BorderStyle="None" BorderWidth="1px" />
                         <HeaderStyle BackColor="#85B3DC" />
                         <Columns>
-                            <asp:BoundField DataField="Id" HeaderText="编号" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                            <asp:BoundField DataField="Id" HeaderText="流水号" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                             <asp:BoundField DataField="FixerDate" HeaderText="修订时间" SortExpression="FixerDate" />
-                            <asp:BoundField DataField="FixRow" HeaderText="修订行" SortExpression="FixRow" />
+                            <asp:BoundField DataField="FixRow" HeaderText="修订条目" SortExpression="FixRow" />
                             <asp:BoundField DataField="FixCol" HeaderText="修订项" SortExpression="FixCol" />
                             <asp:BoundField DataField="FixNew" HeaderText="新内容" SortExpression="FixNew" />
                             <asp:CommandField HeaderText="详情" ShowSelectButton="True" ButtonType="Button" SelectText="查看" />
@@ -46,12 +46,12 @@
                     <asp:DetailsView ID="EdFlDtlView" runat="server" CssClass="table table-responsive table-condensed table-hover"  AutoGenerateRows="False" DataKeyNames="Id" DataSourceID="EditFlowDBSelected" BorderStyle="None">
                         <FieldHeaderStyle BackColor="#C9D9F8" />
                         <Fields>
-                            <asp:BoundField DataField="Id" HeaderText="编号" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                            <asp:BoundField DataField="Id" HeaderText="流水号" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                             <asp:BoundField DataField="CfgID" HeaderText="对应配置式编号" SortExpression="CfgID" />
                             <asp:BoundField DataField="FixerID" HeaderText="修订者登录ID" SortExpression="FixerID" />
                             <asp:BoundField DataField="FixerDetal" HeaderText="修订详情" SortExpression="FixerDetal" />
                             <asp:BoundField DataField="FixerDate" HeaderText="修订时间" SortExpression="FixerDate" />
-                            <asp:BoundField DataField="FixRow" HeaderText="修订行" SortExpression="FixRow" />
+                            <asp:BoundField DataField="FixRow" HeaderText="修订条目" SortExpression="FixRow" />
                             <asp:BoundField DataField="FixCol" HeaderText="修订项" SortExpression="FixCol" />
                             <asp:BoundField DataField="FixNew" HeaderText="新内容" SortExpression="FixNew" />
                             <asp:BoundField DataField="FixOld" HeaderText="旧内容" SortExpression="FixOld" />
