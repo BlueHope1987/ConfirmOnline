@@ -1,10 +1,9 @@
-﻿using System;
-using System.Web;
-using System.Web.UI;
+﻿using ConfirmOnline.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Owin;
-using ConfirmOnline.Models;
+using System;
+using System.Web;
+using System.Web.UI;
 
 namespace ConfirmOnline.Account
 {

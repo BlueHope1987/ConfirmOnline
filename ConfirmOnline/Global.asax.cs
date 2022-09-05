@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConfirmOnline.Logic;
+using ConfirmOnline.Models;
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
-using System.Data.Entity;
-using ConfirmOnline.Logic;
-using ConfirmOnline.Models;
 
 
 namespace ConfirmOnline
@@ -81,7 +78,7 @@ namespace ConfirmOnline
                 if (exc.InnerException != null)
                 {
                     exc = new Exception(exc.InnerException.Message);
-                    Server.Transfer("ErrorPage.aspx?handler=Application_Error%20-%20Global.asax", true);
+                    Server.Transfer("~/ErrorPage.aspx?handler=Application_Error%20-%20Global.asax", true);
                 }
             }
         }

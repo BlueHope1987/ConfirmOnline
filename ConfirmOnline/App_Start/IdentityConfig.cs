@@ -1,12 +1,12 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using ConfirmOnline.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using ConfirmOnline.Models;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ConfirmOnline
 {
@@ -87,7 +87,8 @@ namespace ConfirmOnline
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) :
-            base(userManager, authenticationManager) { }
+            base(userManager, authenticationManager)
+        { }
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {

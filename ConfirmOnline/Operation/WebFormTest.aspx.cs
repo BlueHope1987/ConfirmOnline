@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using ConfirmOnline.Logic;
+using System;
 
 namespace ConfirmOnline.Operation
 {
@@ -39,6 +35,8 @@ namespace ConfirmOnline.Operation
             Response.Write("用户的IP地址：" + Request.ServerVariables["REMOTE_ADDR"] + "<BR />");
             Response.Write("请求的方法：" + Request.ServerVariables["REQUEST_METHOD"] + "<BR />");
             Response.Write("服务器的IP地址：" + Request.ServerVariables["LOCAL_ADDR"] + "<BR />");
+
+            Response.Write(string.Join("<br/>", ExcelVisiter.listOLEDBDrv().ToArray()));
         }
     }
 }

@@ -1,13 +1,11 @@
-﻿using System;
+﻿using ConfirmOnline.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using ConfirmOnline.Logic;
-using ConfirmOnline.Models;
 
 namespace ConfirmOnline.Operation
 {
@@ -15,7 +13,7 @@ namespace ConfirmOnline.Operation
     {
 
         public SiteMaster mstPg;
-        List<string> correctKey, originalVal, correctVal, fixedKey , fixedOld, fixedNew;//参与修订键 全部原始值 全部新值 已修订键 已修订原始值 已修订新值
+        List<string> correctKey, originalVal, correctVal, fixedKey, fixedOld, fixedNew;//参与修订键 全部原始值 全部新值 已修订键 已修订原始值 已修订新值
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,7 +36,7 @@ namespace ConfirmOnline.Operation
             //    //执行您的回发处理代码
             //}
 
-            if((string)Session["Struct"] != "LookupOK")
+            if ((string)Session["Struct"] != "LookupOK")
                 Response.Redirect("RecodeLookup");
 
             //修订记录检查
@@ -50,7 +48,7 @@ namespace ConfirmOnline.Operation
 
             if (editHistory.Count != 0)
             {
-                if(editHistory.Count - 1 >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes && ((SiteSetting)Application["SystemSet"]).AllowFixTimes >= 0)
+                if (editHistory.Count - 1 >= ((SiteSetting)Application["SystemSet"]).AllowFixTimes && ((SiteSetting)Application["SystemSet"]).AllowFixTimes >= 0)
                 {
                     Session["Struct"] = "OutFixTimes";
                     Response.Redirect("RecodeCorrectFinished");
@@ -58,20 +56,20 @@ namespace ConfirmOnline.Operation
 
                 List<string> fixcol = new List<string>();
 
-                for(int i=0;i< ((DataTable)Session["qurResult"]).Columns.Count; i++)
+                for (int i = 0; i < ((DataTable)Session["qurResult"]).Columns.Count; i++)
                 {
                     qResult.Add(Convert.ToString(((DataTable)Session["qurResult"]).Rows[0][i]));
                 }
-                
+
                 foreach (EditFlow flow in editHistory)
                 {
                     List<string> fc = flow.FixCol.Split(',').ToList<string>();
                     List<string> fn = flow.FixNew.Split(',').ToList<string>();
                     List<string> fo = flow.FixOld.Split(',').ToList<string>();
                     Dictionary<string, string> dic = new Dictionary<string, string>();
-                    for(int i = 0; i < fc.Count; i++)
+                    for (int i = 0; i < fc.Count; i++)
                     {
-                        if(qResult[int.Parse(fc[i]) - 1] == fo[i].Replace("&comma&", ","))
+                        if (qResult[int.Parse(fc[i]) - 1] == fo[i].Replace("&comma&", ","))
                         {
                             qResult[int.Parse(fc[i]) - 1] = fn[i].Replace("&comma&", ",");//转义逗号
                         }
@@ -84,7 +82,7 @@ namespace ConfirmOnline.Operation
 
                 HtmlGenericControl div = new HtmlGenericControl("div");
                 div.Attributes["class"] = "glyphicon glyphicon-info-sign alert alert-warning";
-                div.InnerText = "本条记录已被核实修订"+ editHistory.Count.ToString()+"次。";
+                div.InnerText = "本条记录已被核实修订" + editHistory.Count.ToString() + "次。";
                 div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
                 div.Style.Add(HtmlTextWriterStyle.Padding, "5px");
                 divContainer.Controls.Add(div);
@@ -143,12 +141,12 @@ namespace ConfirmOnline.Operation
             {
                 var nEF = new EditFlow();
                 nEF.FixerID = "";
-                nEF.FixerDetal = Request.UserHostName + "," + Request.UserHostAddress + "," +Request.ServerVariables["HTTP_USER_AGENT"];
+                nEF.FixerDetal = Request.UserHostName + "," + Request.UserHostAddress + "," + Request.ServerVariables["HTTP_USER_AGENT"];
                 nEF.FixerDate = DateTime.Now;
-                nEF.FixNew= String.Join(",", fixedNew);
+                nEF.FixNew = String.Join(",", fixedNew);
                 nEF.FixOld = String.Join(",", fixedOld);
-                nEF.FixCol= String.Join(",", fixedKey);
-                nEF.FixRow= String.Join(",", ((List<string>)Session["qurVal"]).ToArray());
+                nEF.FixCol = String.Join(",", fixedKey);
+                nEF.FixRow = String.Join(",", ((List<string>)Session["qurVal"]).ToArray());
                 nEF.CfgID = ((SiteSetting)Application["SystemSet"]).CfgID;
 
                 using (SiteContext _db = new SiteContext())
@@ -178,7 +176,7 @@ namespace ConfirmOnline.Operation
             //string qk = ((SiteSetting)Application["SystemSet"]).QueryMeth;
             //string qk = String.Join(",", ((List<string>)Session["qurKey"]).ToArray());
             string qk = String.Join(",", ((List<string>)Session["qurVal"]).ToArray());
-            IQueryable<EditFlow> query = _db.EditFlow.Where(s => s.FixRow == qk).OrderBy(x=>x.FixerDate);
+            IQueryable<EditFlow> query = _db.EditFlow.Where(s => s.FixRow == qk).OrderBy(x => x.FixerDate);
             return query;
         }
 

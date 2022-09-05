@@ -1,11 +1,10 @@
-﻿using System;
+﻿using ConfirmOnline.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Owin;
-using ConfirmOnline.Models;
 
 namespace ConfirmOnline.Account
 {
@@ -24,10 +23,10 @@ namespace ConfirmOnline.Account
                 //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
                 //manager.SendEmail(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">此处 </a> 来确认你的帐户。");
 
-                signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
+                signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
-            else 
+            else
             {
                 ErrorMessage.Text = result.Errors.FirstOrDefault();
             }

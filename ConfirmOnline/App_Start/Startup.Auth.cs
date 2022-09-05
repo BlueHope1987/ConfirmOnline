@@ -1,17 +1,15 @@
-﻿using System;
+﻿using ConfirmOnline.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.DataProtection;
-using Microsoft.Owin.Security.Google;
 using Owin;
-using ConfirmOnline.Models;
+using System;
 
 namespace ConfirmOnline
 {
-    public partial class Startup {
+    public partial class Startup
+    {
 
         // 有关配置身份验证的详细信息，请访问 https://go.microsoft.com/fwlink/?LinkId=301883
         public void ConfigureAuth(IAppBuilder app)

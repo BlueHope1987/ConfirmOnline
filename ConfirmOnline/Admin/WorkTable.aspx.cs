@@ -1,13 +1,11 @@
-﻿using ConfirmOnline.Models;
-using ConfirmOnline.Logic;
+﻿using ConfirmOnline.Logic;
+using ConfirmOnline.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace ConfirmOnline.Admin
 {
@@ -83,7 +81,7 @@ namespace ConfirmOnline.Admin
             TableCell tc = new TableCell();
             SiteContext context = new SiteContext();
 
-            if(dspNub|| dspOver || dspColor)
+            if (dspNub || dspOver || dspColor)
             {
                 List<string> qm = ((SiteSetting)Application["SystemSet"]).QueryMeth.Split(',').ToList();
                 string qurtxt = "";
@@ -112,13 +110,14 @@ namespace ConfirmOnline.Admin
                     {
                         int cot = query.Count();
                         tc.Text = cot.ToString();
-                        if (cot > 0) {
-                            tc.BackColor= System.Drawing.Color.YellowGreen;
+                        if (cot > 0)
+                        {
+                            tc.BackColor = System.Drawing.Color.YellowGreen;
                         }
                         e.Row.Cells.Add(tc);
                     }
 
-                    if (dspOver||dspColor)
+                    if (dspOver || dspColor)
                     {
                         foreach (EditFlow flow in editHistory)
                         {
@@ -131,8 +130,8 @@ namespace ConfirmOnline.Admin
                                 if (dspOver)
                                     //
                                     //if (((DataSet)WorkTableView.DataSource).Tables[0].Rows[e.Row.RowIndex][int.Parse(fc[i]) - 1].ToString() == fo[i].Replace("&comma&", ","))
-                                        
-                                    if (e.Row.Cells[int.Parse(fc[i]) - 1].Text.Replace("&nbsp;","") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？
+
+                                    if (e.Row.Cells[int.Parse(fc[i]) - 1].Text.Replace("&nbsp;", "") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？
                                     {
                                         e.Row.Cells[int.Parse(fc[i]) - 1].Text = fn[i].Replace("&comma&", ",");//转义逗号
                                         e.Row.Cells[int.Parse(fc[i]) - 1].Font.Bold = true;
@@ -159,8 +158,9 @@ namespace ConfirmOnline.Admin
             {
                 BtnDspOver.CssClass = "btn btn-primary";
             }
-            else {
-                BtnDspOver.CssClass= "btn btn-primary active";
+            else
+            {
+                BtnDspOver.CssClass = "btn btn-primary active";
             }
             LkBtnStart_Click(null, null);
         }
@@ -215,7 +215,8 @@ namespace ConfirmOnline.Admin
                     {
                         dr[countsub] = "";
                     }
-                    else {
+                    else
+                    {
                         dr[countsub] = Convert.ToString(WorkTableView.Rows[count].Cells[countsub].Text);
                     }
                 }
@@ -226,7 +227,7 @@ namespace ConfirmOnline.Admin
             //{
             //    dt.Rows.Add(row);
             //}
-            string fn= DateTime.Now.ToString("s").Replace(':', '-') + ".xls";
+            string fn = DateTime.Now.ToString("s").Replace(':', '-') + ".xls";
             string ffn = Server.MapPath("../App_Data/DownloadReady/Table") + fn;
             ExcelVisiter.TableToExcelFile(dt, ffn, Server.MapPath("../App_Data/XLSModelFile.xls"));
 

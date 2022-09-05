@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ConfirmOnline.Operation
 {
@@ -18,7 +13,7 @@ namespace ConfirmOnline.Operation
             }
             if ((string)Session["Struct"] == "OutFixTimes")
             {
-                megdiv.InnerHtml="感谢使用，您已达到最大修订次数。";
+                megdiv.InnerHtml = "感谢使用，您已达到最大修订次数。";
                 return;
             }
 

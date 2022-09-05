@@ -1,13 +1,11 @@
-﻿using System;
+﻿using ConfirmOnline.Logic;
+using ConfirmOnline.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using ConfirmOnline.Logic;
-using ConfirmOnline.Models;
 
 namespace ConfirmOnline.Operation
 {
@@ -41,42 +39,42 @@ namespace ConfirmOnline.Operation
                     if (s.IndexOf(q) == 0)
                     {
                         qurKey.Add(s.Split(':')[0]);
-                        qurName.Add(s.Split(':')[1].Replace("&comma&",","));//转义逗号
+                        qurName.Add(s.Split(':')[1].Replace("&comma&", ","));//转义逗号
                         CreateTextBoxList(s.Split(':')[0], s.Split(':')[1]);
                     }
                 }
             }
         }
 
-        private void CreateTextBoxList(string id,string describe)
+        private void CreateTextBoxList(string id, string describe)
         {
-            HtmlGenericControl div=new HtmlGenericControl("div");
-            HtmlGenericControl span=new HtmlGenericControl("span");
+            HtmlGenericControl div = new HtmlGenericControl("div");
+            HtmlGenericControl span = new HtmlGenericControl("span");
             TextBox txt;
 
-                //创建div   
-                div = new HtmlGenericControl();
-                div.TagName = "div";
-                div.ID = "divTextBox" + id;
-                div.Attributes["class"] = "input-group input-group-md col-md-offset-2";
-                div.Attributes["style"] = "margin-top: 10px;";
+            //创建div   
+            div = new HtmlGenericControl();
+            div.TagName = "div";
+            div.ID = "divTextBox" + id;
+            div.Attributes["class"] = "input-group input-group-md col-md-offset-2";
+            div.Attributes["style"] = "margin-top: 10px;";
 
-                //创建span   
-                span = new HtmlGenericControl();
-                span.ID = "spanTextBox" + id;
-                span.InnerHtml = describe + ":";
-                span.Attributes["class"] = "input-group-addon control-label";
-            
+            //创建span   
+            span = new HtmlGenericControl();
+            span.ID = "spanTextBox" + id;
+            span.InnerHtml = describe + ":";
+            span.Attributes["class"] = "input-group-addon control-label";
 
-                //创建TextBox   
-                txt = new TextBox();
-                txt.ID = "txt" + id;
-                txt.CssClass = "form-control";
 
-                //添加控件到容器   
-                div.Controls.Add(span);
-                div.Controls.Add(txt);
-                divContainer.Controls.Add(div);
+            //创建TextBox   
+            txt = new TextBox();
+            txt.ID = "txt" + id;
+            txt.CssClass = "form-control";
+
+            //添加控件到容器   
+            div.Controls.Add(span);
+            div.Controls.Add(txt);
+            divContainer.Controls.Add(div);
 
         }
 
@@ -98,10 +96,10 @@ namespace ConfirmOnline.Operation
             }
             if (submitChck())
             {
-                List<string> qv=new List<string>();
+                List<string> qv = new List<string>();
                 foreach (string s in qurMth)
                 {
-                    qv.Add(qurVal[qurKey.IndexOf(s)].Replace(",","&comma&"));//逗号转义
+                    qv.Add(qurVal[qurKey.IndexOf(s)].Replace(",", "&comma&"));//逗号转义
                 }
                 //Server.Transfer("RecodeCorrect.aspx", false);
                 Session["Struct"] = "LookupOK";
@@ -119,7 +117,7 @@ namespace ConfirmOnline.Operation
         protected bool submitChck()
         {
             errList = new List<string>();
-            for(int i = 0; i < qurVal.Count; i++)
+            for (int i = 0; i < qurVal.Count; i++)
             {
                 if (qurVal[i] == "")
                 {
@@ -158,7 +156,7 @@ namespace ConfirmOnline.Operation
                 //p.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold");
                 //p.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");
                 //divContainer.Controls.Add(p);
-                HtmlGenericControl div=new HtmlGenericControl("div");
+                HtmlGenericControl div = new HtmlGenericControl("div");
                 div.Attributes["class"] = "alert alert-danger";
                 div.InnerText = "没有查询到条目，请检查后重试。";
                 div.Style.Add(HtmlTextWriterStyle.Margin, "5px 0 5px");

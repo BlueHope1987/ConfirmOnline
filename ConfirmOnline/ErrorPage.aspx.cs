@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ConfirmOnline.Logic;
+using System;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using ConfirmOnline.Logic;
 
 namespace ConfirmOnline
 {

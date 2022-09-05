@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ConfirmOnline.Admin
@@ -22,7 +20,7 @@ namespace ConfirmOnline.Admin
         protected void EdFlLstView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowIndex == -1) return;
-            if(e.Row.Cells.Count > 4)
+            if (e.Row.Cells.Count > 4)
             {
                 List<string> ot = e.Row.Cells[3].Text.Split(',').ToList();
                 List<string> nt = new List<string>();

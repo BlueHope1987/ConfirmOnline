@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConfirmOnline.Models;
+using System;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ConfirmOnline.Models;
 
 namespace ConfirmOnline.Admin
 {
@@ -16,7 +14,7 @@ namespace ConfirmOnline.Admin
         }
         protected bool GetVisible(object objVal)
         {
-                return (bool)objVal;
+            return (bool)objVal;
         }
 
         protected void ListView1_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -41,7 +39,7 @@ namespace ConfirmOnline.Admin
 
         protected void BtnNew_Click(object sender, EventArgs e)
         {
-            OpsAre.Visible= false;
+            OpsAre.Visible = false;
             EditAre.Visible = true;
             CfgSave.Visible = false;
             CfgDelete.Visible = false;
@@ -52,7 +50,7 @@ namespace ConfirmOnline.Admin
         protected void BtnCfgEnable_Click(object sender, EventArgs e)
         {
             LinkButton lbenable = (LinkButton)sender;
-           
+
             if (lbenable.CommandArgument != "")
             {
                 //启用逻辑

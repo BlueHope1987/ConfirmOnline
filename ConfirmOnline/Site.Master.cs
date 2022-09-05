@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
+﻿using ConfirmOnline.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.AspNet.Identity;
-using System.Linq;
-using ConfirmOnline.Logic;
-using ConfirmOnline.Models;
 
 namespace ConfirmOnline
 {

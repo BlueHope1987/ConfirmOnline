@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
@@ -10,7 +9,7 @@ namespace ConfirmOnline.Logic
 {
     public class ExcelVisiter
     {
-        readonly public string filepath , dataTable, sConnectionString;
+        readonly public string filepath, dataTable, sConnectionString;
         readonly public List<string> columnName;
 
         public ExcelVisiter()
@@ -18,14 +17,14 @@ namespace ConfirmOnline.Logic
             return;
         }
 
-            public ExcelVisiter(string fp,string dt)
+        public ExcelVisiter(string fp, string dt)
         {
             filepath = fp;
-            dataTable= dt;
+            dataTable = dt;
 
-            if (System.IO.Path.GetExtension(filepath).Equals(".xls"))
+            if (System.IO.Path.GetExtension(filepath).Equals(".xls"))//Provider=Microsoft.Jet.OLEDB.4.0;
             {
-                sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
+                sConnectionString = "Provider=Microsoft.Ace.OleDb.12.0;" +
                     "Data Source=" + filepath + ";" +
                     "Extended Properties='Excel 8.0; HDR=NO; IMEX=1'";
             }
@@ -66,7 +65,7 @@ namespace ConfirmOnline.Logic
 
             // The code to follow uses a SQL SELECT command to display the data from the worksheet.
             // Create new OleDbCommand to return data from worksheet.
-            OleDbCommand objCmdSelect = new OleDbCommand("SELECT * FROM ["+ dataTable + "$]", objConn);
+            OleDbCommand objCmdSelect = new OleDbCommand("SELECT * FROM [" + dataTable + "$]", objConn);
             //需要在Excel 插入菜单-名称-定义 将数据选区定义为myRange1 若工作表为 [Sheet1$] 若不指特定第一个[$A1:R65536]
 
             // Create new OleDbDataAdapter that is used to build a DataSet
@@ -114,7 +113,7 @@ namespace ConfirmOnline.Logic
         public DataTable getDataSet(List<string> qurKey, List<string> qurVal)
         {
             string sqlwhere = " Where ";
-            for(int i=0;i<qurVal.Count;i++)
+            for (int i = 0; i < qurVal.Count; i++)
             {
                 if (i != 0) sqlwhere = sqlwhere + "AND ";
                 sqlwhere = sqlwhere +
@@ -129,7 +128,7 @@ namespace ConfirmOnline.Logic
             DataSet objDataset1 = new DataSet();
 
             objConn.Open();
-            objAdapter1.SelectCommand = new OleDbCommand("SELECT * FROM [" + dataTable + "$]" + sqlwhere, objConn); 
+            objAdapter1.SelectCommand = new OleDbCommand("SELECT * FROM [" + dataTable + "$]" + sqlwhere, objConn);
             objAdapter1.Fill(objDataset1, "XLData");
             objConn.Close();
 
@@ -159,7 +158,7 @@ namespace ConfirmOnline.Logic
             }
 
             sb = new StringBuilder();
-            connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ExcelFileName + ";Extended Properties=Excel 8.0; Extended Properties='Excel 8.0; HDR=NO; IMEX=0'";
+            connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ExcelFileName + ";Extended Properties='Excel 8.0; HDR=NO; IMEX=0'";//Microsoft.Jet.OLEDB.4.0
 
 
 
@@ -189,7 +188,8 @@ namespace ConfirmOnline.Logic
                     objConn.Open();
                     objCmd.ExecuteNonQuery();
                     objConn.Close();
-                }catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     objConn.Close();
                     return "在Excel中创建表失败，错误信息：" + e.Message;
@@ -234,7 +234,7 @@ namespace ConfirmOnline.Logic
                     objCmd.ExecuteNonQuery();
                 }
                 objConn.Close();
-                
+
                 ////无效
                 //if (dt.TableName != "Sheet1")
                 //{
@@ -266,7 +266,7 @@ namespace ConfirmOnline.Logic
             sbConnection.DataSource = filepath;
             if (System.IO.Path.GetExtension(filepath).Equals(".xls"))//for 97-03 Excel file
             {
-                sbConnection.Provider = "Microsoft.Jet.OLEDB.4.0";
+                sbConnection.Provider = "Microsoft.ACE.OLEDB.12.0";//Microsoft.Jet.OLEDB.4.0
                 strExtendedProperties = "Excel 8.0;HDR=Yes;IMEX=1";//HDR=ColumnHeader,IMEX=InterMixed
             }
             else if (System.IO.Path.GetExtension(filepath).Equals(".xlsx"))  //for 2007 Excel file
@@ -298,7 +298,7 @@ namespace ConfirmOnline.Logic
             using (OleDbConnection connection =
                     new OleDbConnection((filepath.TrimEnd().ToLower().EndsWith("x"))
                     ? "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='" + filepath + "';" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
-                    : "provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + filepath + "';Extended Properties=Excel 8.0;"))
+                    : "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='" + filepath + "';Extended Properties=Excel 8.0;")) //provider=Microsoft.Jet.OLEDB.4.0
             {
                 connection.Open();
                 DataTable dt = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
@@ -359,14 +359,13 @@ namespace ConfirmOnline.Logic
                 {
                     // fails here with "System.Data.OleDb.OleDbException: 
                     // External table is not in the expected format." 
-                    // 
-                    // 
+                    return;
                 }
             }
         }
 
         //枚举OLEDB驱动
-        public List<string> listOLEDBDrv()
+        public static List<string> listOLEDBDrv()
         {
             var reader = OleDbEnumerator.GetRootEnumerator();
 
