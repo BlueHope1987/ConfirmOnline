@@ -91,8 +91,9 @@ namespace ConfirmOnline.Admin
                     //txt += ((DataTable)WorkTableView.DataSource).Rows[e.Row.RowIndex][int.Parse(q) - 1];
                     qurtxt += e.Row.Cells[int.Parse(q) - 1].Text;
                 }
+                int curCfgID = ((SiteSetting)Application["SystemSet"]).CfgID;
 
-                IQueryable<EditFlow> query = context.EditFlow.Where(s => s.FixRow == qurtxt).OrderBy(x => x.FixerDate);
+                IQueryable<EditFlow> query = context.EditFlow.Where(s => (s.FixRow == qurtxt && s.CfgID == curCfgID)).OrderBy(x => x.FixerDate);
                 List<EditFlow> editHistory = query.ToList();
 
                 if (e.Row.RowIndex == -1)

@@ -23,6 +23,8 @@
                         <asp:LinkButton ID="BtnDspOver" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspOver_Click">显示最终状态</asp:LinkButton>
                         <asp:LinkButton ID="BtnColor" type="button" class="btn btn-primary" runat="server" OnClick="BtnColor_Click">着色修订项</asp:LinkButton>
                         <asp:LinkButton ID="BtnDspNub" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspNub_Click">显示修订次数</asp:LinkButton>
+                        <asp:LinkButton ID="BtnHidFixed" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspNub_Click">隐藏已修订</asp:LinkButton>
+                        <asp:LinkButton ID="BtnHid" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspNub_Click">隐藏未修订</asp:LinkButton>
                         <asp:LinkButton ID="SaveTable" type="button" class="btn btn-primary" runat="server" OnClick="SaveTable_Click">保存下面的数据</asp:LinkButton>
                     </div>
                     <asp:GridView ID="WorkTableView" runat="server" CssClass="table table-responsive table-condensed table-hover" OnRowDataBound="WorkTableView_RowDataBound" BorderStyle="Solid" BackColor="WhiteSmoke" BorderWidth="1px" EmptyDataText="表格中没有数据，请检查您的设置。" Font-Size="Small" GridLines="None">
