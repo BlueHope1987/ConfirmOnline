@@ -11,7 +11,7 @@ namespace ConfirmOnline.Admin
 {
     public partial class WorkTable : System.Web.UI.Page
     {
-        bool dspOver, dspColor, dspNub;//显示最终状态 着色 显示修订次数
+        bool dspOver, dspColor, dspNub, hidFixed, hidInital;//显示最终状态 着色 显示修订次数
         ExcelVisiter visiter;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -47,10 +47,43 @@ namespace ConfirmOnline.Admin
                 dspNub = false;
             }
 
+            if (BtnHidFixed.CssClass.Contains("active"))
+            {
+                hidFixed = true;
+            }
+            else
+            {
+                hidFixed = false;
+            }
+
+            if (BtnHidInital.CssClass.Contains("active"))
+            {
+                hidInital = true;
+            }
+            else
+            {
+                hidInital = false;
+            }
+
             WorkTableNote.Visible = false;
 
             visiter = new ExcelVisiter(Server.MapPath("../App_Data/UploadExcels/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
-            WorkTableView.DataSource = visiter.getDataSet();
+            DataSet ds= visiter.getDataSet();
+
+            if (hidFixed)
+            {
+                //隐藏已修订条目逻辑 处理dataset以筛选
+
+            };
+
+            if (hidInital)
+            {
+                //隐藏原始条目逻辑 处理dataset以筛选
+
+            };
+
+            WorkTableView.DataSource = ds;
+
             WorkTableView.DataBind();
 
             // Create a BoundField object to display an author's last name.
@@ -175,6 +208,32 @@ namespace ConfirmOnline.Admin
             else
             {
                 BtnColor.CssClass = "btn btn-primary active";
+            }
+            LkBtnStart_Click(null, null);
+        }
+
+        protected void BtnHidFixed_Click(object sender, EventArgs e)
+        {
+            if (BtnHidFixed.CssClass.Contains("active"))
+            {
+                BtnHidFixed.CssClass = "btn btn-primary";
+            }
+            else
+            {
+                BtnHidFixed.CssClass = "btn btn-primary active";
+            }
+            LkBtnStart_Click(null, null);
+        }
+
+        protected void BtnHidInital_Click(object sender, EventArgs e)
+        {
+            if (BtnHidInital.CssClass.Contains("active"))
+            {
+                BtnHidInital.CssClass = "btn btn-primary";
+            }
+            else
+            {
+                BtnHidInital.CssClass = "btn btn-primary active";
             }
             LkBtnStart_Click(null, null);
         }
