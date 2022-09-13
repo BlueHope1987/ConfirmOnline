@@ -11,7 +11,7 @@ namespace ConfirmOnline.Admin
 {
     public partial class WorkTable : System.Web.UI.Page
     {
-        bool dspOver, dspColor, dspNub, hidFixed, hidInital;//显示最终状态 着色 显示修订次数
+        bool dspOver, dspColor, dspNub, hidFixed, hidInital;//显示最终状态 着色 显示修订次数 隐藏修订 隐藏原始
         ExcelVisiter visiter;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -20,83 +20,88 @@ namespace ConfirmOnline.Admin
 
         protected void LkBtnStart_Click(object sender, EventArgs e)
         {
-            if (BtnDspOver.CssClass.Contains("active"))
-            {
-                dspOver = true;
-            }
-            else
-            {
-                dspOver = false;
-            }
-
-            if (BtnColor.CssClass.Contains("active"))
-            {
-                dspColor = true;
-            }
-            else
-            {
-                dspColor = false;
-            }
-
-            if (BtnDspNub.CssClass.Contains("active"))
-            {
-                dspNub = true;
-            }
-            else
-            {
-                dspNub = false;
-            }
-
-            if (BtnHidFixed.CssClass.Contains("active"))
-            {
-                hidFixed = true;
-            }
-            else
-            {
-                hidFixed = false;
-            }
-
-            if (BtnHidInital.CssClass.Contains("active"))
-            {
-                hidInital = true;
-            }
-            else
-            {
-                hidInital = false;
-            }
+            dspOver = BtnDspOver.CssClass.Contains("active") ? true : false;
+            dspColor= BtnColor.CssClass.Contains("active") ? true : false;
+            dspNub = BtnDspNub.CssClass.Contains("active") ? true : false;
+            hidFixed = BtnHidFixed.CssClass.Contains("active") ? true : false;
+            hidInital= BtnHidInital.CssClass.Contains("active") ? true : false;
 
             WorkTableNote.Visible = false;
 
             visiter = new ExcelVisiter(Server.MapPath("../App_Data/UploadExcels/") + ((SiteSetting)Application["SystemSet"]).DataSource, ((SiteSetting)Application["SystemSet"]).DataTable);
             DataSet ds= visiter.getDataSet();
 
-            if (hidFixed)
+
+            SiteContext context = new SiteContext();
+            int curCfgID = ((SiteSetting)Application["SystemSet"]).CfgID;
+
+            if (dspNub || dspOver || hidFixed || hidInital)
             {
-                //隐藏已修订条目逻辑 处理dataset以筛选
+                //从应用状态获取系统设置：查询字段 配置式ID
+                List<string> qm = ((SiteSetting)Application["SystemSet"]).QueryMeth.Split(',').ToList();
 
-            };
+                if (dspNub) ds.Tables[0].Columns.Add("修订次数",typeof(string));
 
-            if (hidInital)
-            {
-                //隐藏原始条目逻辑 处理dataset以筛选
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    string qurtxt = "";
+                    foreach (string q in qm)
+                    {
+                        if (qurtxt != "") qurtxt += ",";
+                        //txt += ((DataTable)WorkTableView.DataSource).Rows[e.Row.RowIndex][int.Parse(q) - 1];
+                        qurtxt += row[int.Parse(q) - 1];
+                    }
 
-            };
+                    //取编辑记录
+                    IQueryable<EditFlow> query = context.EditFlow.Where(s => (s.FixRow == qurtxt && s.CfgID == curCfgID)).OrderBy(x => x.FixerDate);
+                    List<EditFlow> editHistory = query.ToList();
+                    int edtflwCut= query.Count();
+                    if (edtflwCut > 0)
+                    {
+                        if (hidFixed)
+                        {
+                            row.Delete();
+                            continue;
+                        }
+                        if (dspNub) row["修订次数"] = query.Count();
+                    }
+                    else
+                    {
+                        if (hidInital)
+                        {
+                            row.Delete();
+                            continue;
+                        }
+                        if (dspNub) row["修订次数"] = "-";
+                    }
+
+                    if (dspOver)
+                    {
+                        foreach (EditFlow flow in editHistory)
+                        {
+                            List<string> fc = flow.FixCol.Split(',').ToList<string>();//修订列
+                            List<string> fn = flow.FixNew.Split(',').ToList<string>();//修订新
+                            List<string> fo = flow.FixOld.Split(',').ToList<string>();//修订旧
+                            Dictionary<string, string> dic = new Dictionary<string, string>();
+                            for (int i = 0; i < fc.Count; i++)
+                            {
+                                if (((string)row[int.Parse(fc[i]) - 1]).Replace("&nbsp;", "") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？
+                                {
+                                    row[int.Parse(fc[i]) - 1] = fn[i].Replace("&comma&", ",");//转义逗号
+                                }
+                                else
+                                {
+                                    throw new ArgumentNullException();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
 
             WorkTableView.DataSource = ds;
-
             WorkTableView.DataBind();
-
-            // Create a BoundField object to display an author's last name.
-            //BoundField lastNameBoundField = new BoundField();
-            //lastNameBoundField.DataField = "F1";
-            //lastNameBoundField.HeaderText = "Last Name";
-
-            //// Create a CheckBoxField object to indicate whether the author
-            //// is on contract.
-            //CheckBoxField contractCheckBoxField = new CheckBoxField();
-            //contractCheckBoxField.DataField = "F2";
-            //contractCheckBoxField.HeaderText = "Contract";
-
 
             WorkTableDiv.Visible = true;
 
@@ -104,20 +109,20 @@ namespace ConfirmOnline.Admin
 
         }
 
-        //protected void WorkTableView_RowCreated(object sender, GridViewRowEventArgs e)
-        //{
-        //}
 
         protected void WorkTableView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
             TableCell tc = new TableCell();
             SiteContext context = new SiteContext();
+            int cot=0;
 
             if (dspNub || dspOver || dspColor)
             {
+                //从应用状态获取系统设置：查询字段 配置式ID
                 List<string> qm = ((SiteSetting)Application["SystemSet"]).QueryMeth.Split(',').ToList();
                 string qurtxt = "";
+                if (e.Row.Cells.Count < qm.Count) return;
                 foreach (string q in qm)
                 {
                     if (qurtxt != "") qurtxt += ",";
@@ -126,60 +131,25 @@ namespace ConfirmOnline.Admin
                 }
                 int curCfgID = ((SiteSetting)Application["SystemSet"]).CfgID;
 
+                //取编辑记录
                 IQueryable<EditFlow> query = context.EditFlow.Where(s => (s.FixRow == qurtxt && s.CfgID == curCfgID)).OrderBy(x => x.FixerDate);
                 List<EditFlow> editHistory = query.ToList();
 
-                if (e.Row.RowIndex == -1)
+
+                if (dspNub) cot = query.Count();
+
+                foreach (EditFlow flow in editHistory)
                 {
-                    if (dspNub)
+                    List<string> fc = flow.FixCol.Split(',').ToList<string>();//修订列
+                    Dictionary<string, string> dic = new Dictionary<string, string>();
+                    for (int i = 0; i < fc.Count; i++)
                     {
-                        TableHeaderCell hc = new TableHeaderCell();
-                        hc.Text = "修订次数";
-                        e.Row.Cells.Add(hc);
+                        if (dspOver) e.Row.Cells[int.Parse(fc[i]) - 1].Font.Bold = true;
+                        if (dspColor) e.Row.Cells[int.Parse(fc[i]) - 1].BackColor = System.Drawing.Color.Orange;
+                        if (dspNub) if(cot > 0) e.Row.Cells[e.Row.Cells.Count-1].BackColor = System.Drawing.Color.YellowGreen;
                     }
                 }
-                else
-                {
-                    if (dspNub)
-                    {
-                        int cot = query.Count();
-                        tc.Text = cot.ToString();
-                        if (cot > 0)
-                        {
-                            tc.BackColor = System.Drawing.Color.YellowGreen;
-                        }
-                        e.Row.Cells.Add(tc);
-                    }
 
-                    if (dspOver || dspColor)
-                    {
-                        foreach (EditFlow flow in editHistory)
-                        {
-                            List<string> fc = flow.FixCol.Split(',').ToList<string>();
-                            List<string> fn = flow.FixNew.Split(',').ToList<string>();
-                            List<string> fo = flow.FixOld.Split(',').ToList<string>();
-                            Dictionary<string, string> dic = new Dictionary<string, string>();
-                            for (int i = 0; i < fc.Count; i++)
-                            {
-                                if (dspOver)
-                                    //
-                                    //if (((DataSet)WorkTableView.DataSource).Tables[0].Rows[e.Row.RowIndex][int.Parse(fc[i]) - 1].ToString() == fo[i].Replace("&comma&", ","))
-
-                                    if (e.Row.Cells[int.Parse(fc[i]) - 1].Text.Replace("&nbsp;", "") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？
-                                    {
-                                        e.Row.Cells[int.Parse(fc[i]) - 1].Text = fn[i].Replace("&comma&", ",");//转义逗号
-                                        e.Row.Cells[int.Parse(fc[i]) - 1].Font.Bold = true;
-                                    }
-                                    else
-                                    {
-                                        throw new ArgumentNullException();
-                                    }
-
-                                if (dspColor) e.Row.Cells[int.Parse(fc[i]) - 1].BackColor = System.Drawing.Color.Orange;
-                            }
-                        }
-                    }
-                }
             }
         }
 

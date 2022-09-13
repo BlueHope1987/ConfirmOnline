@@ -79,7 +79,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p><%: SystemSet.SiteName %> &copy; <%: DateTime.Now.Year %> - <%: SystemSet.SiteCopyRightStr %> via.平顶山市妇幼保健院妇幼信息管理科</p>
+                <p><%: SystemSet.SiteName %> &copy; <%: DateTime.Now.Year %> - <%: SystemSet.SiteCopyRightStr %> </p>
                 <p>PowerBy BluehopeStudio, 该版本仅供内部测试与临时应用 测试版本 0.8.0.0</p>
             </footer>
         </div>
