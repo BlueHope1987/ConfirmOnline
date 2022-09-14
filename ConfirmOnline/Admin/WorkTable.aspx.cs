@@ -34,6 +34,38 @@ namespace ConfirmOnline.Admin
 
             SiteContext context = new SiteContext();
             int curCfgID = ((SiteSetting)Application["SystemSet"]).CfgID;
+            int dataRowStart = ((SiteSetting)Application["SystemSet"]).SouRowRangeStart;
+            int dataRowEnd = ((SiteSetting)Application["SystemSet"]).SouRowRangeEnd;
+
+
+            List<string> souCol = new List<string>(((SiteSetting)Application["SystemSet"]).SouColReDef.Split(','));
+            List<string> qurName = new List<string>();
+            List<int> qurKey = new List<int>();
+
+            foreach (string s in souCol)
+            {
+                 qurKey.Add(int.Parse(s.Split(':')[0]));
+                 qurName.Add(s.Split(':')[1].Replace("&comma&", ","));//转义逗号  
+            }
+
+            //TODO:
+
+            //去表头 改列名
+            for(int i=0;i<qurKey.Count;i++)
+            {
+                ds.Tables[0].Columns[qurKey[i] - 1].ColumnName = qurName[i];
+                ds.Tables[0].Columns[qurKey[i] - 1].Caption= qurName[i];
+            }
+
+
+            if (ds.Tables[0].Rows.Count >= dataRowStart)
+            {
+                for (int i = 0; i < dataRowStart - 1; i++) //
+                {
+                    ds.Tables[0].Rows[i].Delete();
+                }
+                ds.AcceptChanges();
+            }
 
             if (dspNub || dspOver || hidFixed || hidInital)
             {
