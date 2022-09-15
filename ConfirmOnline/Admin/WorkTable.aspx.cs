@@ -20,11 +20,11 @@ namespace ConfirmOnline.Admin
 
         protected void LkBtnStart_Click(object sender, EventArgs e)
         {
-            dspOver = BtnDspOver.CssClass.Contains("active") ? true : false;
-            dspColor= BtnColor.CssClass.Contains("active") ? true : false;
-            dspNub = BtnDspNub.CssClass.Contains("active") ? true : false;
-            hidFixed = BtnHidFixed.CssClass.Contains("active") ? true : false;
-            hidInital= BtnHidInital.CssClass.Contains("active") ? true : false;
+            dspOver = BtnDspOver.CssClass.Contains("active");
+            dspColor= BtnColor.CssClass.Contains("active");
+            dspNub = BtnDspNub.CssClass.Contains("active");
+            hidFixed = BtnHidFixed.CssClass.Contains("active");
+            hidInital= BtnHidInital.CssClass.Contains("active");
 
             WorkTableNote.Visible = false;
 
@@ -45,19 +45,18 @@ namespace ConfirmOnline.Admin
             foreach (string s in souCol)
             {
                  qurKey.Add(int.Parse(s.Split(':')[0]));
-                 qurName.Add(s.Split(':')[1].Replace("&comma&", ","));//转义逗号  
+                 qurName.Add(s.Split(':')[1].Replace("&comma&", ",").Replace("&colon&",":"));//转义逗号冒号  
             }
+            souCol = null;
 
-            //TODO:
-
-            //去表头 改列名
+            //改列名
             for(int i=0;i<qurKey.Count;i++)
             {
                 ds.Tables[0].Columns[qurKey[i] - 1].ColumnName = qurName[i];
-                ds.Tables[0].Columns[qurKey[i] - 1].Caption= qurName[i];
+                ds.Tables[0].Columns[qurKey[i] - 1].Caption = qurName[i];
             }
 
-
+            //去表头
             if (ds.Tables[0].Rows.Count >= dataRowStart)
             {
                 for (int i = 0; i < dataRowStart - 1; i++) //
@@ -65,6 +64,69 @@ namespace ConfirmOnline.Admin
                     ds.Tables[0].Rows[i].Delete();
                 }
                 ds.AcceptChanges();
+            }
+
+            //检索数据
+            if (TbxSearch.Text.Length > 0)
+            {
+                DataRow[] foundRows=null;
+                if (TbxSearch.Text.StartsWith("Select:"))
+                {
+                    //select标准语法搜索 https://www.csharp-examples.net/dataview-rowfilter/
+                    try
+                    {
+                        foundRows = ds.Tables[0].Select(TbxSearch.Text.Replace("Select:", ""));
+                    }
+                    catch
+                    {
+                        TbxSearch.Text = "";
+                        TbxSearch.Attributes["placeholder"] = "错误的Select检索，请重试。";
+                        return;
+                    }
+                }
+                else
+                {
+                    //全文搜索
+                    List<DataRow> fR=new List<DataRow>();
+                    foreach (DataRow dr in ds.Tables[0].Rows) ///遍历所有的行
+                        foreach (DataColumn dc in ds.Tables[0].Columns) //遍历所有的列
+                        {
+                            if (dr[dc].ToString().Contains(TbxSearch.Text))
+                            {
+                                fR.Add(dr);
+                                break;
+                            }
+                        }
+                    if (fR.Count > 0)
+                    {
+                        foundRows = fR.ToArray();
+                        fR = null;
+                    }
+                }
+
+                if (foundRows!=null)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        bool keep=false;
+                        foreach (DataRow r in foundRows)
+                        {
+                            keep = keep || dr == r;
+                        }
+                        if (!keep)
+                        {
+                            dr.Delete();
+                        }
+                    }
+                    ds.AcceptChanges();
+                    TbxSearch.Attributes["placeholder"] = "输入再次开始您的检索";
+                }
+                else
+                {
+                    ds.Tables[0].Rows.Clear();
+                    TbxSearch.Text = "";
+                    TbxSearch.Attributes["placeholder"] = "没找到？尝试Select:专业搜索";
+                }
             }
 
             if (dspNub || dspOver || hidFixed || hidInital)
@@ -185,8 +247,10 @@ namespace ConfirmOnline.Admin
             }
         }
 
-
-
+        protected void BtnSearch_Click(object sender, EventArgs e)
+        {
+            LkBtnStart_Click(null, null);
+        }
 
         protected void BtnDspOver_Click(object sender, EventArgs e)
         {

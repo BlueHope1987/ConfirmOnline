@@ -19,7 +19,15 @@
                     <asp:LinkButton ID="LkBtnStart" class="btn btn-warning" runat="server" OnClick="LkBtnStart_Click">点击开始</asp:LinkButton>
                 </div>
                 <div id="WorkTableDiv" runat="server" visible="false" class="row">
-                    <div class="btn-group btn-group-sm pull-right">
+                    <div class="col-md-4" style="padding-left:0px;">
+                        <div class="input-group input-group-sm">
+                            <asp:TextBox ID="TbxSearch" runat="server" class="form-control" placeholder="输入您想检索的内容"></asp:TextBox>
+                            <span class="input-group-btn">
+                                <asp:LinkButton ID="BtnSearch" type="button" class="btn btn-primary" runat="server" OnClick="BtnSearch_Click">搜索</asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-sm pull-right cod-md-6">
                         <asp:LinkButton ID="BtnDspOver" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspOver_Click">显示最终状态</asp:LinkButton>
                         <asp:LinkButton ID="BtnColor" type="button" class="btn btn-primary" runat="server" OnClick="BtnColor_Click">着色修订项</asp:LinkButton>
                         <asp:LinkButton ID="BtnDspNub" type="button" class="btn btn-primary" runat="server" OnClick="BtnDspNub_Click">显示修订次数</asp:LinkButton>

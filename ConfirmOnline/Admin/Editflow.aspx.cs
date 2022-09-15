@@ -33,6 +33,22 @@ namespace ConfirmOnline.Admin
                     }
                 }
                 e.Row.Cells[3].Text = string.Join(",", nt);
+
+            }
+        }
+
+        protected void SearchLkBt_Click(Object sender, CommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+
+                case "Search":
+
+                    break;
+
+                default:
+
+                    break;
             }
         }
 
@@ -40,6 +56,22 @@ namespace ConfirmOnline.Admin
         {
             EditFlowNote.Visible = false;
             EdFlViewDiv.Visible = true;
+        }
+
+        protected void EdFlLstView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+
+                case "Search":
+                    EditFlowDBVister.SelectCommand = "SELECT * FROM [EditFlows] WHERE ([CfgID] = @CfgID) and ([FixRow] =N'"+ ((LinkButton)EdFlLstView.Rows[int.Parse((string)e.CommandArgument)].Cells[2].Controls[0]).Text + "')";
+                    EdFlLstView.DataBind();
+                    break;
+
+                default:
+
+                    break;
+            }
         }
     }
 }
