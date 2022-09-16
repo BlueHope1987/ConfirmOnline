@@ -179,7 +179,7 @@ namespace ConfirmOnline.Admin
                             Dictionary<string, string> dic = new Dictionary<string, string>();
                             for (int i = 0; i < fc.Count; i++)
                             {
-                                if (((string)row[int.Parse(fc[i]) - 1]).Replace("&nbsp;", "") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？
+                                if ((Convert.ToString(row[int.Parse(fc[i]) - 1])).Replace("&nbsp;", "") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？BUG:(String)遇到DbNull会报错无法强制转换 Convert.ToString解决
                                 {
                                     row[int.Parse(fc[i]) - 1] = fn[i].Replace("&comma&", ",");//转义逗号
                                 }
@@ -240,7 +240,11 @@ namespace ConfirmOnline.Admin
                     {
                         if (dspOver) e.Row.Cells[int.Parse(fc[i]) - 1].Font.Bold = true;
                         if (dspColor) e.Row.Cells[int.Parse(fc[i]) - 1].BackColor = System.Drawing.Color.Orange;
-                        if (dspNub) if(cot > 0) e.Row.Cells[e.Row.Cells.Count-1].BackColor = System.Drawing.Color.YellowGreen;
+                        if (dspNub)
+                            if(cot > 0) { 
+                                e.Row.Cells[e.Row.Cells.Count-1].BackColor = System.Drawing.Color.YellowGreen;
+                                e.Row.Cells[e.Row.Cells.Count - 1].Text= "<a href='Editflow.aspx?qw="+ System.Web.HttpUtility.UrlEncode(qurtxt) + "' style='color: darkblue;font-weight: bold;'>" + cot.ToString() + "</a>";
+                            }
                     }
                 }
 

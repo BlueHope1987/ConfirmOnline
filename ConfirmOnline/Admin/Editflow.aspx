@@ -19,6 +19,17 @@
                     <asp:LinkButton ID="LkBtnStart" class="btn btn-warning" runat="server" OnClick="LkBtnStart_Click">点击开始</asp:LinkButton>
                 </div>
                 <div id="EdFlViewDiv" runat="server" visible="false" class="row">
+
+                    <div class="col-md-4" style="padding-left:0px;">
+                        <div class="input-group input-group-sm">
+                            <asp:TextBox ID="TbxSearch" runat="server" class="form-control" placeholder="输入您想检索的条目"></asp:TextBox>
+                            <span class="input-group-btn">
+                                <asp:LinkButton ID="BtnSearch" type="button" class="btn btn-primary" runat="server" OnClick="BtnSearch_Click">搜索</asp:LinkButton>
+                                <a ID="LinkButton1" class="btn btn-success" href="Editflow.aspx?reset=true">重置</a>
+                            </span>
+                        </div>
+                    </div>
+
                     <asp:SqlDataSource runat="server" ID="EditFlowDBVister" ConnectionString='<%$ ConnectionStrings:SiteContext %>' SelectCommand="SELECT * FROM [EditFlows] WHERE ([CfgID] = @CfgID)">
                         <SelectParameters>
                             <asp:SessionParameter Name="CfgID" SessionField="currCfgID" Type="Int32" />
