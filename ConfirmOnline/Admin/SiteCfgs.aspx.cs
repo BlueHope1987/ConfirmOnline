@@ -1,5 +1,6 @@
 ﻿using ConfirmOnline.Models;
 using System;
+using System.IO;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -10,7 +11,15 @@ namespace ConfirmOnline.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (IsPostBack)
+            {
+                if(Page.Request.Form["__EVENTTARGET"]== "UploadFiles")
+                {
+                    //文件上传逻辑
+                }
+               // ((SiteCfgs)sender).Request.Form["file"]
+               //Request.Form["__EVENTARGUMENT"]
+            }
         }
         protected bool GetVisible(object objVal)
         {
@@ -143,6 +152,40 @@ namespace ConfirmOnline.Admin
         {
             CfgEditForm.DeleteItem();
             CancelEdit_Click(null, null);
+        }
+
+        protected void DataSource_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void FileList_PreRender(object sender, EventArgs e)
+        {
+            DirectoryInfo di = new DirectoryInfo(Server.MapPath("~/App_Data/UploadExcels"));
+            FileInfo[] fiArray = di.GetFiles("*.xls*");
+            FileList.Items.Clear();
+            if (fiArray.Count() > 0)
+            {
+                foreach(FileInfo fn in fiArray)
+                {
+                    FileList.Items.Add(fn.Name);
+                }
+            }
+        }
+
+        protected void FleDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void FleUpload_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void FileList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FleDelete.CssClass = "btn btn-warning";
         }
     }
 }

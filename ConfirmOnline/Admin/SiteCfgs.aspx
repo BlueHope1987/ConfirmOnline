@@ -216,8 +216,8 @@
                                                     <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' /></td>
-                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' /></td>
+                                                    <th>Excel文件</th><td><asp:LinkButton ID="DataSourceTextBox" runat="server" Text='<%# Eval("DataSource") %>' OnClick="DataSource_Click" /></td>
+                                                    <th>Excel工作表</th><td><asp:LinkButton ID="DataTableTextBox" runat="server" Text='<%# Eval("DataTable") %>' OnClick="DataSource_Click" /></td>
                                                     <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
                                                 </tr>
                                                 <tr>
@@ -262,8 +262,8 @@
                                                     <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' /></td>
-                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' /></td>
+                                                    <th>Excel文件</th><td><asp:LinkButton ID="DataSourceTextBox" runat="server" Text='<%# Eval("DataSource") %>' OnClick="DataSource_Click" /></td>
+                                                    <th>Excel工作表</th><td><asp:LinkButton ID="DataTableTextBox" runat="server" Text='<%# Eval("DataTable") %>'  OnClick="DataSource_Click" /></td>
                                                     <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
                                                 </tr>
                                                 <tr>
@@ -354,6 +354,30 @@
                             <asp:LinkButton ID="CancelEdit" runat="server" type="button" class="btn btn-primary" OnClick="CancelEdit_Click">取消</asp:LinkButton>
                         </div>
                     </div>
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 id="H1" runat="server" class="panel-title">表格选择</h3>
+                        </div>
+                        <div class="row">
+                            <asp:ListBox ID="FileList" runat="server" Width="176px" OnPreRender="FileList_PreRender" CssClass="col-md-4"></asp:ListBox>
+                            <div class="con-md-1">
+                                <asp:LinkButton ID="FleDelete" runat="server" type="button" class="btn btn-warning disabled"  OnClick="FleDelete_Click">删除</asp:LinkButton>
+                                <a id="FleUploadBtn" type="button" class="btn btn-warning">上传</a>
+                            </div>
+                            <script type="text/javascript">
+                                $('[id$=FileList]').change(function () { $('[id$=FleDelete]').removeClass("disabled"); });
+                                $('#FleUploadBtn').after('<input type="file" id="fileLoad" name="file" accept=".xls, .xlsx" multiple style="display:none" onchange="fleUpload()">');
+                                $('#FleUploadBtn').click(function () { $('#fileLoad').click(); });
+                                function fleUpload() {
+                                    __doPostBack('UploadFiles', $('#fileLoad').val());
+                                }
+                            </script>
+                        </div>
+                         <div class="panel-footer text-right">
+                            <asp:LinkButton ID="LinkButton1" runat="server" type="button" class="btn btn-warning" OnClick="CfgSave_Click">确定</asp:LinkButton>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
