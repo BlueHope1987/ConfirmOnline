@@ -13,13 +13,22 @@ namespace ConfirmOnline.Admin
         {
             if (IsPostBack)
             {
-                if(Page.Request.Form["__EVENTTARGET"]== "UploadFiles")
+                if(Request.Form["__EVENTTARGET"]== "UploadFiles")
                 {
-                    //文件上传逻辑
+                   //文件上传逻辑
+                   //Request.Form["__EVENTARGUMENT"]
+                   foreach(string fn in Request.Files)
+                   {
+                        System.Web.HttpPostedFile f = Request.Files[fn];
+                        int j=1;
+                        if(File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last())))
+                            for (j = 2; File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() +"_"+ f.FileName.Split('\\').Last())); j++);
+                        if(j==1) f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last()));
+                        else f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last()));//需增加重名逻辑
+                    }
                 }
-               // ((SiteCfgs)sender).Request.Form["file"]
-               //Request.Form["__EVENTARGUMENT"]
             }
+            Page.Form.Enctype = "multipart/form-data";
         }
         protected bool GetVisible(object objVal)
         {
@@ -175,7 +184,8 @@ namespace ConfirmOnline.Admin
 
         protected void FleDelete_Click(object sender, EventArgs e)
         {
-
+            if (File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text)))
+                File.Delete(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text));
         }
 
         protected void FleUpload_Click(object sender, EventArgs e)

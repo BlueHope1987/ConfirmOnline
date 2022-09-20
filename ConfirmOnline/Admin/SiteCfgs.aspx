@@ -359,7 +359,7 @@
                             <h3 id="H1" runat="server" class="panel-title">表格选择</h3>
                         </div>
                         <div class="row">
-                            <asp:ListBox ID="FileList" runat="server" Width="176px" OnPreRender="FileList_PreRender" CssClass="col-md-4"></asp:ListBox>
+                            <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="col-md-4"></asp:ListBox>
                             <div class="con-md-1">
                                 <asp:LinkButton ID="FleDelete" runat="server" type="button" class="btn btn-warning disabled"  OnClick="FleDelete_Click">删除</asp:LinkButton>
                                 <a id="FleUploadBtn" type="button" class="btn btn-warning">上传</a>
