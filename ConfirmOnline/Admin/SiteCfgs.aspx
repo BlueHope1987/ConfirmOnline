@@ -191,7 +191,7 @@
 
 
                 <div id="EditAre" runat="server" class="row" visible="false">
-                    <div class="panel panel-warning">
+                    <div class="panel panel-warning row">
                         <div class="panel-heading">
                             <h3 id="EditAreTitle" runat="server" class="panel-title">面板标题</h3>
                         </div>
@@ -354,18 +354,37 @@
                             <asp:LinkButton ID="CancelEdit" runat="server" type="button" class="btn btn-primary" OnClick="CancelEdit_Click">取消</asp:LinkButton>
                         </div>
                     </div>
-                    <div class="panel panel-warning">
+                    <div class="panel panel-warning row">
                         <div class="panel-heading">
                             <h3 id="H1" runat="server" class="panel-title">表格选择</h3>
                         </div>
-                        <div class="row">
-                            <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="col-md-4"></asp:ListBox>
-                            <div class="con-md-1">
-                                <asp:LinkButton ID="FleDelete" runat="server" type="button" class="btn btn-warning disabled"  OnClick="FleDelete_Click">删除</asp:LinkButton>
-                                <a id="FleUploadBtn" type="button" class="btn btn-warning">上传</a>
-                            </div>
+                        <div class="panel-body">
+                            <table>
+                                <tr class="row">
+                                    <td class="col-md-4">
+                                        <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="form-select col-md-12" Rows="8"></asp:ListBox>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <div class="btn-group-vertical">
+                                            <asp:LinkButton ID="FleSelect" runat="server" type="button" class="btn btn-info btn-sm disabled" OnClick="FleSelect_Click">访问</asp:LinkButton>
+                                            <a id="FleUploadBtn" type="button" class="btn btn-warning btn-sm">上传</a>
+                                            <asp:LinkButton ID="FleDelete" runat="server" type="button" class="btn btn-warning btn-sm disabled" OnClick="FleDelete_Click">删除</asp:LinkButton>
+                                        </div>
+                                    </td>
+                                    <td class="col-md-7">
+                                        <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged"></asp:DropDownList>
+                                        <div id="WorkTablePvBox" runat="server"></div>
+                                    </td>
+                                </tr>
+                            </table>
+
                             <script type="text/javascript">
-                                $('[id$=FileList]').change(function () { $('[id$=FleDelete]').removeClass("disabled"); });
+                                $('[id$=FileList]').change(function (){
+                                    $('[id$=FleSelect]').removeClass("disabled");
+                                    $('[id$=FleDelete]').removeClass("disabled");
+                                });
+                                $('[id$=FileList]').children("option").addClass("glyphicon glyphicon-calendar");
+                                $('[id$=FileList]').children("option").css('display', 'block');
                                 $('#FleUploadBtn').after('<input type="file" id="fileLoad" name="file" accept=".xls, .xlsx" multiple style="display:none" onchange="fleUpload()">');
                                 $('#FleUploadBtn').click(function () { $('#fileLoad').click(); });
                                 function fleUpload() {
@@ -373,7 +392,7 @@
                                 }
                             </script>
                         </div>
-                         <div class="panel-footer text-right">
+                        <div class="panel-footer text-right">
                             <asp:LinkButton ID="LinkButton1" runat="server" type="button" class="btn btn-warning" OnClick="CfgSave_Click">确定</asp:LinkButton>
                         </div>
                     </div>

@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ConfirmOnline.Logic;
+using System.Collections.Generic;
 
 namespace ConfirmOnline.Admin
 {
@@ -17,14 +19,17 @@ namespace ConfirmOnline.Admin
                 {
                    //文件上传逻辑
                    //Request.Form["__EVENTARGUMENT"]
-                   foreach(string fn in Request.Files)
+                   for(int fn=0; fn<Request.Files.Count;fn++)
                    {
                         System.Web.HttpPostedFile f = Request.Files[fn];
-                        int j=1;
-                        if(File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last())))
-                            for (j = 2; File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() +"_"+ f.FileName.Split('\\').Last())); j++);
-                        if(j==1) f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last()));
-                        else f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last()));//需增加重名逻辑
+                        if(!File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last())))
+                            f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last()));
+                        else
+                        {
+                            int j;
+                            for (j = 2; File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last())); j++) ;
+                            f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last()));//重名逻辑
+                        }
                     }
                 }
             }
@@ -170,6 +175,7 @@ namespace ConfirmOnline.Admin
 
         protected void FileList_PreRender(object sender, EventArgs e)
         {
+            string sltitem = FileList.Text;
             DirectoryInfo di = new DirectoryInfo(Server.MapPath("~/App_Data/UploadExcels"));
             FileInfo[] fiArray = di.GetFiles("*.xls*");
             FileList.Items.Clear();
@@ -180,6 +186,8 @@ namespace ConfirmOnline.Admin
                     FileList.Items.Add(fn.Name);
                 }
             }
+            if(FileList.Items.FindByText(sltitem)!=null)
+                FileList.Items.FindByText(sltitem).Selected = true;
         }
 
         protected void FleDelete_Click(object sender, EventArgs e)
@@ -196,6 +204,42 @@ namespace ConfirmOnline.Admin
         protected void FileList_SelectedIndexChanged(object sender, EventArgs e)
         {
             FleDelete.CssClass = "btn btn-warning";
+        }
+
+        protected void FleSelect_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text)))
+            {
+                List<string> fl = new List<string>();
+                WorkTableSelect.Items.Clear();
+                try
+                {
+                    fl=ExcelVisiter.ToExcelsSheetList(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text));
+
+                }
+                catch
+                {
+                    fl.Add("枚举工作表失败，请检查文件");
+                }
+
+                WorkTableSelect.Items.Add("下拉以开始选择工作表");
+
+                foreach (string s in fl)
+                {
+                    WorkTableSelect.Items.Add(s);
+                }
+            }
+        }
+
+        protected void WorkTableSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(WorkTableSelect.Text== "枚举工作表失败，请检查文件" || WorkTableSelect.Text== "下拉以开始选择工作表") return;
+            ExcelVisiter ev = new ExcelVisiter(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text), WorkTableSelect.Text);
+            GridView WorkTablePv = new GridView();
+            WorkTablePv.CssClass = "table";
+            WorkTablePvBox.Controls.Add(WorkTablePv);
+            WorkTablePv.DataSource=ev.getDataSet("SELECT TOP 10 * FROM [" + WorkTableSelect.Text + "$]");
+            WorkTablePv.DataBind();
         }
     }
 }
