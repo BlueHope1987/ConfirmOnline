@@ -373,7 +373,7 @@
                                     </td>
                                     <td class="col-md-7">
                                         <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged" Height="20px"></asp:DropDownList>
-                                        <div id="WorkTablePvBox" Class="col-md-12 pre-scrollable" style="height: 180px; margin-top: 2px; padding: 2px;" runat="server">
+                                        <div id="WorkTablePvBox" Class="col-md-12" style="height: 180px; margin-top: 2px; padding: 2px; overflow:auto; max-width=50%;" runat="server">
                                         </div>
                                     </td>
                                 </tr>

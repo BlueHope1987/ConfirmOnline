@@ -6,32 +6,60 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ConfirmOnline.Logic;
 using System.Collections.Generic;
+using System.Data;
 
 namespace ConfirmOnline.Admin
 {
     public partial class SiteCfgs : System.Web.UI.Page
     {
+        int tableOpsStep;//五步数据操作序号
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
             {
-                if(Request.Form["__EVENTTARGET"]== "UploadFiles")
-                {
-                   //文件上传逻辑
-                   //Request.Form["__EVENTARGUMENT"]
-                   for(int fn=0; fn<Request.Files.Count;fn++)
-                   {
-                        System.Web.HttpPostedFile f = Request.Files[fn];
-                        if(f.FileName.ToLower().Contains("xls")|| f.FileName.ToLower().Contains("xlsx"))
-                            if(!File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last())))
-                                f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last()));
-                            else
-                            {
-                                int j;
-                                for (j = 2; File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last())); j++) ;
-                                f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last()));//重名逻辑
-                            }
-                    }
+                switch (Request.Form["__EVENTTARGET"]){
+                    case "UploadFiles":
+                        //文件上传逻辑
+                        //Request.Form["__EVENTARGUMENT"]
+                        for (int fn = 0; fn < Request.Files.Count; fn++)
+                        {
+                            System.Web.HttpPostedFile f = Request.Files[fn];
+                            if (f.FileName.ToLower().Contains("xls") || f.FileName.ToLower().Contains("xlsx"))
+                                if (!File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last())))
+                                    f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last()));
+                                else
+                                {
+                                    int j;
+                                    for (j = 2; File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last())); j++) ;
+                                    f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last()));//重名逻辑
+                                }
+                        }
+                        break;
+
+                    case "datastartrow":
+                        tableOpsStep = 1;
+                        WorkTableSelect_SelectedIndexChanged(null, null);
+                        break;
+                    case "addworkcol":
+                        tableOpsStep = 2;
+                        WorkTableSelect_SelectedIndexChanged(null, null);
+                        break;
+                    case "dataheadrow":
+                        tableOpsStep = 3;
+                        WorkTableSelect_SelectedIndexChanged(null, null);
+                        break;
+                    case "datacolrename":
+                        tableOpsStep = 4;
+                        WorkTableSelect_SelectedIndexChanged(null, null);
+                        break;
+                    case "datacolkey":
+                        tableOpsStep = 5;
+                        WorkTableSelect_SelectedIndexChanged(null, null);
+                        break;
+                    default:
+
+                        break;
                 }
             }
             Page.Form.Enctype = "multipart/form-data";
@@ -235,10 +263,34 @@ namespace ConfirmOnline.Admin
                 GridView WorkTablePv = new GridView();
                 WorkTablePv.Style.Add("font-size", "10px");
                 WorkTablePv.Style.Add("text-align", "center");
-                WorkTablePv.CellPadding = 2;
+                WorkTablePv.Style.Add("white-space", "nowrap");
+                WorkTablePv.CssClass = "table-condensed";
+                WorkTablePv.RowDataBound += WorkTablePv_RowDataBound;
 
                 System.Web.UI.HtmlControls.HtmlGenericControl p = new System.Web.UI.HtmlControls.HtmlGenericControl("p");
-                p.InnerText = "以下选取 " + FileList.Text + " 文件中 " + WorkTableSelect.Text + " 工作表的前10行。";
+                switch (tableOpsStep)
+                {
+                    case 1:
+                        p.InnerHtml += "(操作2/5)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 完成点这里下一步</a>）";
+                        break;
+                    case 2:
+                        p.InnerHtml += "(操作3/5)点击序号选取需要套取的标题行（<a href=\"javascript:__doPostBack('dataheadrow','-1')\" > 没有点这里下一步</a>）";
+                        break;
+                    case 3:
+                        p.InnerHtml += "(操作4/5)为您选取的各个列更新名称（<a href=\"javascript:__doPostBack('datacolrename','')\" > 完成点这里下一步</a>）";
+                        break;
+                    case 4:
+                        p.InnerHtml += "(操作5/5)选取数个用以访问者检索到唯一记录的列（<a href=\"javascript:__doPostBack('datacolkey','')\" > 点这里完成</a>）";
+                        break;
+                    case 5:
+                        p.InnerHtml += "您已完成向导操作生成设定值，点击完成返回设置。";
+                        break;
+                    default:
+                        p.InnerHtml += "(操作1/5)点击序号选取数据起始行";
+                        break;
+                }
+                p.InnerHtml += "<br/>以下选取 " + FileList.Text + " 文件中 " + WorkTableSelect.Text + " 工作表的前10行。";
+
                 p.Style.Add(HtmlTextWriterStyle.Margin, "0");
 
                 WorkTablePvBox.Controls.Add(p);
@@ -247,6 +299,63 @@ namespace ConfirmOnline.Admin
                 WorkTablePv.DataSource=ev.getDataSet("SELECT TOP 10 * FROM [" + WorkTableSelect.Text + "$]");
                 WorkTablePv.DataBind();
 
+            }
+        }
+
+        private void WorkTablePv_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowIndex == -1)
+            {
+                TableHeaderCell hc = new TableHeaderCell();
+
+                switch (Request.Form["__EVENTTARGET"])
+                {
+                    case "datastartrow":
+                        break;
+                    case "addworkcol":
+                        hc.Text = "行序号";
+                        hc.BackColor = System.Drawing.Color.LightBlue;
+                        e.Row.Cells.Add(hc);
+                        break;
+                    case "dataheadrow":
+                        break;
+                    case "datacolrename":
+                        break;
+                    case "datacolkey":
+                        break;
+                    default:
+                        hc.Text = "行序号";
+                        hc.BackColor = System.Drawing.Color.LightBlue;
+                        e.Row.Cells.Add(hc);
+                        break;
+
+                }
+            }
+            else
+            {
+                TableCell tc = new TableCell();
+
+                switch (Request.Form["__EVENTTARGET"]){
+                    case "datastartrow":
+                        break;
+                    case "addworkcol":
+                        tc.Text = "<a href=\"javascript:__doPostBack('dataheadrow','" + (e.Row.RowIndex + 1).ToString() + "')\">" + (e.Row.RowIndex + 1).ToString() + "</a>";
+                        tc.BackColor = System.Drawing.Color.AliceBlue;
+                        e.Row.Cells.Add(tc);
+                        break;
+                    case "dataheadrow":
+                        break;
+                    case "datacolrename":
+                        break;
+                    case "datacolkey":
+                        break;
+                    default:
+                        tc.Text = "<a href=\"javascript:__doPostBack('datastartrow','" + (e.Row.RowIndex + 1).ToString() + "')\">" + (e.Row.RowIndex + 1).ToString() + "</a>";
+                        tc.BackColor = System.Drawing.Color.AliceBlue;
+                        e.Row.Cells.Add(tc);
+                        break;
+
+                }
             }
         }
     }
