@@ -22,14 +22,15 @@ namespace ConfirmOnline.Admin
                    for(int fn=0; fn<Request.Files.Count;fn++)
                    {
                         System.Web.HttpPostedFile f = Request.Files[fn];
-                        if(!File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last())))
-                            f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last()));
-                        else
-                        {
-                            int j;
-                            for (j = 2; File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last())); j++) ;
-                            f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last()));//重名逻辑
-                        }
+                        if(f.FileName.ToLower().Contains("xls")|| f.FileName.ToLower().Contains("xlsx"))
+                            if(!File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last())))
+                                f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + f.FileName.Split('\\').Last()));
+                            else
+                            {
+                                int j;
+                                for (j = 2; File.Exists(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last())); j++) ;
+                                f.SaveAs(Server.MapPath("~/App_Data/UploadExcels/" + j.ToString() + "_" + f.FileName.Split('\\').Last()));//重名逻辑
+                            }
                     }
                 }
             }
@@ -196,11 +197,6 @@ namespace ConfirmOnline.Admin
                 File.Delete(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text));
         }
 
-        protected void FleUpload_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void FileList_SelectedIndexChanged(object sender, EventArgs e)
         {
             FleDelete.CssClass = "btn btn-warning";
@@ -233,13 +229,25 @@ namespace ConfirmOnline.Admin
 
         protected void WorkTableSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(WorkTableSelect.Text== "枚举工作表失败，请检查文件" || WorkTableSelect.Text== "下拉以开始选择工作表") return;
-            ExcelVisiter ev = new ExcelVisiter(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text), WorkTableSelect.Text);
-            GridView WorkTablePv = new GridView();
-            WorkTablePv.CssClass = "table";
-            WorkTablePvBox.Controls.Add(WorkTablePv);
-            WorkTablePv.DataSource=ev.getDataSet("SELECT TOP 10 * FROM [" + WorkTableSelect.Text + "$]");
-            WorkTablePv.DataBind();
+            if(!(WorkTableSelect.Text== "枚举工作表失败，请检查文件" || WorkTableSelect.Text== "下拉以开始选择工作表"))
+            {
+                ExcelVisiter ev = new ExcelVisiter(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text), WorkTableSelect.Text);
+                GridView WorkTablePv = new GridView();
+                WorkTablePv.Style.Add("font-size", "10px");
+                WorkTablePv.Style.Add("text-align", "center");
+                WorkTablePv.CellPadding = 2;
+
+                System.Web.UI.HtmlControls.HtmlGenericControl p = new System.Web.UI.HtmlControls.HtmlGenericControl("p");
+                p.InnerText = "以下选取 " + FileList.Text + " 文件中 " + WorkTableSelect.Text + " 工作表的前10行。";
+                p.Style.Add(HtmlTextWriterStyle.Margin, "0");
+
+                WorkTablePvBox.Controls.Add(p);
+                WorkTablePvBox.Controls.Add(WorkTablePv);
+
+                WorkTablePv.DataSource=ev.getDataSet("SELECT TOP 10 * FROM [" + WorkTableSelect.Text + "$]");
+                WorkTablePv.DataBind();
+
+            }
         }
     }
 }

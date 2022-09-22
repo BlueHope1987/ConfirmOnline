@@ -360,9 +360,9 @@
                         </div>
                         <div class="panel-body">
                             <table>
-                                <tr class="row">
+                                <tr class="row" style="vertical-align:top;">
                                     <td class="col-md-4">
-                                        <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="form-select col-md-12" Rows="8"></asp:ListBox>
+                                        <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="form-select col-md-12" Rows="8" Height="200px"></asp:ListBox>
                                     </td>
                                     <td class="col-md-1">
                                         <div class="btn-group-vertical">
@@ -372,8 +372,9 @@
                                         </div>
                                     </td>
                                     <td class="col-md-7">
-                                        <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged"></asp:DropDownList>
-                                        <div id="WorkTablePvBox" runat="server"></div>
+                                        <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged" Height="20px"></asp:DropDownList>
+                                        <div id="WorkTablePvBox" Class="col-md-12 pre-scrollable" style="height: 180px; margin-top: 2px; padding: 2px;" runat="server">
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
