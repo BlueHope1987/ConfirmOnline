@@ -38,11 +38,25 @@ namespace ConfirmOnline.Admin
                         break;
 
                     case "datastartrow":
+                        Session["tmpdatastartrow"] = int.Parse(Request.Form["__EVENTARGUMENT"]);
+                        Session["tmpworkcol"] = null;
                         tableOpsStep = 1;
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
                     case "addworkcol":
-                        tableOpsStep = 2;
+                        if (int.Parse(Request.Form["__EVENTARGUMENT"]) == -1)
+                        {
+                            tableOpsStep = 2;
+                        }
+                        else {
+                            if (int.Parse(Request.Form["__EVENTARGUMENT"]) >= 0)
+                            {
+                                if (Session["tmpworkcol"] == null)
+                                    Session["tmpworkcol"] = new List<int>();
+                                ((List<int>)Session["tmpworkcol"]).Add(int.Parse(Request.Form["__EVENTARGUMENT"]));
+                            }
+                            tableOpsStep = 1;
+                        };
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
                     case "dataheadrow":
@@ -54,7 +68,20 @@ namespace ConfirmOnline.Admin
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
                     case "datacolkey":
-                        tableOpsStep = 5;
+                        if (Request.Form["__EVENTARGUMENT"] == "")
+                        {
+                            tableOpsStep = 5;
+                        }
+                        else
+                        {
+                            if (int.Parse(Request.Form["__EVENTARGUMENT"]) >= 0)
+                            {
+                                if (Session["tmpcolkey"] == null)
+                                    Session["tmpcolkey"] = new List<int>();
+                                ((List<int>)Session["tmpcolkey"]).Add(int.Parse(Request.Form["__EVENTARGUMENT"]));
+                            }
+                            tableOpsStep = 4;
+                        };
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
                     default:
@@ -308,20 +335,48 @@ namespace ConfirmOnline.Admin
             {
                 TableHeaderCell hc = new TableHeaderCell();
 
-                switch (Request.Form["__EVENTTARGET"])
+                switch (tableOpsStep)
                 {
-                    case "datastartrow":
+                    case 1:
+                        foreach(TableCell tc in e.Row.Cells)
+                        {
+                            if(Session["tmpworkcol"]!=null)
+                            {
+                                if (((List<int>)Session["tmpworkcol"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
+                                    tc.Text = tc.Text + "（No." + (((List<int>)Session["tmpworkcol"]).IndexOf(e.Row.Cells.GetCellIndex(tc) + 1) + 1) + "）";
+                                else
+                                    tc.Text = "<a href=\"javascript:__doPostBack('addworkcol','" + (e.Row.Cells.GetCellIndex(tc) + 1) + "')\">" + tc.Text + "</a>";
+                            }
+                            else
+                            {
+                                tc.Text = "<a href=\"javascript:__doPostBack('addworkcol','" + (e.Row.Cells.GetCellIndex(tc) + 1) + "')\">" + tc.Text + "</a>";
+                            }
+                        }
                         break;
-                    case "addworkcol":
+                    case 2:
                         hc.Text = "行序号";
                         hc.BackColor = System.Drawing.Color.LightBlue;
                         e.Row.Cells.Add(hc);
                         break;
-                    case "dataheadrow":
+                    case 3:
                         break;
-                    case "datacolrename":
+                    case 4:
+                        foreach (TableCell tc in e.Row.Cells)
+                        {
+                            if (Session["tmpcolkey"] != null)
+                            {
+                                if (((List<int>)Session["tmpcolkey"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
+                                    tc.Text = tc.Text + "（索引列）";
+                                else
+                                    tc.Text = "<a href=\"javascript:__doPostBack('datacolkey','" + (e.Row.Cells.GetCellIndex(tc) + 1) + "')\">" + tc.Text + "</a>";
+                            }
+                            else
+                            {
+                                tc.Text = "<a href=\"javascript:__doPostBack('datacolkey','" + (e.Row.Cells.GetCellIndex(tc) + 1) + "')\">" + tc.Text + "</a>";
+                            }
+                        }
                         break;
-                    case "datacolkey":
+                    case 5:
                         break;
                     default:
                         hc.Text = "行序号";
@@ -335,19 +390,19 @@ namespace ConfirmOnline.Admin
             {
                 TableCell tc = new TableCell();
 
-                switch (Request.Form["__EVENTTARGET"]){
-                    case "datastartrow":
+                switch (tableOpsStep){
+                    case 1:
                         break;
-                    case "addworkcol":
+                    case 2:
                         tc.Text = "<a href=\"javascript:__doPostBack('dataheadrow','" + (e.Row.RowIndex + 1).ToString() + "')\">" + (e.Row.RowIndex + 1).ToString() + "</a>";
                         tc.BackColor = System.Drawing.Color.AliceBlue;
                         e.Row.Cells.Add(tc);
                         break;
-                    case "dataheadrow":
+                    case 3:
                         break;
-                    case "datacolrename":
+                    case 4:
                         break;
-                    case "datacolkey":
+                    case 5:
                         break;
                     default:
                         tc.Text = "<a href=\"javascript:__doPostBack('datastartrow','" + (e.Row.RowIndex + 1).ToString() + "')\">" + (e.Row.RowIndex + 1).ToString() + "</a>";
