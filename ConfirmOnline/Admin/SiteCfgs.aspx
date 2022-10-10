@@ -216,8 +216,8 @@
                                                     <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Excel文件</th><td><asp:LinkButton ID="DataSourceTextBox" runat="server" Text='<%# Eval("DataSource") %>' OnClick="DataSource_Click" /></td>
-                                                    <th>Excel工作表</th><td><asp:LinkButton ID="DataTableTextBox" runat="server" Text='<%# Eval("DataTable") %>' OnClick="DataSource_Click" /></td>
+                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" /></td>
+                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' OnClick="DataSource_Click" /></td>
                                                     <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
                                                 </tr>
                                                 <tr>
@@ -262,8 +262,8 @@
                                                     <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Excel文件</th><td><asp:LinkButton ID="DataSourceTextBox" runat="server" Text='<%# Eval("DataSource") %>' OnClick="DataSource_Click" /></td>
-                                                    <th>Excel工作表</th><td><asp:LinkButton ID="DataTableTextBox" runat="server" Text='<%# Eval("DataTable") %>'  OnClick="DataSource_Click" /></td>
+                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" /></td>
+                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>'  OnClick="DataSource_Click" /></td>
                                                     <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
                                                 </tr>
                                                 <tr>

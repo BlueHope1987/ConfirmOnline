@@ -72,7 +72,7 @@ namespace ConfirmOnline.Admin
                         Session["tmpcolrename"] = new List<string>();
                         foreach(int i in (List<int>)Session["tmpworkcol"])
                         {
-                            ((List<string>)Session["tmpcolrename"]).Add(i.ToString() + ":" + ((string)Request.Form["tmpdataheadrow-cell"+(i-1)]).Replace(":", "&colon&"));//转义冒号
+                            ((List<string>)Session["tmpcolrename"]).Add(i.ToString() + ":" + ((string)Request.Form["tmpdataheadrow-cell"+(i-1)]).Replace(",","&comma&").Replace(":", "&colon&"));//转义逗号冒号
                         }
                         tableOpsStep = 4;
                         WorkTableSelect_SelectedIndexChanged(null, null);
@@ -308,6 +308,25 @@ namespace ConfirmOnline.Admin
                 System.Web.UI.HtmlControls.HtmlGenericControl p = new System.Web.UI.HtmlControls.HtmlGenericControl("p");
                 switch (tableOpsStep)
                 {
+                    //case 1:
+                    //    p.InnerHtml += "<div class=\"alert alert-info\">(步骤2/5)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 完成点这里下一步</a>）</div>";
+                    //    break;
+                    //case 2:
+                    //    p.InnerHtml += "<div class=\"alert alert-info\"(步骤3/5)点击序号选取需要套取的标题行（<a href=\"javascript:__doPostBack('dataheadrow','-1')\" > 没有点这里下一步</a>）</div>";
+                    //    break;
+                    //case 3:
+                    //    p.InnerHtml += "<div class=\"alert alert-info\"(步骤4/5)为您选取的各个列更新名称（<a href=\"javascript:__doPostBack('datacolrename','')\" > 完成点这里下一步</a>）</div>";
+                    //    break;
+                    //case 4:
+                    //    p.InnerHtml += "<div class=\"alert alert-info\"(步骤5/5)选取数个用以访问者检索到唯一记录的列（<a href=\"javascript:__doPostBack('datacolkey','')\" > 点这里完成</a>）</div>";
+                    //    break;
+                    //case 5:
+                    //    p.InnerHtml += "<div class=\"alert alert-info\"您已完成向导操作生成设定值，点击完成返回设置。</div>";
+                    //    BtnGuideFin.CssClass= "btn btn-warning";
+                    //    break;
+                    //default:
+                    //    p.InnerHtml += "<font color=\"DarkOrange\">(步骤1/5)点击序号选取数据起始行</font>";
+                    //    break;
                     case 1:
                         p.InnerHtml += "<font color=\"DarkOrange\">(步骤2/5)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 完成点这里下一步</a>）</font>";
                         break;
@@ -322,7 +341,7 @@ namespace ConfirmOnline.Admin
                         break;
                     case 5:
                         p.InnerHtml += "<font color=\"DarkOrange\">您已完成向导操作生成设定值，点击完成返回设置。</font>";
-                        BtnGuideFin.CssClass= "btn btn-warning";
+                        BtnGuideFin.CssClass = "btn btn-warning";
                         break;
                     default:
                         p.InnerHtml += "<font color=\"DarkOrange\">(步骤1/5)点击序号选取数据起始行</font>";
@@ -350,7 +369,8 @@ namespace ConfirmOnline.Admin
                 switch (tableOpsStep)
                 {
                     case 1:
-                        foreach(TableCell tc in e.Row.Cells)
+                        e.Row.BackColor = System.Drawing.Color.AliceBlue;
+                        foreach (TableCell tc in e.Row.Cells)
                         {
                             if(Session["tmpworkcol"]!=null)
                             {
@@ -371,6 +391,7 @@ namespace ConfirmOnline.Admin
                         e.Row.Cells.Add(hc);
                         break;
                     case 3://名称更新
+                        e.Row.BackColor = System.Drawing.Color.AliceBlue;
                         if (Session["tmpdataheadrow"] != null)
                             if((int)Session["tmpdataheadrow"] != -1)
                             {
@@ -396,6 +417,7 @@ namespace ConfirmOnline.Admin
                                 
                         break;
                     case 4:
+                        e.Row.BackColor = System.Drawing.Color.AliceBlue;
                         foreach (TableCell tc in e.Row.Cells)
                         {
                             if (((List<int>)Session["tmpworkcol"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
@@ -405,7 +427,7 @@ namespace ConfirmOnline.Admin
                                     foreach (string str in ((List<String>)Session["tmpcolrename"]))
                                     {
                                         if (int.Parse(str.Split(':')[0]) - 1 == e.Row.Cells.GetCellIndex(tc))
-                                            tc.Text = str.Split(':')[1].Replace("&colon&", ":");//冒号转义
+                                            tc.Text = str.Split(':')[1].Replace("&comma&", ",").Replace("&colon&", ":");//逗号冒号转义
                                     }
                                 }
 
@@ -424,6 +446,7 @@ namespace ConfirmOnline.Admin
                         }
                         break;
                     case 5:
+                        e.Row.BackColor = System.Drawing.Color.AliceBlue;
                         foreach (TableCell tc in e.Row.Cells)
                         {
                             if (((List<int>)Session["tmpworkcol"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
@@ -433,7 +456,7 @@ namespace ConfirmOnline.Admin
                                     foreach (string str in ((List<String>)Session["tmpcolrename"]))
                                     {
                                         if (int.Parse(str.Split(':')[0]) - 1 == e.Row.Cells.GetCellIndex(tc))
-                                            tc.Text = str.Split(':')[1].Replace("&colon&", ":");//冒号转义
+                                            tc.Text = str.Split(':')[1].Replace("&comma&", ",").Replace("&colon&", ":");//逗号冒号转义
                                     }
                                 }
 
@@ -489,12 +512,16 @@ namespace ConfirmOnline.Admin
 
         protected void BtnGuideFin_Click(object sender, EventArgs e)
         {
-            if (tableOpsStep == 5)
-            {
-
-            }
-            else
-                return;
+            ((TextBox)CfgEditForm.FindControl("SouRowRangeStartTextBox")).Text = ((int)Session["tmpdatastartrow"]).ToString(); //起始行
+            Session["tmpdatastartrow"] = null;
+            ((TextBox)CfgEditForm.FindControl("QueryMethTextBox")).Text = string.Join(",", ((List<int>)Session["tmpcolkey"])); //查询列
+            Session["tmpcolkey"] = null;
+            ((TextBox)CfgEditForm.FindControl("SouColReDefTextBox")).Text = string.Join(",", ((List<string>)Session["tmpcolrename"]));//涉及列
+            Session["tmpdataheadrow"] = null;
+            Session["tmpcolrename"] = null;
+            Session["tmpworkcol"] = null;
+            ((TextBox)CfgEditForm.FindControl("DataSourceTextBox")).Text = FileList.Text; //excel文件
+            ((TextBox)CfgEditForm.FindControl("DataTableTextBox")).Text = WorkTableSelect.Text; //工作表
         }
     }
 }
