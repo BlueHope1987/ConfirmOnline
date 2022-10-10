@@ -371,8 +371,8 @@
                                             <asp:LinkButton ID="FleDelete" runat="server" type="button" class="btn btn-warning btn-sm disabled" OnClick="FleDelete_Click">删除</asp:LinkButton>
                                         </div>
                                     </td>
-                                    <td class="col-md-7">
-                                        <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged" Height="20px"></asp:DropDownList>
+                                    <td class="col-md-7" style="font-size: 10px;">
+                                        <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged" Height="20px" Visible="False"></asp:DropDownList>
                                         <div id="WorkTablePvBox" Class="col-md-12" style="height: 180px; margin-top: 2px; padding: 2px; overflow:auto; max-width=50%;" runat="server">
                                         </div>
                                     </td>
@@ -394,7 +394,7 @@
                             </script>
                         </div>
                         <div class="panel-footer text-right">
-                            <asp:LinkButton ID="LinkButton1" runat="server" type="button" class="btn btn-warning" OnClick="CfgSave_Click">确定</asp:LinkButton>
+                            <asp:LinkButton ID="BtnGuideFin" runat="server" type="button" class="btn btn-warning disabled" OnClick="BtnGuideFin_Click">确定</asp:LinkButton>
                         </div>
                     </div>
 

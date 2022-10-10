@@ -13,6 +13,7 @@ namespace ConfirmOnline.Admin
     public partial class SiteCfgs : System.Web.UI.Page
     {
         int tableOpsStep;//五步数据操作序号
+        GridView WorkTablePv;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,6 +41,9 @@ namespace ConfirmOnline.Admin
                     case "datastartrow":
                         Session["tmpdatastartrow"] = int.Parse(Request.Form["__EVENTARGUMENT"]);
                         Session["tmpworkcol"] = null;
+                        Session["tmpdataheadrow"] = null;
+                        Session["tmpcolkey"] = null;
+                        Session["tmpcolrename"] = null;
                         tableOpsStep = 1;
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
@@ -60,10 +64,16 @@ namespace ConfirmOnline.Admin
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
                     case "dataheadrow":
+                        Session["tmpdataheadrow"] = int.Parse(Request.Form["__EVENTARGUMENT"]);
                         tableOpsStep = 3;
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
                     case "datacolrename":
+                        Session["tmpcolrename"] = new List<string>();
+                        foreach(int i in (List<int>)Session["tmpworkcol"])
+                        {
+                            ((List<string>)Session["tmpcolrename"]).Add(i.ToString() + ":" + ((string)Request.Form["tmpdataheadrow-cell"+(i-1)]).Replace(":", "&colon&"));//转义冒号
+                        }
                         tableOpsStep = 4;
                         WorkTableSelect_SelectedIndexChanged(null, null);
                         break;
@@ -263,6 +273,7 @@ namespace ConfirmOnline.Admin
             {
                 List<string> fl = new List<string>();
                 WorkTableSelect.Items.Clear();
+                WorkTableSelect.Visible = true;
                 try
                 {
                     fl=ExcelVisiter.ToExcelsSheetList(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text));
@@ -287,7 +298,7 @@ namespace ConfirmOnline.Admin
             if(!(WorkTableSelect.Text== "枚举工作表失败，请检查文件" || WorkTableSelect.Text== "下拉以开始选择工作表"))
             {
                 ExcelVisiter ev = new ExcelVisiter(Server.MapPath("~/App_Data/UploadExcels/" + FileList.Text), WorkTableSelect.Text);
-                GridView WorkTablePv = new GridView();
+                WorkTablePv = new GridView();
                 WorkTablePv.Style.Add("font-size", "10px");
                 WorkTablePv.Style.Add("text-align", "center");
                 WorkTablePv.Style.Add("white-space", "nowrap");
@@ -298,25 +309,26 @@ namespace ConfirmOnline.Admin
                 switch (tableOpsStep)
                 {
                     case 1:
-                        p.InnerHtml += "(操作2/5)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 完成点这里下一步</a>）";
+                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤2/5)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 完成点这里下一步</a>）</font>";
                         break;
                     case 2:
-                        p.InnerHtml += "(操作3/5)点击序号选取需要套取的标题行（<a href=\"javascript:__doPostBack('dataheadrow','-1')\" > 没有点这里下一步</a>）";
+                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤3/5)点击序号选取需要套取的标题行（<a href=\"javascript:__doPostBack('dataheadrow','-1')\" > 没有点这里下一步</a>）</font>";
                         break;
                     case 3:
-                        p.InnerHtml += "(操作4/5)为您选取的各个列更新名称（<a href=\"javascript:__doPostBack('datacolrename','')\" > 完成点这里下一步</a>）";
+                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤4/5)为您选取的各个列更新名称（<a href=\"javascript:__doPostBack('datacolrename','')\" > 完成点这里下一步</a>）</font>";
                         break;
                     case 4:
-                        p.InnerHtml += "(操作5/5)选取数个用以访问者检索到唯一记录的列（<a href=\"javascript:__doPostBack('datacolkey','')\" > 点这里完成</a>）";
+                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤5/5)选取数个用以访问者检索到唯一记录的列（<a href=\"javascript:__doPostBack('datacolkey','')\" > 点这里完成</a>）</font>";
                         break;
                     case 5:
-                        p.InnerHtml += "您已完成向导操作生成设定值，点击完成返回设置。";
+                        p.InnerHtml += "<font color=\"DarkOrange\">您已完成向导操作生成设定值，点击完成返回设置。</font>";
+                        BtnGuideFin.CssClass= "btn btn-warning";
                         break;
                     default:
-                        p.InnerHtml += "(操作1/5)点击序号选取数据起始行";
+                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤1/5)点击序号选取数据起始行</font>";
                         break;
                 }
-                p.InnerHtml += "<br/>以下选取 " + FileList.Text + " 文件中 " + WorkTableSelect.Text + " 工作表的前10行。";
+                p.InnerHtml += "<br/><font color=\"Silver\">以下选取 " + FileList.Text + " 文件中 " + WorkTableSelect.Text + " 工作表的前10行。</font>";
 
                 p.Style.Add(HtmlTextWriterStyle.Margin, "0");
 
@@ -358,25 +370,86 @@ namespace ConfirmOnline.Admin
                         hc.BackColor = System.Drawing.Color.LightBlue;
                         e.Row.Cells.Add(hc);
                         break;
-                    case 3:
+                    case 3://名称更新
+                        if (Session["tmpdataheadrow"] != null)
+                            if((int)Session["tmpdataheadrow"] != -1)
+                            {
+                                foreach (TableCell tc in e.Row.Cells)
+                                {
+                                    if (((List<int>)Session["tmpworkcol"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1)) { 
+                                        int idx = e.Row.Cells.GetCellIndex(tc);
+                                        tc.Text = "<input name=\"tmpdataheadrow-cell" + idx + "\" type=\"text\" value=\"" + (string)((DataSet)WorkTablePv.DataSource).Tables[0].Rows[((int)Session["tmpdataheadrow"]) - 1][idx] + "\" id=name=\"tmpdataheadrow-cell" + idx + "\" style=\"width: 100%;\">";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (TableCell tc in e.Row.Cells)
+                                {
+                                    if (((List<int>)Session["tmpworkcol"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
+                                    {
+                                        int idx = e.Row.Cells.GetCellIndex(tc);
+                                        tc.Text = "<input name=\"tmpdataheadrow-cell" + idx + "\" type=\"text\" value=\"" + tc.Text + "\" id=name=\"tmpdataheadrow-cell" + idx + "\" style=\"width: 100%;\">";
+                                    }
+                                }
+                            }
+                                
                         break;
                     case 4:
                         foreach (TableCell tc in e.Row.Cells)
                         {
-                            if (Session["tmpcolkey"] != null)
+                            if (((List<int>)Session["tmpworkcol"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
                             {
-                                if (((List<int>)Session["tmpcolkey"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
-                                    tc.Text = tc.Text + "（索引列）";
+                                if (Session["tmpcolrename"] != null)
+                                {
+                                    foreach (string str in ((List<String>)Session["tmpcolrename"]))
+                                    {
+                                        if (int.Parse(str.Split(':')[0]) - 1 == e.Row.Cells.GetCellIndex(tc))
+                                            tc.Text = str.Split(':')[1].Replace("&colon&", ":");//冒号转义
+                                    }
+                                }
+
+                                if (Session["tmpcolkey"] != null)
+                                {
+                                    if (((List<int>)Session["tmpcolkey"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
+                                        tc.Text = tc.Text + "（索引列）";
+                                    else
+                                        tc.Text = "<a href=\"javascript:__doPostBack('datacolkey','" + (e.Row.Cells.GetCellIndex(tc) + 1) + "')\">" + tc.Text + "</a>";
+                                }
                                 else
+                                {
                                     tc.Text = "<a href=\"javascript:__doPostBack('datacolkey','" + (e.Row.Cells.GetCellIndex(tc) + 1) + "')\">" + tc.Text + "</a>";
-                            }
-                            else
-                            {
-                                tc.Text = "<a href=\"javascript:__doPostBack('datacolkey','" + (e.Row.Cells.GetCellIndex(tc) + 1) + "')\">" + tc.Text + "</a>";
+                                }
                             }
                         }
                         break;
                     case 5:
+                        foreach (TableCell tc in e.Row.Cells)
+                        {
+                            if (((List<int>)Session["tmpworkcol"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
+                            {
+                                if (Session["tmpcolrename"] != null)
+                                {
+                                    foreach (string str in ((List<String>)Session["tmpcolrename"]))
+                                    {
+                                        if (int.Parse(str.Split(':')[0]) - 1 == e.Row.Cells.GetCellIndex(tc))
+                                            tc.Text = str.Split(':')[1].Replace("&colon&", ":");//冒号转义
+                                    }
+                                }
+
+                                if (Session["tmpcolkey"] != null)
+                                {
+                                    if (((List<int>)Session["tmpcolkey"]).Exists(x => x == e.Row.Cells.GetCellIndex(tc) + 1))
+                                        tc.Text = "<b>" + tc.Text + "（索引列）" + "</b>";
+                                    else
+                                        tc.Text = "<b>" + tc.Text + "(工作列)" + "</b>";
+                                }
+                                else
+                                {
+                                    tc.Text = "<b>" + tc.Text + "(工作列)"+ "</b>";
+                                }
+                            }
+                        }
                         break;
                     default:
                         hc.Text = "行序号";
@@ -412,6 +485,16 @@ namespace ConfirmOnline.Admin
 
                 }
             }
+        }
+
+        protected void BtnGuideFin_Click(object sender, EventArgs e)
+        {
+            if (tableOpsStep == 5)
+            {
+
+            }
+            else
+                return;
         }
     }
 }
