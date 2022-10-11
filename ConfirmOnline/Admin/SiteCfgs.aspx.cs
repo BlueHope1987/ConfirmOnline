@@ -38,6 +38,10 @@ namespace ConfirmOnline.Admin
                         }
                         break;
 
+                    case "startGuide":
+                        GuideDiv.Visible = true;
+                        break;
+
                     case "datastartrow":
                         Session["tmpdatastartrow"] = int.Parse(Request.Form["__EVENTARGUMENT"]);
                         Session["tmpworkcol"] = null;
@@ -305,49 +309,47 @@ namespace ConfirmOnline.Admin
                 WorkTablePv.CssClass = "table-condensed";
                 WorkTablePv.RowDataBound += WorkTablePv_RowDataBound;
 
+                WorkTableSelect.Visible = false;
                 System.Web.UI.HtmlControls.HtmlGenericControl p = new System.Web.UI.HtmlControls.HtmlGenericControl("p");
+                p.InnerHtml += "<font color=\"Silver\">以下选取 " + FileList.Text + " 文件中 " + WorkTableSelect.Text + " 工作表的前10行。</font><br/>";
+
                 switch (tableOpsStep)
                 {
-                    //case 1:
-                    //    p.InnerHtml += "<div class=\"alert alert-info\">(步骤2/5)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 完成点这里下一步</a>）</div>";
-                    //    break;
-                    //case 2:
-                    //    p.InnerHtml += "<div class=\"alert alert-info\"(步骤3/5)点击序号选取需要套取的标题行（<a href=\"javascript:__doPostBack('dataheadrow','-1')\" > 没有点这里下一步</a>）</div>";
-                    //    break;
-                    //case 3:
-                    //    p.InnerHtml += "<div class=\"alert alert-info\"(步骤4/5)为您选取的各个列更新名称（<a href=\"javascript:__doPostBack('datacolrename','')\" > 完成点这里下一步</a>）</div>";
-                    //    break;
-                    //case 4:
-                    //    p.InnerHtml += "<div class=\"alert alert-info\"(步骤5/5)选取数个用以访问者检索到唯一记录的列（<a href=\"javascript:__doPostBack('datacolkey','')\" > 点这里完成</a>）</div>";
-                    //    break;
-                    //case 5:
-                    //    p.InnerHtml += "<div class=\"alert alert-info\"您已完成向导操作生成设定值，点击完成返回设置。</div>";
-                    //    BtnGuideFin.CssClass= "btn btn-warning";
-                    //    break;
-                    //default:
-                    //    p.InnerHtml += "<font color=\"DarkOrange\">(步骤1/5)点击序号选取数据起始行</font>";
-                    //    break;
                     case 1:
-                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤2/5)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 完成点这里下一步</a>）</font>";
+                        if (Session["tmpworkcol"] != null)
+                        {
+                            p.InnerHtml += "<span class=\"label label-warning\">(步骤2/5:涉及列)点击标头依次添加参与查询修订的所有列（<a href=\"javascript:__doPostBack('addworkcol','-1')\" > 点这里完成</a>）</span>";
+                        }
+                        else
+                        {
+                            p.InnerHtml += "<span class=\"label label-warning\">(步骤2/5:涉及列)点击标头依次添加参与查询修订的所有列（请按照您最终想呈现的顺序点击）</span>";
+                        }
                         break;
                     case 2:
-                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤3/5)点击序号选取需要套取的标题行（<a href=\"javascript:__doPostBack('dataheadrow','-1')\" > 没有点这里下一步</a>）</font>";
+                        p.InnerHtml += "<span class=\"label label-warning\">(步骤3/5:套取项目)点击序号选取需要套取的标题行（<a href=\"javascript:__doPostBack('dataheadrow','-1')\" > 没有点这里下一步</a>）</span>";
                         break;
                     case 3:
-                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤4/5)为您选取的各个列更新名称（<a href=\"javascript:__doPostBack('datacolrename','')\" > 完成点这里下一步</a>）</font>";
+                        p.InnerHtml += "<span class=\"label label-warning\">(步骤4/5:重设项目)为您选取的各个列更新名称（<a href=\"javascript:__doPostBack('datacolrename','')\" > 完成点这里下一步</a>）</span>";
                         break;
                     case 4:
-                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤5/5)选取数个用以访问者检索到唯一记录的列（<a href=\"javascript:__doPostBack('datacolkey','')\" > 点这里完成</a>）</font>";
+                        if (Session["tmpcolkey"] != null)
+                        {
+                            p.InnerHtml += "<span class=\"label label-warning\">(步骤5/5:查询列)选取数个用以访问者检索到唯一记录的列（<a href=\"javascript:__doPostBack('datacolkey','')\" > 点这里完成</a>）</span>";
+                        }
+                        else
+                        {
+                            p.InnerHtml += "<span class=\"label label-warning\">(步骤5/5:查询列)选取数个用以访问者检索到唯一记录的列";
+                        }                            
                         break;
                     case 5:
-                        p.InnerHtml += "<font color=\"DarkOrange\">您已完成向导操作生成设定值，点击完成返回设置。</font>";
+                        p.InnerHtml += "<span class=\"label label-warning\">您已完成向导操作生成设定值，点击完成向导按钮返回设置。</span>";
+                        BtnGuideFin.Text = "完成向导";
                         BtnGuideFin.CssClass = "btn btn-warning";
                         break;
                     default:
-                        p.InnerHtml += "<font color=\"DarkOrange\">(步骤1/5)点击序号选取数据起始行</font>";
+                        p.InnerHtml += "<span class=\"label label-warning\">(步骤1/5:起始行)点击序号选取数据起始行</span>";
                         break;
                 }
-                p.InnerHtml += "<br/><font color=\"Silver\">以下选取 " + FileList.Text + " 文件中 " + WorkTableSelect.Text + " 工作表的前10行。</font>";
 
                 p.Style.Add(HtmlTextWriterStyle.Margin, "0");
 
@@ -491,7 +493,7 @@ namespace ConfirmOnline.Admin
                         break;
                     case 2:
                         tc.Text = "<a href=\"javascript:__doPostBack('dataheadrow','" + (e.Row.RowIndex + 1).ToString() + "')\">" + (e.Row.RowIndex + 1).ToString() + "</a>";
-                        tc.BackColor = System.Drawing.Color.AliceBlue;
+                        tc.BackColor = System.Drawing.Color.PowderBlue;
                         e.Row.Cells.Add(tc);
                         break;
                     case 3:
@@ -502,7 +504,7 @@ namespace ConfirmOnline.Admin
                         break;
                     default:
                         tc.Text = "<a href=\"javascript:__doPostBack('datastartrow','" + (e.Row.RowIndex + 1).ToString() + "')\">" + (e.Row.RowIndex + 1).ToString() + "</a>";
-                        tc.BackColor = System.Drawing.Color.AliceBlue;
+                        tc.BackColor = System.Drawing.Color.PowderBlue;
                         e.Row.Cells.Add(tc);
                         break;
 
@@ -512,16 +514,24 @@ namespace ConfirmOnline.Admin
 
         protected void BtnGuideFin_Click(object sender, EventArgs e)
         {
-            ((TextBox)CfgEditForm.FindControl("SouRowRangeStartTextBox")).Text = ((int)Session["tmpdatastartrow"]).ToString(); //起始行
-            Session["tmpdatastartrow"] = null;
-            ((TextBox)CfgEditForm.FindControl("QueryMethTextBox")).Text = string.Join(",", ((List<int>)Session["tmpcolkey"])); //查询列
-            Session["tmpcolkey"] = null;
-            ((TextBox)CfgEditForm.FindControl("SouColReDefTextBox")).Text = string.Join(",", ((List<string>)Session["tmpcolrename"]));//涉及列
-            Session["tmpdataheadrow"] = null;
-            Session["tmpcolrename"] = null;
-            Session["tmpworkcol"] = null;
-            ((TextBox)CfgEditForm.FindControl("DataSourceTextBox")).Text = FileList.Text; //excel文件
-            ((TextBox)CfgEditForm.FindControl("DataTableTextBox")).Text = WorkTableSelect.Text; //工作表
+            if(BtnGuideFin.CssClass == "btn btn-warning")
+            {
+                ((TextBox)CfgEditForm.FindControl("SouRowRangeStartTextBox")).Text = ((int)Session["tmpdatastartrow"]).ToString(); //起始行
+                Session["tmpdatastartrow"] = null;
+                ((TextBox)CfgEditForm.FindControl("QueryMethTextBox")).Text = string.Join(",", ((List<int>)Session["tmpcolkey"])); //查询列
+                Session["tmpcolkey"] = null;
+                ((TextBox)CfgEditForm.FindControl("SouColReDefTextBox")).Text = string.Join(",", ((List<string>)Session["tmpcolrename"]));//涉及列
+                Session["tmpdataheadrow"] = null;
+                Session["tmpcolrename"] = null;
+                Session["tmpworkcol"] = null;
+                ((TextBox)CfgEditForm.FindControl("DataSourceTextBox")).Text = FileList.Text; //excel文件
+                ((TextBox)CfgEditForm.FindControl("DataTableTextBox")).Text = WorkTableSelect.Text; //工作表
+                BtnGuideFin.CssClass = "btn btn-primary";
+                BtnGuideFin.Text = "关闭向导";
+            }
+            WorkTableSelect.Items.Clear();
+            WorkTableSelect.Visible= false;
+            GuideDiv.Visible = false;
         }
     }
 }

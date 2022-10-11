@@ -216,6 +216,9 @@
                                                     <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
                                                 </tr>
                                                 <tr>
+                                                    <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a>，并进行文件管理和工作表浏览。</div></td>
+                                                </tr>
+                                                <tr>
                                                     <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" /></td>
                                                     <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' OnClick="DataSource_Click" /></td>
                                                     <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
@@ -260,6 +263,9 @@
                                                 <tr>
                                                     <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' /></td>
                                                     <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a>，并进行文件管理和工作表浏览。</div></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" /></td>
@@ -354,24 +360,24 @@
                             <asp:LinkButton ID="CancelEdit" runat="server" type="button" class="btn btn-primary" OnClick="CancelEdit_Click">取消</asp:LinkButton>
                         </div>
                     </div>
-                    <div class="panel panel-warning row">
+                    <div runat="server" class="panel panel-warning row" id="GuideDiv" visible="False">
                         <div class="panel-heading">
                             <h3 id="H1" runat="server" class="panel-title">表格选择</h3>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" style="background-color: aliceblue;">
                             <table>
                                 <tr class="row" style="vertical-align:top;">
-                                    <td class="col-md-4">
+                                    <td class="col-md-4" style="background-color:lightblue;padding-left:2px;padding-right:0px;">
                                         <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="form-select col-md-12" Rows="8" Height="200px"></asp:ListBox>
                                     </td>
-                                    <td class="col-md-1">
+                                    <td class="col-md-1" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;padding: 5px;background-color: lightblue;text-align: center;">
                                         <div class="btn-group-vertical">
                                             <asp:LinkButton ID="FleSelect" runat="server" type="button" class="btn btn-info btn-sm disabled" OnClick="FleSelect_Click">访问</asp:LinkButton>
                                             <a id="FleUploadBtn" type="button" class="btn btn-warning btn-sm">上传</a>
                                             <asp:LinkButton ID="FleDelete" runat="server" type="button" class="btn btn-warning btn-sm disabled" OnClick="FleDelete_Click">删除</asp:LinkButton>
                                         </div>
                                     </td>
-                                    <td class="col-md-7" style="font-size: 10px;">
+                                    <td class="col-md-7" style="padding-left:10px; padding-right:2px; font-size: 10px;">
                                         <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged" Height="20px" Visible="False"></asp:DropDownList>
                                         <div id="WorkTablePvBox" Class="col-md-12" style="height: 180px; margin-top: 2px; padding: 2px; overflow:auto; max-width=50%;" runat="server">
                                         </div>
@@ -394,7 +400,7 @@
                             </script>
                         </div>
                         <div class="panel-footer text-right">
-                            <asp:LinkButton ID="BtnGuideFin" runat="server" type="button" class="btn btn-warning disabled" OnClick="BtnGuideFin_Click">确定</asp:LinkButton>
+                            <asp:LinkButton ID="BtnGuideFin" runat="server" type="button" class="btn btn-primary" OnClick="BtnGuideFin_Click">关闭向导</asp:LinkButton>
                         </div>
                     </div>
 
