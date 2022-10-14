@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="联系方式" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="ConfirmOnline.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>ConfirmOnline：Bluehope's 在线核实修订程序</h2>
-    <h3>&copy;Buehope Studio 联系方式</h3>
+    <h2>ConfirmOnline&trade;：Bluehope's 在线核实修订程序</h2>
+    <p style="color:darkgray;">&copy; 本应用为满足偶然的工作事务需要而创作；属个人独立作品，非本职务作品且利用于单位偶发事务。<br/>联系地址为制作人创作时就职联系方式。</p>
+    <h3>Bluehope Studio&trade; 联系方式</h3>
     <address>
         河南省 平顶山市<br />
         市妇幼保健院 妇幼信息管理科<br />

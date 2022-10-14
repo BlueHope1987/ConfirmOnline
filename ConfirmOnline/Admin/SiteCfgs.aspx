@@ -199,157 +199,84 @@
 
                         <asp:FormView ID="CfgEditForm" runat="server" DataKeyNames="CfgID" DataSourceID="SelectdCfg" DefaultMode="Edit" EnableViewState="True">
                             <EditItemTemplate>
+
                                 <div class="panel-body">
-                                    <table class="col-lg-12">
-                                                <tr>
-                                                    <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' /></td>
-                                                    <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' /></td>
+                                    <table width="100%">
+                                                <tr height="40px">
+                                                    <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' CssClass="form-control input-sm" /></td>
+                                                    <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' CssClass="form-control input-sm"  /></td>
                                                     <th>仅登录使用并开放注册</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
                                                 </tr>
-                                                <tr>
-                                                    <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' /></td>
-                                                    <th>版权信息</th><td><asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' /></td>
-                                                    <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' /></td>
+                                                <tr height="40px">
+                                                    <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>版权信息</th><td><asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' CssClass="form-control input-sm"  /></td>
+                                                </tr>
+                                                <tr height="40px">
+                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' /></td>
-                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
+                                                    <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<b><a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a></b>，并进行文件管理和工作表浏览。</div></td>
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a>，并进行文件管理和工作表浏览。</div></td>
+                                                <tr height="40px">
+                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" CssClass="form-control input-sm"  /></td>
+                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' OnClick="DataSource_Click" CssClass="form-control input-sm"  /></td>
+                                                    <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
-                                                <tr>
-                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" /></td>
-                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' OnClick="DataSource_Click" /></td>
-                                                    <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
+                                                <tr height="40px">
+                                                    <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
-                                                <tr>
-                                                    <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' /></td>
-                                                    <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' /></td>
-                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' /></td>
-                                                </tr>
-                                                <tr>
-                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' /></td>
-                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' /></td>
-                                                    <th></th><td></td>
-                                                </tr>
-                                                <tr>
+                                                <tr height="40px">
+                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' CssClass="form-control input-sm"  /></td>
                                                     <th></th><td></td>
                                                 </tr>
                                         </table>
-                                   <%-- CfgID:
-                                    CfgCreator:
-                                    CfgCrtTime:
-                                    CfgIsEnable:
-                                    SouEntNum:
-                                    FixEntNum:
-
-                                    <asp:LinkButton ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="更新" />
-                                    &nbsp;<asp:LinkButton ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />--%>
+                                    </div>
                                     
                             </EditItemTemplate>
                             <InsertItemTemplate>
-                                <table class="col-lg-12">
-                                                <tr>
-                                                    <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' /></td>
-                                                    <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' /></td>
+
+                                <div class="panel-body">
+                                    <table width="100%">
+                                                <tr height="40px">
+                                                    <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' CssClass="form-control input-sm" /></td>
+                                                    <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' CssClass="form-control input-sm"  /></td>
                                                     <th>仅登录使用并开放注册</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
                                                 </tr>
-                                                <tr>
-                                                    <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' /></td>
-                                                    <th>版权信息</th><td><asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' /></td>
-                                                    <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' /></td>
+                                                <tr height="40px">
+                                                    <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>版权信息</th><td><asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' CssClass="form-control input-sm"  /></td>
+                                                </tr>
+                                                <tr height="40px">
+                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' /></td>
-                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' /></td>
+                                                    <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<b><a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a></b>，并进行文件管理和工作表浏览。</div></td>
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a>，并进行文件管理和工作表浏览。</div></td>
+                                                <tr height="40px">
+                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" CssClass="form-control input-sm"  /></td>
+                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' OnClick="DataSource_Click" CssClass="form-control input-sm"  /></td>
+                                                    <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
-                                                <tr>
-                                                    <th>Excel文件</th><td><asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' OnClick="DataSource_Click" /></td>
-                                                    <th>Excel工作表</th><td><asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>'  OnClick="DataSource_Click" /></td>
-                                                    <th>允许的核实修订次数</th><td><asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' /></td>
+                                                <tr height="40px">
+                                                    <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
-                                                <tr>
-                                                    <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' /></td>
-                                                    <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' /></td>
-                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' /></td>
-                                                </tr>
-                                                <tr>
-                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' /></td>
-                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' /></td>
-                                                    <th></th><td></td>
-                                                </tr>
-                                                <tr>
+                                                <tr height="40px">
+                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' CssClass="form-control input-sm"  /></td>
                                                     <th></th><td></td>
                                                 </tr>
                                         </table>
-                               <%-- CfgName:
-                                    <asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' />
-                                <br />
-                                CfgCreator:
-                                    <asp:TextBox ID="CfgCreatorTextBox" runat="server" Text='<%# Bind("CfgCreator") %>' />
-                                <br />
-                                CfgCrtTime:
-                                    <asp:TextBox ID="CfgCrtTimeTextBox" runat="server" Text='<%# Bind("CfgCrtTime") %>' />
-                                <br />
-                                CfgIsEnable:
-                                    <asp:CheckBox ID="CfgIsEnableCheckBox" runat="server" Checked='<%# Bind("CfgIsEnable") %>' />
-                                <br />
-                                SiteEnabTimSt:
-                                    <asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' />
-                                <br />
-                                SiteEnabTimEd:
-                                    <asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' />
-                                <br />
-                                SiteName:
-                                    <asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' />
-                                <br />
-                                SiteWelcomeWord:
-                                    <asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' />
-                                <br />
-                                SiteCopyRightStr:
-                                    <asp:TextBox ID="SiteCopyRightStrTextBox" runat="server" Text='<%# Bind("SiteCopyRightStr") %>' />
-                                <br />
-                                SiteContactStr:
-                                    <asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' />
-                                <br />
-                                UserRegEnab:
-                                    <asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' />
-                                <br />
-                                AllowFixTimes:
-                                    <asp:TextBox ID="AllowFixTimesTextBox" runat="server" Text='<%# Bind("AllowFixTimes") %>' />
-                                <br />
-                                DataSource:
-                                    <asp:TextBox ID="DataSourceTextBox" runat="server" Text='<%# Bind("DataSource") %>' />
-                                <br />
-                                DataTable:
-                                    <asp:TextBox ID="DataTableTextBox" runat="server" Text='<%# Bind("DataTable") %>' />
-                                <br />
-                                SouColReDef:
-                                    <asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' />
-                                <br />
-                                SouRowRangeStart:
-                                    <asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' />
-                                <br />
-                                SouRowRangeEnd:
-                                    <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' />
-                                <br />
-                                QueryMeth:
-                                    <asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' />
-                                <br />
-                                QueryMethRef:
-                                    <asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' />
-                                <br />
-                                SouEntNum:
-                                    <asp:TextBox ID="SouEntNumTextBox" runat="server" Text='<%# Bind("SouEntNum") %>' />
-                                <br />
-                                FixEntNum:
-                                    <asp:TextBox ID="FixEntNumTextBox" runat="server" Text='<%# Bind("FixEntNum") %>' />
-                                <br />--%>
                                 </div>
+
                             </InsertItemTemplate>
                         </asp:FormView>
 
@@ -367,10 +294,10 @@
                         <div class="panel-body" style="background-color: aliceblue;">
                             <table>
                                 <tr class="row" style="vertical-align:top;">
-                                    <td class="col-md-4" style="background-color:lightblue;padding-left:2px;padding-right:0px;">
-                                        <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="form-select col-md-12" Rows="8" Height="200px"></asp:ListBox>
+                                    <td class="col-md-4" style="background-color:lightblue;padding-left:5px;padding-right:0px;vertical-align:middle;">
+                                        <asp:ListBox ID="FileList" runat="server" OnPreRender="FileList_PreRender" CssClass="form-select col-md-12" Rows="8" Height="290px"></asp:ListBox>
                                     </td>
-                                    <td class="col-md-1" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;padding: 5px;background-color: lightblue;text-align: center;">
+                                    <td class="col-md-1" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;padding: 0px;padding-top: 5px;background-color: lightblue;text-align: center;">
                                         <div class="btn-group-vertical">
                                             <asp:LinkButton ID="FleSelect" runat="server" type="button" class="btn btn-info btn-sm disabled" OnClick="FleSelect_Click">访问</asp:LinkButton>
                                             <a id="FleUploadBtn" type="button" class="btn btn-warning btn-sm">上传</a>
@@ -379,7 +306,7 @@
                                     </td>
                                     <td class="col-md-7" style="padding-left:10px; padding-right:2px; font-size: 10px;">
                                         <asp:DropDownList ID="WorkTableSelect" runat="server" CssClass="col-md-12" AutoPostBack="True" OnSelectedIndexChanged="WorkTableSelect_SelectedIndexChanged" Height="20px" Visible="False"></asp:DropDownList>
-                                        <div id="WorkTablePvBox" Class="col-md-12" style="height: 180px; margin-top: 2px; padding: 2px; overflow:auto; max-width=50%;" runat="server">
+                                        <div id="WorkTablePvBox" Class="col-md-12" style="width: 600px; height: 300px; margin-top: 2px; padding: 2px; overflow:auto;" runat="server">
                                         </div>
                                     </td>
                                 </tr>
@@ -397,6 +324,22 @@
                                 function fleUpload() {
                                     __doPostBack('UploadFiles', $('#fileLoad').val());
                                 }
+
+                                /*
+                                //尝试改变选中项背景色 不好用
+                                $(function () {
+                                    $('[id$=FileList]').css("", "transparent");
+                                    $('[id$=FileList]').children("option").css("color", "lightblue");
+                                    $('[id$=FileList]').change(function () {
+                                        var selItem = $(this).val();
+                                        if (selItem == $(this).find('option:first').val()) {
+                                            $(this).css("color", "transparent");
+                                        } else {
+                                            $(this).css("color", "lightblue");
+                                        }
+                                    });
+                                })
+                                */
                             </script>
                         </div>
                         <div class="panel-footer text-right">

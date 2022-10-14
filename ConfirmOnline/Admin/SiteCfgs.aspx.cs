@@ -39,6 +39,7 @@ namespace ConfirmOnline.Admin
                         break;
 
                     case "startGuide":
+                        FileList.Style.Add(HtmlTextWriterStyle.Padding, "5px");
                         GuideDiv.Visible = true;
                         break;
 
@@ -347,7 +348,7 @@ namespace ConfirmOnline.Admin
                         BtnGuideFin.CssClass = "btn btn-warning";
                         break;
                     default:
-                        p.InnerHtml += "<span class=\"label label-warning\">(步骤1/5:起始行)点击序号选取数据起始行</span>";
+                        p.InnerHtml += "<span class=\"label label-warning\">(步骤1/5:起始行)点击最后一列“行序号”选取数据起始行</span>";
                         break;
                 }
 
