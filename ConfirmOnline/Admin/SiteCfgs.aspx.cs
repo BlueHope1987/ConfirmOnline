@@ -239,11 +239,6 @@ namespace ConfirmOnline.Admin
             CancelEdit_Click(null, null);
         }
 
-        protected void DataSource_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void FileList_PreRender(object sender, EventArgs e)
         {
             string sltitem = FileList.Text;

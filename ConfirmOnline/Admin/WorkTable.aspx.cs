@@ -179,6 +179,7 @@ namespace ConfirmOnline.Admin
                             Dictionary<string, string> dic = new Dictionary<string, string>();
                             for (int i = 0; i < fc.Count; i++)
                             {
+                                if (fc[i] == "-1") continue;
                                 if ((Convert.ToString(row[int.Parse(fc[i]) - 1])).Replace("&nbsp;", "") == fo[i].Replace("&comma&", ",")) //修BUG:需要空格检测？？？？BUG:(String)遇到DbNull会报错无法强制转换 Convert.ToString解决
                                 {
                                     row[int.Parse(fc[i]) - 1] = fn[i].Replace("&comma&", ",");//转义逗号
@@ -238,6 +239,7 @@ namespace ConfirmOnline.Admin
                     Dictionary<string, string> dic = new Dictionary<string, string>();
                     for (int i = 0; i < fc.Count; i++)
                     {
+                        if (fc[i] == "-1") continue;
                         if (dspOver) e.Row.Cells[int.Parse(fc[i]) - 1].Font.Bold = true;
                         if (dspColor) e.Row.Cells[int.Parse(fc[i]) - 1].BackColor = System.Drawing.Color.Orange;
                         if (dspNub)

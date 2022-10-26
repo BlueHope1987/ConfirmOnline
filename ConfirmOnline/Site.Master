@@ -52,8 +52,6 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" id="adminLink" visible="false" href="~/Admin/AdminPage">管理</a></li>
                         <li><a runat="server" href="~/">主页</a></li>
-                        <li><a runat="server" href="~/About">关于</a></li>
-                        <li><a runat="server" href="~/Contact">联系方式</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
@@ -79,7 +77,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p><%: SystemSet.SiteName %> &copy; <%: DateTime.Now.Year %> - <%: SystemSet.SiteCopyRightStr %> </p>
+                <p><a runat="server" href="~/About"><%: SystemSet.SiteName %> &copy; <%: DateTime.Now.Year %> - <%: SystemSet.SiteCopyRightStr %> </a></p>
                 <p>PowerBy BluehopeStudio, 该版本仅供内部测试与临时应用 测试版本 0.8.0.0</p>
             </footer>
         </div>

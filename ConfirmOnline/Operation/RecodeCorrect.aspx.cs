@@ -69,6 +69,7 @@ namespace ConfirmOnline.Operation
                     Dictionary<string, string> dic = new Dictionary<string, string>();
                     for (int i = 0; i < fc.Count; i++)
                     {
+                        if (fc[i] == "-1") continue;
                         if (qResult[int.Parse(fc[i]) - 1] == fo[i].Replace("&comma&", ","))
                         {
                             qResult[int.Parse(fc[i]) - 1] = fn[i].Replace("&comma&", ",");//转义逗号
@@ -145,7 +146,14 @@ namespace ConfirmOnline.Operation
                 nEF.FixerDate = DateTime.Now;
                 nEF.FixNew = String.Join(",", fixedNew);
                 nEF.FixOld = String.Join(",", fixedOld);
-                nEF.FixCol = String.Join(",", fixedKey);
+                if(fixedNew.Count > 0)
+                {
+                    nEF.FixCol = String.Join(",", fixedKey);
+                }
+                else
+                {
+                    nEF.FixCol ="-1";
+                }
                 nEF.FixRow = String.Join(",", ((List<string>)Session["qurVal"]).ToArray());
                 nEF.CfgID = ((SiteSetting)Application["SystemSet"]).CfgID;
 

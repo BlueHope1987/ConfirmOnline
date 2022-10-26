@@ -205,7 +205,7 @@
                                                 <tr height="40px">
                                                     <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' CssClass="form-control input-sm" /></td>
                                                     <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>仅登录使用并开放注册</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
+                                                    <th>仅登录使用并开放注册(尚未实现)</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
                                                 </tr>
                                                 <tr height="40px">
                                                     <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' CssClass="form-control input-sm"  /></td>
@@ -213,8 +213,8 @@
                                                     <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr height="40px">
-                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>开放时间(尚未实现)</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>停止时间(尚未实现)</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<b><a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a></b>，并进行文件管理和工作表浏览。</div></td>
@@ -227,11 +227,11 @@
                                                 <tr height="40px">
                                                     <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' CssClass="form-control input-sm"  /></td>
                                                     <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>查询参考(尚未实现)</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr height="40px">
-                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>起始行(尚未实现)</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>结束行(尚未实现)</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' CssClass="form-control input-sm"  /></td>
                                                     <th></th><td></td>
                                                 </tr>
                                         </table>
@@ -245,7 +245,7 @@
                                                 <tr height="40px">
                                                     <th>配置式名称</th><td><asp:TextBox ID="CfgNameTextBox" runat="server" Text='<%# Bind("CfgName") %>' CssClass="form-control input-sm" /></td>
                                                     <th>站点名称</th><td><asp:TextBox ID="SiteNameTextBox" runat="server" Text='<%# Bind("SiteName") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>仅登录使用并开放注册</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
+                                                    <th>仅登录使用并开放注册(尚未实现)</th><td><asp:CheckBox ID="UserRegEnabCheckBox" runat="server" Checked='<%# Bind("UserRegEnab") %>' /></td>
                                                 </tr>
                                                 <tr height="40px">
                                                     <th>欢迎词</th><td><asp:TextBox ID="SiteWelcomeWordTextBox" runat="server" Text='<%# Bind("SiteWelcomeWord") %>' CssClass="form-control input-sm"  /></td>
@@ -253,8 +253,8 @@
                                                     <th>联系信息</th><td><asp:TextBox ID="SiteContactStrTextBox" runat="server" Text='<%# Bind("SiteContactStr") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr height="40px">
-                                                    <th>开放时间</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>停止时间</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>开放时间(尚未实现)</th><td><asp:TextBox ID="SiteEnabTimStTextBox" runat="server" Text='<%# Bind("SiteEnabTimSt") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>停止时间(尚未实现)</th><td><asp:TextBox ID="SiteEnabTimEdTextBox" runat="server" Text='<%# Bind("SiteEnabTimEd") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="6"><div class="alert alert-info" style="padding: 5px; margin-top: 10px;">以下项目有不太清楚的，可使用<b><a href="javascript:__doPostBack('startGuide','')" >我们提供的生成向导</a></b>，并进行文件管理和工作表浏览。</div></td>
@@ -267,11 +267,11 @@
                                                 <tr height="40px">
                                                     <th>涉及列</th><td><asp:TextBox ID="SouColReDefTextBox" runat="server" Text='<%# Bind("SouColReDef") %>' CssClass="form-control input-sm"  /></td>
                                                     <th>查询列</th><td><asp:TextBox ID="QueryMethTextBox" runat="server" Text='<%# Bind("QueryMeth") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>查询参考</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>查询参考(尚未实现)</th><td><asp:TextBox ID="QueryMethRefTextBox" runat="server" Text='<%# Bind("QueryMethRef") %>' CssClass="form-control input-sm"  /></td>
                                                 </tr>
                                                 <tr height="40px">
-                                                    <th>起始行</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' CssClass="form-control input-sm"  /></td>
-                                                    <th>结束行</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>起始行(尚未实现)</th><td><asp:TextBox ID="SouRowRangeStartTextBox" runat="server" Text='<%# Bind("SouRowRangeStart") %>' CssClass="form-control input-sm"  /></td>
+                                                    <th>结束行(尚未实现)</th><td> <asp:TextBox ID="SouRowRangeEndTextBox" runat="server" Text='<%# Bind("SouRowRangeEnd") %>' CssClass="form-control input-sm"  /></td>
                                                     <th></th><td></td>
                                                 </tr>
                                         </table>

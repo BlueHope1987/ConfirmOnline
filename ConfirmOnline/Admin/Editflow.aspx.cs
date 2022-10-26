@@ -47,10 +47,17 @@ namespace ConfirmOnline.Admin
                 List<string> nt = new List<string>();
                 foreach (string s in ot)
                 {
-                    foreach (string q in souCol)
+                    if (s == "-1")
                     {
-                        if (q.Split(':')[0] == s)
-                            nt.Add(s + "[" + q.Split(':')[1].Replace("&comma&", ",") + "]");
+                        nt.Add(s + "[确认无修订]");
+                    }
+                    else
+                    {
+                        foreach (string q in souCol)
+                        {
+                            if (q.Split(':')[0] == s)
+                                nt.Add(s + "[" + q.Split(':')[1].Replace("&comma&", ",") + "]");
+                        }
                     }
                 }
                 e.Row.Cells[3].Text = string.Join(",", nt);
